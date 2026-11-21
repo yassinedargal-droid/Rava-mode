@@ -1,0 +1,1736 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RAVA MODE — سنيكرز RAVA RUNNER 01 | التشكيلة الحصرية بالمغرب</title>
+
+  <!-- Core Media State & Early Global Helpers (Prevents ReferenceError on inline onerror handlers) -->
+  <script>
+    window.FALLBACK_IMAGES = {
+      blanc_studio: 'https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?auto=format&fit=crop&w=900&q=85',
+      blanc_street: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=900&q=85',
+      noir_studio: 'https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?auto=format&fit=crop&w=900&q=85',
+      noir_walk: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=85'
+    };
+
+    window.COLOR_META = {
+      blanc: {
+        label: 'أبيض / أحمر',
+        shortLabel: 'أبيض / أحمر',
+        primaryFile: 'WhatsApp Image 2026-11-01 at 20.52.40;_2.jpeg',
+        fallbackKey: 'blanc_studio'
+      },
+      noir: {
+        label: 'أسود / رمادي',
+        shortLabel: 'أسود / رمادي',
+        primaryFile: 'WhatsApp Image 2026-11-01 at 20.52.40.jpeg',
+        fallbackKey: 'noir_studio'
+      }
+    };
+
+    window.VIDEOS_CONFIG = [
+      {
+        index: 0,
+        colorKey: 'blanc',
+        badge: '🎥 زوم ماكرو • أبيض / أحمر',
+        file: 'sneaker_white_navy_flat_9x16_with_voiceover 2_2.mp4',
+        fallbackImg: 'WhatsApp Image 2026-11-01 at 20.52.40;_2.jpeg',
+        fallbackKey: 'blanc_studio'
+      },
+      {
+        index: 1,
+        colorKey: 'blanc',
+        badge: '🎥 تجربة ملبوسة • أبيض / أحمر',
+        file: 'sneakers_sidewalk_handheld_9x16_silent 3.mp4',
+        fallbackImg: 'hbnk.jfif',
+        fallbackKey: 'blanc_street'
+      },
+      {
+        index: 2,
+        colorKey: 'noir',
+        badge: '🎥 زوم ماكرو • أسود / رمادي',
+        file: 'sneaker_black_exact_9x16_with_voiceover_v2 3_2.mp4',
+        fallbackImg: 'WhatsApp Image 2026-11-01 at 20.52.40.jpeg',
+        fallbackKey: 'noir_studio'
+      },
+      {
+        index: 3,
+        colorKey: 'noir',
+        badge: '🎥 تجربة ملبوسة • أسود / رمادي',
+        file: 'sneaker_step_9x16_with_voiceover 1_2.mp4',
+        fallbackImg: 'ijp.jfif',
+        fallbackKey: 'noir_walk'
+      }
+    ];
+
+    window.orderState = {
+      offer: 'solo',
+      pair1: { color: 'blanc', size: '42' },
+      pair2: { color: 'noir', size: '43' },
+      activeHeroVideoIdx: 0
+    };
+
+    function renderOfficialRavaSvg(imgEl) {
+      if (!imgEl || !imgEl.parentElement) return;
+      imgEl.onerror = null;
+      imgEl.parentElement.innerHTML = `
+        <svg viewBox="0 0 120 120" class="w-full h-full" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="RAVA MODE">
+          <circle cx="60" cy="60" r="60" fill="#0E0E10"/>
+          <circle cx="60" cy="46" r="21" fill="none" stroke="#FFFFFF" stroke-width="2.2"/>
+          <path d="M51 57V36H62.5C67 36 69.5 38.4 69.5 42.3C69.5 45.7 67.4 47.9 63.6 48.5L73.5 63.5" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+          <text x="60" y="86" text-anchor="middle" fill="#FFFFFF" font-family="Montserrat, sans-serif" font-weight="700" font-size="11.5" letter-spacing="2.4">RAVA MODE</text>
+        </svg>
+      `;
+    }
+
+    function applyMediaFallback(imgEl, key) {
+      if (!imgEl) return;
+      imgEl.onerror = null;
+      imgEl.src = window.FALLBACK_IMAGES[key] || window.FALLBACK_IMAGES.blanc_studio;
+    }
+
+    function activateHeroKenBurnsFallback() {
+      const vidEl = document.getElementById('heroMainVideo');
+      const stageEl = document.getElementById('heroKenBurnsStage');
+      const imgEl = document.getElementById('heroKenBurnsImg');
+      const currentCfg = window.VIDEOS_CONFIG[window.orderState.activeHeroVideoIdx] || window.VIDEOS_CONFIG[0];
+      if (!stageEl || !imgEl) return;
+
+      if (vidEl) vidEl.classList.add('hidden');
+      stageEl.classList.remove('hidden');
+
+      imgEl.onerror = function() {
+        applyMediaFallback(imgEl, currentCfg.fallbackKey);
+      };
+      imgEl.src = currentCfg.fallbackImg;
+    }
+
+    function activateGridKenBurnsFallback(idx) {
+      const vidEl = document.getElementById('gridVideo-' + idx);
+      const fallbackEl = document.getElementById('gridFallback-' + idx);
+      if (vidEl) vidEl.classList.add('hidden');
+      if (fallbackEl) fallbackEl.classList.remove('hidden');
+    }
+
+    function switchHeroVideo(idx) {
+      window.orderState.activeHeroVideoIdx = idx;
+      const cfg = window.VIDEOS_CONFIG[idx] || window.VIDEOS_CONFIG[0];
+
+      const badge = document.getElementById('heroVideoBadge');
+      if (badge) badge.textContent = cfg.badge;
+
+      for (let i = 0; i < 4; i++) {
+        const pill = document.getElementById('hero-vid-pill-' + i);
+        if (!pill) continue;
+        if (i === idx) {
+          pill.className = 'shrink-0 px-2.5 py-1.5 rounded-full text-[11px] font-extrabold bg-white text-obsidian shadow-sm transition cursor-pointer';
+        } else {
+          pill.className = 'shrink-0 px-2.5 py-1.5 rounded-full text-[11px] font-bold bg-white/20 text-white backdrop-blur-md hover:bg-white/30 transition cursor-pointer';
+        }
+      }
+
+      const vidEl = document.getElementById('heroMainVideo');
+      const stageEl = document.getElementById('heroKenBurnsStage');
+
+      if (vidEl) {
+        if (stageEl) stageEl.classList.add('hidden');
+        vidEl.classList.remove('hidden');
+        vidEl.src = cfg.file;
+        vidEl.load();
+        const playPromise = vidEl.play();
+        if (playPromise && typeof playPromise.catch === 'function') {
+          playPromise.catch(function() {
+            activateHeroKenBurnsFallback();
+          });
+        }
+      }
+    }
+
+    function syncAllPreviewThumbnails() {
+      const colorKey = window.orderState.pair1.color;
+      const meta = window.COLOR_META[colorKey] || window.COLOR_META.blanc;
+      const src = meta.primaryFile;
+
+      const formImg = document.getElementById('formPreviewImg');
+      if (formImg) {
+        formImg.onerror = function() { applyMediaFallback(formImg, meta.fallbackKey); };
+        formImg.src = src;
+      }
+
+      const stickyImg = document.getElementById('mobileStickyThumb');
+      if (stickyImg) {
+        stickyImg.onerror = function() { applyMediaFallback(stickyImg, meta.fallbackKey); };
+        stickyImg.src = src;
+      }
+    }
+
+    function startSmoothProgressLoop() {
+      const bar = document.getElementById('heroVideoProgress');
+      const vid = document.getElementById('heroMainVideo');
+      if (!bar) return;
+
+      let simulatedProgress = 0;
+      setInterval(function() {
+        if (vid && !vid.classList.contains('hidden') && vid.duration && !isNaN(vid.duration)) {
+          const pct = Math.min(100, Math.max(5, (vid.currentTime / vid.duration) * 100));
+          bar.style.width = pct + '%';
+        } else {
+          simulatedProgress = (simulatedProgress + 1.5) % 100;
+          bar.style.width = Math.max(8, simulatedProgress) + '%';
+        }
+      }, 150);
+    }
+  </script>
+
+  <!-- Google Fonts: Cairo & Tajawal (Arabic Modern Streetwear) + Montserrat (Brand Wordmark) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Montserrat:wght@600;700;800&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Cairo"', '"Tajawal"', 'sans-serif'],
+            display: ['"Cairo"', 'sans-serif'],
+            brand: ['"Montserrat"', 'sans-serif'],
+          },
+          colors: {
+            alabaster: '#FAF9F6',
+            stonegray: '#EAE7E1',
+            obsidian: '#0E0E10',
+            marine: '#13294B',
+            crimson: '#D92B2B',
+            warmsand: '#DFD4C0',
+            anthracite: '#2C2E33',
+          },
+          animation: {
+            'ken-burns': 'kenBurns 11s ease-in-out infinite alternate',
+            'ken-burns-pan': 'kenBurnsPan 12s ease-in-out infinite alternate',
+          },
+          keyframes: {
+            kenBurns: {
+              '0%': { transform: 'scale(1.02) translate(0%, 0%)' },
+              '50%': { transform: 'scale(1.16) translate(-2%, -1.5%)' },
+              '100%': { transform: 'scale(1.24) translate(2%, 1.5%)' },
+            },
+            kenBurnsPan: {
+              '0%': { transform: 'scale(1.06) translate(2%, 1%)' },
+              '100%': { transform: 'scale(1.22) translate(-2.5%, -1.5%)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #FAF9F6;
+      color: #0E0E10;
+      font-family: 'Cairo', 'Tajawal', sans-serif;
+      overflow-x: hidden;
+    }
+
+    .hairline-border {
+      border: 1px solid rgba(14, 14, 16, 0.12);
+    }
+
+    .hairline-border-strong {
+      border: 1px solid rgba(14, 14, 16, 0.24);
+    }
+
+    .editorial-grid-bg {
+      background-image: radial-gradient(rgba(14, 14, 16, 0.045) 1px, transparent 0);
+      background-size: 22px 22px;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: #0E0E10;
+      box-shadow: 0 0 0 3px rgba(14, 14, 16, 0.08);
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* Official RAVA MODE Logo Circular Crop when image_003970.jpg loads */
+    .rava-logo-crop {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 48%;
+      transform: scale(2.15);
+    }
+
+    /* =====================================================================
+       DYNAMIC CREATIVE THEME ENGINE (BLANC/ROUGE vs NOIR/GRIS)
+       ===================================================================== */
+    :root {
+      --theme-bg: #FAF9F6;
+      --theme-surface: #FFFFFF;
+      --theme-surface-alt: #EAE7E1;
+      --theme-text: #0E0E10;
+      --theme-text-muted: rgba(14, 14, 16, 0.72);
+      --theme-border: rgba(14, 14, 16, 0.12);
+      --theme-accent: #D92B2B;
+      --theme-accent-soft: rgba(217, 43, 43, 0.10);
+      --theme-highlight: #DFD4C0;
+      --theme-cta-bg: #D92B2B;
+      --theme-cta-text: #FFFFFF;
+      --theme-dot: rgba(217, 43, 43, 0.065);
+    }
+
+    body.theme-noir {
+      --theme-bg: #0B0C0E;
+      --theme-surface: #15171B;
+      --theme-surface-alt: #1E2127;
+      --theme-text: #F5F5F7;
+      --theme-text-muted: rgba(245, 245, 247, 0.72);
+      --theme-border: rgba(255, 255, 255, 0.12);
+      --theme-accent: #DFD4C0;
+      --theme-accent-soft: rgba(223, 212, 192, 0.14);
+      --theme-highlight: #2C2E33;
+      --theme-cta-bg: #F5F5F7;
+      --theme-cta-text: #0E0E10;
+      --theme-dot: rgba(255, 255, 255, 0.055);
+    }
+
+    body,
+    header,
+    section,
+    footer,
+    .theme-card,
+    .theme-surface,
+    .theme-btn-primary,
+    .theme-input {
+      transition: background-color 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                  color 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                  border-color 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                  box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    body {
+      background-color: var(--theme-bg) !important;
+      color: var(--theme-text) !important;
+    }
+
+    .editorial-grid-bg {
+      background-image: radial-gradient(var(--theme-dot) 1px, transparent 0) !important;
+      background-size: 22px 22px;
+    }
+
+    body.theme-noir header {
+      background-color: rgba(11, 12, 14, 0.90) !important;
+      border-color: rgba(255, 255, 255, 0.10) !important;
+    }
+
+    body.theme-noir #videos-zoom {
+      background-color: #0E0F12 !important;
+      border-color: rgba(255, 255, 255, 0.10) !important;
+    }
+
+    body.theme-noir #pourquoi {
+      background-color: #121418 !important;
+      border-color: rgba(255, 255, 255, 0.10) !important;
+    }
+
+    body.theme-noir .bg-white,
+    body.theme-noir .bg-white\/95,
+    body.theme-noir .bg-white\/75,
+    body.theme-noir .bg-alabaster {
+      background-color: var(--theme-surface) !important;
+    }
+
+    body.theme-noir .bg-stonegray,
+    body.theme-noir .bg-stonegray\/85,
+    body.theme-noir .bg-stonegray\/70,
+    body.theme-noir .bg-stonegray\/65 {
+      background-color: var(--theme-surface-alt) !important;
+    }
+
+    body.theme-noir .text-obsidian {
+      color: #F5F5F7 !important;
+    }
+
+    body.theme-noir .text-obsidian\/80,
+    body.theme-noir .text-obsidian\/75,
+    body.theme-noir .text-obsidian\/70,
+    body.theme-noir .text-obsidian\/65,
+    body.theme-noir .text-obsidian\/60,
+    body.theme-noir .text-obsidian\/55 {
+      color: rgba(245, 245, 247, 0.72) !important;
+    }
+
+    body.theme-noir .text-obsidian\/40 {
+      color: rgba(245, 245, 247, 0.38) !important;
+    }
+
+    body.theme-noir .hairline-border {
+      border-color: rgba(255, 255, 255, 0.12) !important;
+    }
+
+    body.theme-noir .hairline-border-strong {
+      border-color: rgba(255, 255, 255, 0.24) !important;
+    }
+
+    body.theme-noir .border-obsidian,
+    body.theme-noir .border-obsidian\/10,
+    body.theme-noir .border-obsidian\/15,
+    body.theme-noir .border-obsidian\/20 {
+      border-color: rgba(255, 255, 255, 0.18) !important;
+    }
+
+    /* Active Selected Buttons adapt to Theme */
+    body.theme-blanc .theme-cta-btn {
+      background-color: #D92B2B !important;
+      color: #FFFFFF !important;
+      box-shadow: 0 14px 30px -8px rgba(217, 43, 43, 0.38) !important;
+    }
+    body.theme-blanc .theme-cta-btn:hover {
+      background-color: #BE2222 !important;
+    }
+
+    body.theme-noir .theme-cta-btn {
+      background-color: #F5F5F7 !important;
+      color: #0E0E10 !important;
+      box-shadow: 0 14px 30px -8px rgba(223, 212, 192, 0.25) !important;
+    }
+    body.theme-noir .theme-cta-btn:hover {
+      background-color: #DFD4C0 !important;
+    }
+
+    /* Active Size / Color Selection Pill in Dark Noir Theme */
+    body.theme-noir .bg-obsidian.text-white {
+      background-color: #DFD4C0 !important;
+      color: #0E0E10 !important;
+      border-color: #DFD4C0 !important;
+    }
+
+    body.theme-noir input,
+    body.theme-noir select {
+      background-color: #1A1D23 !important;
+      color: #F5F5F7 !important;
+      border-color: rgba(255, 255, 255, 0.18) !important;
+    }
+    body.theme-noir input::placeholder {
+      color: rgba(245, 245, 247, 0.45) !important;
+    }
+    body.theme-noir input:focus,
+    body.theme-noir select:focus {
+      border-color: #DFD4C0 !important;
+      box-shadow: 0 0 0 3px rgba(223, 212, 192, 0.18) !important;
+    }
+  </style>
+</head>
+<body class="theme-blanc antialiased selection:bg-crimson selection:text-white pb-24 md:pb-0">
+
+  <!-- =====================================================================
+       0. TOP MOROCCO COD ANNOUNCEMENT BAR
+       ===================================================================== -->
+  <div id="topAnnouncementBar" class="bg-crimson text-white text-[11px] sm:text-xs font-bold py-2.5 px-4 text-center border-b border-white/10 transition-colors duration-500">
+    <p class="max-w-7xl mx-auto tracking-wide">
+      🚚 التوصيل فابور لجميع المدن المغربية (24-48 ساعة) • 💵 الدفع عند الاستلام حتى تقلب السلعة بيديك
+    </p>
+  </div>
+
+  <!-- =====================================================================
+       1. STICKY HEADER WITH OFFICIAL RAVA MODE LOGO + STUDIO MEDIA LOADER
+       ===================================================================== -->
+  <header class="sticky top-0 z-40 bg-alabaster/92 backdrop-blur-md border-b border-obsidian/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
+      
+      <!-- Brand Emblem + RAVA MODE Wordmark -->
+      <a href="#" class="flex items-center gap-3 group focus:outline-none">
+        <div id="headerLogoWrapper" class="w-12 h-12 rounded-full overflow-hidden bg-obsidian shrink-0 shadow-sm ring-1 ring-obsidian/15 group-hover:scale-105 transition-transform duration-300">
+          <img
+            src="image_003970.jpg"
+            alt="شعار RAVA MODE"
+            class="rava-logo-crop"
+            onerror="renderOfficialRavaSvg(this)"
+          />
+        </div>
+        <div class="flex flex-col text-right">
+          <span dir="ltr" class="font-brand font-extrabold text-base sm:text-lg tracking-[0.18em] text-obsidian leading-none">
+            RAVA MODE
+          </span>
+          <span class="text-[11px] text-obsidian/65 mt-1 font-semibold">
+            المجموعة الحصرية 2026
+          </span>
+        </div>
+      </a>
+
+      <!-- Minimal Desktop Navigation -->
+      <nav class="hidden lg:flex items-center gap-7 text-xs font-bold text-obsidian/75">
+        <a href="#videos-zoom" class="hover:text-obsidian transition">شاهد التفاصيل عن قرب</a>
+        <a href="#pourquoi" class="hover:text-obsidian transition">مميزات الحذاء</a>
+        <a href="#commander" class="hover:text-obsidian transition">اطلب الآن</a>
+      </nav>
+
+      <!-- Header Actions: Fast Order CTA -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <a href="#commander" class="theme-cta-btn px-4 sm:px-6 py-2.5 rounded-full bg-crimson text-white text-xs sm:text-sm font-extrabold active:scale-[0.98] transition shadow-sm">
+          اطلب الآن
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- =====================================================================
+       2. HERO SECTION (RTL SPLIT: RIGHT HIGH-IMPACT COPY / LEFT ZOOM PLAYER)
+       ===================================================================== -->
+  <section class="relative pt-6 pb-14 sm:pt-10 sm:pb-20 lg:py-16 editorial-grid-bg border-b border-obsidian/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        
+        <!-- RIGHT COLUMN IN RTL: HEADLINE, SOCIAL PROOF, COLORWAYS, SIZES & CTA (6 cols) -->
+        <div class="lg:col-span-6 flex flex-col items-start text-right order-2 lg:order-1">
+          
+          <!-- Exclusive Drop Badge + Live Theme Indicator -->
+          <div class="flex flex-wrap items-center gap-2.5 mb-5">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-stonegray hairline-border">
+              <span id="heroThemeDot" class="w-2.5 h-2.5 rounded-full bg-crimson animate-pulse"></span>
+              <span id="heroThemeBadgeText" class="text-xs font-extrabold text-obsidian">
+                ثيم أبيض / أحمر • المجموعة الحصرية 2026
+              </span>
+            </div>
+          </div>
+
+          <!-- High-Impact Arabic / Darija Headline -->
+          <h1 class="font-display font-black text-3xl sm:text-5xl lg:text-[48px] text-obsidian leading-[1.18] mb-5">
+            الأناقة والراحة فخطوة وحدة — <br/>
+            <span class="relative inline-block">
+              سنيكرز RAVA MODE الجديد
+              <span id="headlineUnderline" class="absolute bottom-1 right-0 w-full h-3 bg-crimson/20 -z-10 rounded-full transition-colors duration-500"></span>
+            </span>
+          </h1>
+
+          <!-- Subtitle -->
+          <p class="text-sm sm:text-base text-obsidian/80 leading-relaxed max-w-xl mb-6 font-medium">
+            موديل واحد بتصميم عصري بجودة عالية، نعل مريح <strong class="text-obsidian font-extrabold">4.5 سم</strong> وتهوية مثالية طوال اليوم. متوفر بلونين حصريين ومقاسات من <strong class="text-obsidian font-extrabold">40 إلى 44</strong>.
+          </p>
+
+          <!-- Pricing & COD Offer Box -->
+          <div class="w-full p-4 sm:p-5 rounded-2xl bg-white hairline-border shadow-xs mb-6">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div class="flex items-baseline gap-3">
+                <span class="font-display font-black text-3xl sm:text-4xl text-obsidian">299 درهم</span>
+                <span class="text-base sm:text-lg text-obsidian/40 line-through font-bold">449 درهم</span>
+                <span class="px-2.5 py-0.5 rounded-full bg-crimson text-white text-xs font-extrabold">
+                  تخفيض -33%
+                </span>
+              </div>
+              <span class="text-xs font-extrabold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full">
+                متوفر حالياً • شحن سريع
+              </span>
+            </div>
+            <p class="mt-2.5 text-xs sm:text-sm font-bold text-obsidian/75 flex items-center gap-2">
+              <svg class="w-4 h-4 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4" d="M5 13l4 4L19 7"/></svg>
+              <span>توصيل مجاني لباب الدار + الدفع عند الاستلام بعد المعاينة</span>
+            </p>
+          </div>
+
+          <!-- Interactive Colorway Switcher (Synchronizes Hero Video + Form + Sticky Bar) -->
+          <div class="w-full mb-6">
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="text-xs sm:text-sm font-bold text-obsidian/75">
+                اختر اللون المفضل : <strong id="heroActiveColorLabel" class="text-obsidian">أبيض / أحمر</strong>
+              </span>
+              <span class="text-xs font-semibold text-obsidian/55">لونان حصريان</span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <!-- Colorway 1: أبيض / أحمر -->
+              <button type="button" onclick="selectColorway('blanc')" id="hero-color-blanc"
+                class="flex items-center gap-3 p-2.5 rounded-2xl bg-white border-2 border-obsidian shadow-sm text-right transition-all cursor-pointer">
+                <img
+                  id="heroThumbBlanc"
+                  src="WhatsApp Image 2026-11-01 at 20.52.40;_2.jpeg"
+                  alt="أبيض / أحمر"
+                  class="w-14 h-14 rounded-xl object-cover bg-stonegray shrink-0 hairline-border"
+                  onerror="applyMediaFallback(this, 'blanc_studio')"
+                />
+                <div class="min-w-0">
+                  <div class="flex items-center gap-1.5">
+                    <span class="w-2.5 h-2.5 rounded-full bg-white border border-obsidian/30 shrink-0"></span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-crimson shrink-0"></span>
+                    <span class="text-xs font-extrabold text-obsidian truncate">أبيض / أحمر</span>
+                  </div>
+                  <div class="text-[11px] text-obsidian/60 mt-1 font-medium">إطلالة مشرقة وعصرية</div>
+                </div>
+              </button>
+
+              <!-- Colorway 2: أسود / رمادي -->
+              <button type="button" onclick="selectColorway('noir')" id="hero-color-noir"
+                class="flex items-center gap-3 p-2.5 rounded-2xl bg-white/75 hover:bg-white border border-obsidian/15 text-right transition-all cursor-pointer">
+                <img
+                  id="heroThumbNoir"
+                  src="WhatsApp Image 2026-11-01 at 20.52.40.jpeg"
+                  alt="أسود / رمادي"
+                  class="w-14 h-14 rounded-xl object-cover bg-stonegray shrink-0 hairline-border"
+                  onerror="applyMediaFallback(this, 'noir_studio')"
+                />
+                <div class="min-w-0">
+                  <div class="flex items-center gap-1.5">
+                    <span class="w-2.5 h-2.5 rounded-full bg-obsidian shrink-0"></span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-anthracite/60 shrink-0"></span>
+                    <span class="text-xs font-extrabold text-obsidian truncate">أسود / رمادي</span>
+                  </div>
+                  <div class="text-[11px] text-obsidian/60 mt-1 font-medium">ستايل داكن وفخم</div>
+                </div>
+              </button>
+            </div>
+          </div>
+
+          <!-- Size Selector Preview (40 to 44) -->
+          <div class="w-full mb-7">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs sm:text-sm font-bold text-obsidian/75">
+                المقاسات المتوفرة (من 40 إلى 44) :
+              </span>
+              <button type="button" onclick="openSizeGuide()" class="text-xs font-bold underline underline-offset-4 text-obsidian/80 hover:text-obsidian cursor-pointer">
+                دليل المقاسات (سم)
+              </button>
+            </div>
+            <div class="grid grid-cols-5 gap-2">
+              <button type="button" onclick="selectSizeFromHero('40')" data-hero-size="40" class="hero-size-btn py-2.5 rounded-xl bg-white border border-obsidian/15 font-bold text-sm text-obsidian hover:border-obsidian transition cursor-pointer">40</button>
+              <button type="button" onclick="selectSizeFromHero('41')" data-hero-size="41" class="hero-size-btn py-2.5 rounded-xl bg-white border border-obsidian/15 font-bold text-sm text-obsidian hover:border-obsidian transition cursor-pointer">41</button>
+              <button type="button" onclick="selectSizeFromHero('42')" data-hero-size="42" class="hero-size-btn py-2.5 rounded-xl bg-obsidian text-white border-2 border-obsidian font-extrabold text-sm transition cursor-pointer">42</button>
+              <button type="button" onclick="selectSizeFromHero('43')" data-hero-size="43" class="hero-size-btn py-2.5 rounded-xl bg-white border border-obsidian/15 font-bold text-sm text-obsidian hover:border-obsidian transition cursor-pointer">43</button>
+              <button type="button" onclick="selectSizeFromHero('44')" data-hero-size="44" class="hero-size-btn py-2.5 rounded-xl bg-white border border-obsidian/15 font-bold text-sm text-obsidian hover:border-obsidian transition cursor-pointer">44</button>
+            </div>
+          </div>
+
+          <!-- Primary Hero CTA -->
+          <a href="#commander"
+            class="theme-cta-btn w-full py-4 sm:py-4.5 px-6 rounded-2xl bg-crimson text-white font-display font-extrabold text-sm sm:text-base flex items-center justify-center gap-3 active:scale-[0.99] transition shadow-xl">
+            <span>اطلب الآن — الدفع عند الاستلام 🛒</span>
+            <svg class="w-5 h-5 shrink-0 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </a>
+        </div>
+
+        <!-- LEFT COLUMN IN RTL: CLEAN SILENT VERTICAL VIDEO PLAYER (6 cols) -->
+        <div class="lg:col-span-6 flex flex-col items-center order-1 lg:order-2">
+          <div class="relative w-full max-w-[395px] aspect-[9/16] rounded-[32px] bg-obsidian p-2 shadow-2xl shadow-obsidian/20 hairline-border-strong">
+            
+            <!-- Inner Vertical Frame (100% Clean Video View) -->
+            <div class="relative w-full h-full rounded-[25px] overflow-hidden bg-obsidian select-none">
+              
+              <!-- Animated Progress Bar -->
+              <div class="absolute top-3 left-3.5 right-3.5 z-30 h-1.5 rounded-full bg-white/25 overflow-hidden backdrop-blur-xs">
+                <div id="heroVideoProgress" class="h-full bg-white w-1/3 transition-all duration-150"></div>
+              </div>
+
+              <!-- Top Floating Badge -->
+              <div class="absolute top-6 left-3.5 right-3.5 z-30 flex items-center justify-between gap-2">
+                <span id="heroVideoBadge" class="px-3 py-1 rounded-full bg-obsidian/80 backdrop-blur-md text-white text-[10px] font-extrabold border border-white/15">
+                  🎥 زوم ماكرو • أبيض / أحمر
+                </span>
+              </div>
+
+              <!-- REAL SILENT MP4 VIDEO -->
+              <video
+                id="heroMainVideo"
+                src="sneaker_white_navy_flat_9x16_with_voiceover 2_2.mp4"
+                class="w-full h-full object-cover"
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="auto"
+                onerror="activateHeroKenBurnsFallback()"
+              ></video>
+
+              <!-- HIGH-RESOLUTION KEN BURNS MACRO FALLBACK STAGE (Guarantees zero black screen in preview) -->
+              <div id="heroKenBurnsStage" class="hidden absolute inset-0 w-full h-full overflow-hidden bg-obsidian">
+                <img
+                  id="heroKenBurnsImg"
+                  src=""
+                  alt="معاينة سنيكرز RAVA MODE"
+                  class="w-full h-full object-cover animate-ken-burns"
+                />
+              </div>
+
+              <!-- Bottom Gradient Overlay: 4 Quick Video Switcher Pills Only -->
+              <div class="absolute bottom-0 inset-x-0 z-30 pt-10 pb-3.5 px-3.5 bg-gradient-to-t from-black/85 via-black/40 to-transparent">
+                <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar">
+                  <button type="button" onclick="switchHeroVideo(0)" id="hero-vid-pill-0"
+                    class="shrink-0 px-2.5 py-1.5 rounded-full text-[11px] font-extrabold bg-white text-obsidian shadow-sm transition cursor-pointer">
+                    01. أبيض / أحمر
+                  </button>
+                  <button type="button" onclick="switchHeroVideo(1)" id="hero-vid-pill-1"
+                    class="shrink-0 px-2.5 py-1.5 rounded-full text-[11px] font-bold bg-white/20 text-white backdrop-blur-md hover:bg-white/30 transition cursor-pointer">
+                    02. أبيض / أحمر (لبس)
+                  </button>
+                  <button type="button" onclick="switchHeroVideo(2)" id="hero-vid-pill-2"
+                    class="shrink-0 px-2.5 py-1.5 rounded-full text-[11px] font-bold bg-white/20 text-white backdrop-blur-md hover:bg-white/30 transition cursor-pointer">
+                    03. أسود / رمادي
+                  </button>
+                  <button type="button" onclick="switchHeroVideo(3)" id="hero-vid-pill-3"
+                    class="shrink-0 px-2.5 py-1.5 rounded-full text-[11px] font-bold bg-white/20 text-white backdrop-blur-md hover:bg-white/30 transition cursor-pointer">
+                    04. أسود / رمادي (لبس)
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <p class="text-xs text-obsidian/65 mt-3 font-semibold text-center">
+            بدّل بين الفيديوهات لمشاهدة الحذاء في اللونين من جميع الزوايا
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       3. SECTION 2: شاهد التفاصيل عن قرب (4 SILENT REAL VIDEOS — 2 PER COLOR)
+       ===================================================================== -->
+  <section id="videos-zoom" class="py-16 sm:py-24 bg-alabaster border-b border-obsidian/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header (No 9:16 mention) -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 sm:mb-12 gap-4 text-right">
+        <div>
+          <span class="text-xs font-extrabold text-obsidian/60">لقطات حقيقية عن قرب بدون فلاتر</span>
+          <h2 class="font-display font-black text-2xl sm:text-4xl text-obsidian mt-1.5">
+            شاهد التفاصيل عن قرب
+          </h2>
+        </div>
+        <p class="text-sm text-obsidian/75 max-w-md leading-relaxed">
+          تأكد من جودة الخياطة، نعومة الجلد السويدي ومرونة النعل في اللونين المتوفرين قبل ما تطلب الحذاء.
+        </p>
+      </div>
+
+      <!-- 4-Card Responsive Video Grid (2 Videos for أبيض / أحمر + 2 Videos for أسود / رمادي) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <!-- VIDEO CARD 1: أبيض / أحمر — زوم ماكرو -->
+        <div id="video-card-0" class="rounded-3xl bg-white hairline-border p-3.5 shadow-sm flex flex-col justify-between text-right transition-all">
+          <div>
+            <div class="relative aspect-[9/16] w-full rounded-2xl overflow-hidden bg-obsidian">
+              <video
+                id="gridVideo-0"
+                src="sneaker_white_navy_flat_9x16_with_voiceover 2_2.mp4"
+                class="w-full h-full object-cover"
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="metadata"
+                onerror="activateGridKenBurnsFallback(0)"
+              ></video>
+
+              <!-- Ken Burns Fallback Stage 0 -->
+              <div id="gridFallback-0" class="hidden absolute inset-0 w-full h-full overflow-hidden">
+                <img id="gridFallbackImg-0" src="WhatsApp Image 2026-11-01 at 20.52.40;_2.jpeg" alt="أبيض / أحمر — زوم التفاصيل" class="w-full h-full object-cover animate-ken-burns" onerror="applyMediaFallback(this, 'blanc_studio')" />
+              </div>
+
+              <!-- Color Tag Badge (No Audio Button) -->
+              <span class="absolute top-3 right-3 z-20 px-3 py-1 rounded-full bg-white/95 backdrop-blur-xs text-obsidian text-[11px] font-extrabold shadow-xs">
+                أبيض / أحمر
+              </span>
+
+              <!-- Darija Subtitle Overlay -->
+              <div class="absolute bottom-0 inset-x-0 z-20 p-3.5 bg-gradient-to-t from-black/95 via-black/55 to-transparent text-white">
+                <p class="text-xs font-extrabold text-warmsand">
+                  « خلي الشمس تدوز على التفاصيل، ميش، سويد ولمسة حمراء... »
+                </p>
+                <p class="text-[11px] text-white/85 mt-1">
+                  زوم بانورامي يوضح تناسق الأبيض مع لمسة الأحمر الأنيقة.
+                </p>
+              </div>
+            </div>
+
+            <div class="mt-4 px-1">
+              <span class="text-[11px] font-extrabold text-crimson">أبيض / أحمر • زوم ماكرو</span>
+              <h3 class="font-display font-extrabold text-base text-obsidian mt-1">تفاصيل الشبكة والسويد</h3>
+              <p class="text-xs text-obsidian/70 mt-1 leading-relaxed">
+                لقطة مقربة تبرز الشبكة المهوية البيضاء، جلد السويد الناعم والخياطة المتقنة.
+              </p>
+            </div>
+          </div>
+
+          <button type="button" onclick="chooseColorAndScroll('blanc')"
+            class="mt-4 w-full py-3 px-4 rounded-xl bg-stonegray/85 hover:bg-obsidian hover:text-white text-obsidian font-extrabold text-xs transition cursor-pointer">
+            اختر أبيض / أحمر — 299 درهم
+          </button>
+        </div>
+
+        <!-- VIDEO CARD 2: أبيض / أحمر — تجربة ملبوسة -->
+        <div id="video-card-1" class="rounded-3xl bg-white hairline-border p-3.5 shadow-sm flex flex-col justify-between text-right transition-all">
+          <div>
+            <div class="relative aspect-[9/16] w-full rounded-2xl overflow-hidden bg-obsidian">
+              <video
+                id="gridVideo-1"
+                src="sneakers_sidewalk_handheld_9x16_silent 3.mp4"
+                class="w-full h-full object-cover"
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="metadata"
+                onerror="activateGridKenBurnsFallback(1)"
+              ></video>
+
+              <!-- Ken Burns Fallback Stage 1 -->
+              <div id="gridFallback-1" class="hidden absolute inset-0 w-full h-full overflow-hidden">
+                <img id="gridFallbackImg-1" src="hbnk.jfif" alt="أبيض / أحمر — إطلالة الشارع" class="w-full h-full object-cover animate-ken-burns-pan" onerror="applyMediaFallback(this, 'blanc_street')" />
+              </div>
+
+              <!-- Color Tag Badge -->
+              <span class="absolute top-3 right-3 z-20 px-3 py-1 rounded-full bg-white/95 backdrop-blur-xs text-obsidian text-[11px] font-extrabold shadow-xs">
+                أبيض / أحمر
+              </span>
+
+              <!-- Darija Subtitle Overlay -->
+              <div class="absolute bottom-0 inset-x-0 z-20 p-3.5 bg-gradient-to-t from-black/95 via-black/55 to-transparent text-white">
+                <p class="text-xs font-extrabold text-warmsand">
+                  « ستايل عصري ومريح مع الكارغو والجينز »
+                </p>
+                <p class="text-[11px] text-white/85 mt-1">
+                  نعل مرتفع 4.5 سم يمنحك أناقة وراحة طوال اليوم.
+                </p>
+              </div>
+            </div>
+
+            <div class="mt-4 px-1">
+              <span class="text-[11px] font-extrabold text-crimson">أبيض / أحمر • إطلالة يومية</span>
+              <h3 class="font-display font-extrabold text-base text-obsidian mt-1">أناقة ملفتة فكل خطوة</h3>
+              <p class="text-xs text-obsidian/70 mt-1 leading-relaxed">
+                تصميم متوازن يجمع بين الخفة والثبات في المشي اليومي.
+              </p>
+            </div>
+          </div>
+
+          <button type="button" onclick="chooseColorAndScroll('blanc')"
+            class="mt-4 w-full py-3 px-4 rounded-xl bg-stonegray/85 hover:bg-obsidian hover:text-white text-obsidian font-extrabold text-xs transition cursor-pointer">
+            اختر أبيض / أحمر — 299 درهم
+          </button>
+        </div>
+
+        <!-- VIDEO CARD 3: أسود / رمادي — زوم ماكرو -->
+        <div id="video-card-2" class="rounded-3xl bg-white hairline-border p-3.5 shadow-sm flex flex-col justify-between text-right transition-all">
+          <div>
+            <div class="relative aspect-[9/16] w-full rounded-2xl overflow-hidden bg-obsidian">
+              <video
+                id="gridVideo-2"
+                src="sneaker_black_exact_9x16_with_voiceover_v2 3_2.mp4"
+                class="w-full h-full object-cover"
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="metadata"
+                onerror="activateGridKenBurnsFallback(2)"
+              ></video>
+
+              <!-- Ken Burns Fallback Stage 2 -->
+              <div id="gridFallback-2" class="hidden absolute inset-0 w-full h-full overflow-hidden">
+                <img id="gridFallbackImg-2" src="WhatsApp Image 2026-11-01 at 20.52.40.jpeg" alt="أسود / رمادي — زوم التفاصيل" class="w-full h-full object-cover animate-ken-burns-pan" onerror="applyMediaFallback(this, 'noir_studio')" />
+              </div>
+
+              <!-- Color Tag Badge -->
+              <span class="absolute top-3 right-3 z-20 px-3 py-1 rounded-full bg-obsidian/90 text-white text-[11px] font-extrabold shadow-xs border border-white/15">
+                أسود / رمادي
+              </span>
+
+              <!-- Darija Subtitle Overlay -->
+              <div class="absolute bottom-0 inset-x-0 z-20 p-3.5 bg-gradient-to-t from-black/95 via-black/55 to-transparent text-white">
+                <p class="text-xs font-extrabold text-warmsand">
+                  « غير خامة وراحة وستايل واعر »
+                </p>
+                <p class="text-[11px] text-white/85 mt-1">
+                  تناغم مثالي بين الأسود الفحمي والرمادي الداكن فوق نعل أبيض.
+                </p>
+              </div>
+            </div>
+
+            <div class="mt-4 px-1">
+              <span class="text-[11px] font-extrabold text-anthracite">أسود / رمادي • زوم ماكرو</span>
+              <h3 class="font-display font-extrabold text-base text-obsidian mt-1">جودة الخامات والتشطيب</h3>
+              <p class="text-xs text-obsidian/70 mt-1 leading-relaxed">
+                تصميم ستريت وير متعدد الطبقات مع نعل أبيض منحوت ومقاوم للانزلاق.
+              </p>
+            </div>
+          </div>
+
+          <button type="button" onclick="chooseColorAndScroll('noir')"
+            class="mt-4 w-full py-3 px-4 rounded-xl bg-stonegray/85 hover:bg-obsidian hover:text-white text-obsidian font-extrabold text-xs transition cursor-pointer">
+            اختر أسود / رمادي — 299 درهم
+          </button>
+        </div>
+
+        <!-- VIDEO CARD 4: أسود / رمادي — تجربة في اللبس -->
+        <div id="video-card-3" class="rounded-3xl bg-white hairline-border p-3.5 shadow-sm flex flex-col justify-between text-right transition-all">
+          <div>
+            <div class="relative aspect-[9/16] w-full rounded-2xl overflow-hidden bg-obsidian">
+              <video
+                id="gridVideo-3"
+                src="sneaker_step_9x16_with_voiceover 1_2.mp4"
+                class="w-full h-full object-cover"
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="metadata"
+                onerror="activateGridKenBurnsFallback(3)"
+              ></video>
+
+              <!-- Ken Burns Fallback Stage 3 -->
+              <div id="gridFallback-3" class="hidden absolute inset-0 w-full h-full overflow-hidden">
+                <img id="gridFallbackImg-3" src="ijp.jfif" alt="أسود / رمادي — تجربة ملبوسة" class="w-full h-full object-cover animate-ken-burns" onerror="applyMediaFallback(this, 'noir_walk')" />
+              </div>
+
+              <!-- Color Tag Badge -->
+              <span class="absolute top-3 right-3 z-20 px-3 py-1 rounded-full bg-obsidian/90 text-white text-[11px] font-extrabold shadow-xs border border-white/15">
+                أسود / رمادي
+              </span>
+
+              <!-- Darija Subtitle Overlay -->
+              <div class="absolute bottom-0 inset-x-0 z-20 p-3.5 bg-gradient-to-t from-black/95 via-black/55 to-transparent text-white">
+                <p class="text-xs font-extrabold text-warmsand">
+                  « خطوة وحدة كافية، خفيف مريح وثابت »
+                </p>
+                <p class="text-[11px] text-white/85 mt-1">
+                  شاهد كيف يبدو الحذاء في اللبس اليومي والحركة.
+                </p>
+              </div>
+            </div>
+
+            <div class="mt-4 px-1">
+              <span class="text-[11px] font-extrabold text-anthracite">أسود / رمادي • تجربة في اللبس</span>
+              <h3 class="font-display font-extrabold text-base text-obsidian mt-1">خفة وثبات طوال اليوم</h3>
+              <p class="text-xs text-obsidian/70 mt-1 leading-relaxed">
+                نعل طبي يمتص الصدمات ويمنحك طولاً إضافياً 4.5 سم بكل أريحية.
+              </p>
+            </div>
+          </div>
+
+          <button type="button" onclick="chooseColorAndScroll('noir')"
+            class="mt-4 w-full py-3 px-4 rounded-xl bg-stonegray/85 hover:bg-obsidian hover:text-white text-obsidian font-extrabold text-xs transition cursor-pointer">
+            اختر أسود / رمادي — 299 درهم
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       4. SECTION 3: POURQUOI CHOISIR RAVA MODE ?
+       ===================================================================== -->
+  <section id="pourquoi" class="py-16 sm:py-20 bg-white border-b border-obsidian/10 text-right">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <span class="text-xs font-extrabold text-obsidian/60">الجودة والثقة قبل كل شيء</span>
+        <h2 class="font-display font-black text-2xl sm:text-4xl text-obsidian mt-1.5">
+          علاش تختار RAVA MODE ؟
+        </h2>
+      </div>
+
+      <!-- 3 Value Proposition Icon Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Card 1 -->
+        <div class="rounded-3xl bg-alabaster hairline-border p-7 shadow-xs flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-2xl bg-obsidian text-warmsand flex items-center justify-center mb-5">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            </div>
+            <h3 class="font-display font-extrabold text-xl text-obsidian">
+              خفة وراحة طوال اليوم
+            </h3>
+            <p class="text-xs sm:text-sm text-obsidian/75 mt-2.5 leading-relaxed">
+              نعل طبي مرن بارتفاع 4.5 سم ووزن خفيف جداً (310 غرام) يمتص الصدمات ويحمي القدمين من التعب حتى بعد ساعات طويلة من المشي.
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-obsidian/10 text-xs font-extrabold text-obsidian">
+            ✓ نعل EVA مريح ومضاد للانزلاق
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="rounded-3xl bg-obsidian text-alabaster p-7 shadow-md flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-2xl bg-white/15 text-warmsand flex items-center justify-center mb-5">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+            </div>
+            <h3 class="font-display font-extrabold text-xl text-white">
+              تشطيب عالي الجودة
+            </h3>
+            <p class="text-xs sm:text-sm text-white/80 mt-2.5 leading-relaxed">
+              شبكة مهوية عالية الكثافة تمنع التعرق، مع جلد سويد ناعم وخياطة مزدوجة متينة تدوم طويلاً وتحافظ على أناقة الحذاء.
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-white/15 text-xs font-extrabold text-warmsand">
+            ✓ جودة مطابقة 100% للصور والفيديوهات
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="rounded-3xl bg-alabaster hairline-border p-7 shadow-xs flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-800 flex items-center justify-center mb-5">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
+            </div>
+            <h3 class="font-display font-extrabold text-xl text-obsidian">
+              توصيل سريع لجميع المدن
+            </h3>
+            <p class="text-xs sm:text-sm text-obsidian/75 mt-2.5 leading-relaxed">
+              توصيل مجاني خلال 24 إلى 48 ساعة لجميع مدن المغرب، مع إمكانية فتح الطرد ومعاينة الحذاء قبل دفع أي درهم.
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-obsidian/10 text-xs font-extrabold text-emerald-700">
+            ✓ الدفع عند الاستلام + تبديل المقاس مجاناً
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       5. SECTION 4: FORMULAIRE DE COMMANDE COD ULTRA-SIMPLE (RTL MOROCCO)
+       ===================================================================== -->
+  <section id="commander" class="py-16 sm:py-24 editorial-grid-bg text-right">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6">
+      
+      <div class="rounded-[32px] bg-white hairline-border-strong shadow-2xl shadow-obsidian/10 overflow-hidden">
+        
+        <!-- Form Header Banner -->
+        <div id="formHeaderBanner" class="bg-crimson text-white px-6 sm:px-10 py-6 sm:py-8 transition-colors duration-500">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <span id="formBannerSubTag" class="text-xs font-extrabold text-white/90">
+              طلب سريع في 30 ثانية • بدون بطاقة بنكية
+            </span>
+            <span class="inline-flex items-center gap-1.5 text-xs font-bold text-white bg-black/20 px-3 py-1 rounded-full">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              توصيل مجاني 24-48 ساعة
+            </span>
+          </div>
+          <h2 class="font-display font-black text-2xl sm:text-3xl mt-2">
+            أكمل طلبك الآن — الدفع عند الاستلام
+          </h2>
+          <p class="text-xs sm:text-sm text-white/85 mt-1">
+            عمّر المعلومات أسفله وسنتصل بك لتأكيد الإرسال لباب منزلك.
+          </p>
+        </div>
+
+        <!-- Form Content -->
+        <form id="codOrderForm" onsubmit="submitOrder(event)" novalidate class="p-6 sm:p-10 space-y-7">
+          
+          <!-- Dynamic Visual Preview of Active Selection -->
+          <div class="flex items-center gap-4 p-4 rounded-2xl bg-alabaster hairline-border">
+            <img
+              id="formPreviewImg"
+              src="WhatsApp Image 2026-11-01 at 20.52.40;_2.jpeg"
+              alt="معاينة سنيكرز RAVA MODE"
+              class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl object-cover bg-stonegray shrink-0 hairline-border"
+              onerror="applyMediaFallback(this, 'blanc_studio')"
+            />
+            <div class="min-w-0 flex-1">
+              <span class="text-[11px] font-bold text-obsidian/60">اختيارك الحالي :</span>
+              <h3 id="formPreviewTitle" class="font-display font-extrabold text-base sm:text-lg text-obsidian truncate mt-0.5">
+                RAVA RUNNER 01 — أبيض / أحمر
+              </h3>
+              <p id="formPreviewSub" class="text-xs text-obsidian/75 mt-1 font-semibold">
+                المقاس : <strong class="text-obsidian">42</strong> • <span class="text-emerald-700 font-bold">توصيل مجاني</span>
+              </p>
+            </div>
+          </div>
+
+          <!-- 1. CHOIX DU COLORIS -->
+          <div>
+            <label class="block text-xs sm:text-sm font-extrabold text-obsidian mb-3">
+              1. اختر اللون :
+            </label>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <button type="button" onclick="setPairColor(1, 'blanc')" id="form-color-blanc"
+                class="flex items-center gap-3 p-3 rounded-2xl bg-alabaster border-2 border-obsidian text-right transition cursor-pointer">
+                <img
+                  id="formThumbBlanc"
+                  src="WhatsApp Image 2026-11-01 at 20.52.40;_2.jpeg"
+                  alt="أبيض / أحمر"
+                  class="w-12 h-12 rounded-xl object-cover shrink-0 hairline-border"
+                  onerror="applyMediaFallback(this, 'blanc_studio')"
+                />
+                <span class="text-xs font-extrabold text-obsidian">أبيض / أحمر</span>
+              </button>
+
+              <button type="button" onclick="setPairColor(1, 'noir')" id="form-color-noir"
+                class="flex items-center gap-3 p-3 rounded-2xl bg-white hover:bg-alabaster border border-obsidian/15 text-right transition cursor-pointer">
+                <img
+                  id="formThumbNoir"
+                  src="WhatsApp Image 2026-11-01 at 20.52.40.jpeg"
+                  alt="أسود / رمادي"
+                  class="w-12 h-12 rounded-xl object-cover shrink-0 hairline-border"
+                  onerror="applyMediaFallback(this, 'noir_studio')"
+                />
+                <span class="text-xs font-extrabold text-obsidian">أسود / رمادي</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 2. CHOIX DE LA POINTURE (40 - 44) -->
+          <div>
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-2.5">
+              <label class="text-xs sm:text-sm font-extrabold text-obsidian">
+                2. اختر المقاس (Pointure) :
+              </label>
+              <button type="button" onclick="openSizeGuide()" class="text-xs font-bold text-obsidian/75 hover:text-obsidian underline underline-offset-4 cursor-pointer">
+                مقاس عادي (خذ مقاسك المعتاد • جدول المقاسات)
+              </button>
+            </div>
+
+            <div class="grid grid-cols-5 gap-2.5">
+              <button type="button" onclick="setPairSize(1, '40')" data-size="40" class="form-size-p1 py-3.5 rounded-xl bg-white border border-obsidian/15 font-extrabold text-sm text-obsidian hover:border-obsidian transition cursor-pointer">40</button>
+              <button type="button" onclick="setPairSize(1, '41')" data-size="41" class="form-size-p1 py-3.5 rounded-xl bg-white border border-obsidian/15 font-extrabold text-sm text-obsidian hover:border-obsidian transition cursor-pointer">41</button>
+              <button type="button" onclick="setPairSize(1, '42')" data-size="42" class="form-size-p1 py-3.5 rounded-xl bg-obsidian text-white border-2 border-obsidian font-extrabold text-sm transition cursor-pointer">42</button>
+              <button type="button" onclick="setPairSize(1, '43')" data-size="43" class="form-size-p1 py-3.5 rounded-xl bg-white border border-obsidian/15 font-extrabold text-sm text-obsidian hover:border-obsidian transition cursor-pointer">43</button>
+              <button type="button" onclick="setPairSize(1, '44')" data-size="44" class="form-size-p1 py-3.5 rounded-xl bg-white border border-obsidian/15 font-extrabold text-sm text-obsidian hover:border-obsidian transition cursor-pointer">44</button>
+            </div>
+          </div>
+
+          <!-- 3. OFFRE SPÉCIALE PANIER MOYEN (SOLO 299 DH vs DUO 548 DH) -->
+          <div>
+            <label class="block text-xs sm:text-sm font-extrabold text-obsidian mb-3">
+              3. اختر العرض المناسب لك :
+            </label>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              <!-- Solo Offer -->
+              <button type="button" onclick="selectOffer('solo')" id="offer-btn-solo"
+                class="p-4 rounded-2xl border-2 border-obsidian bg-alabaster text-right transition cursor-pointer">
+                <div class="flex items-center justify-between">
+                  <span class="font-display font-extrabold text-base text-obsidian">زوج واحد (1 Paire)</span>
+                  <span class="font-display font-black text-lg text-obsidian">299 درهم</span>
+                </div>
+                <p class="text-xs text-emerald-700 font-bold mt-1">+ توصيل مجاني لباب الدار</p>
+              </button>
+
+              <!-- Pack Duo Offer (548 DH - Save 50 DH) -->
+              <button type="button" onclick="selectOffer('duo')" id="offer-btn-duo"
+                class="relative p-4 rounded-2xl border border-obsidian/20 bg-white hover:border-obsidian/50 text-right transition cursor-pointer">
+                <span class="absolute -top-3 left-3 px-2.5 py-0.5 rounded-full bg-crimson text-white text-[11px] font-extrabold shadow-xs">
+                  الأكثر طلباً 🔥
+                </span>
+                <div class="flex items-center justify-between">
+                  <span class="font-display font-extrabold text-base text-obsidian">عرض الثنائي (2 Paires)</span>
+                  <div>
+                    <span class="font-display font-black text-lg text-obsidian">548 درهم</span>
+                    <span class="text-xs text-obsidian/40 line-through mr-1">598 درهم</span>
+                  </div>
+                </div>
+                <p class="text-xs text-crimson font-bold mt-1">وفر 50 درهم + توصيل مجاني</p>
+              </button>
+            </div>
+          </div>
+
+          <!-- PAIR 2 SELECTOR (WHEN DUO OFFER IS CHOSEN) -->
+          <div id="pair2Box" class="hidden p-5 rounded-2xl bg-stonegray/65 hairline-border space-y-4">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-extrabold text-obsidian">الحذاء الثاني — اختر اللون والمقاس :</span>
+              <span class="text-[11px] font-bold text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-full">مشمول في عرض الثنائي</span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              <button type="button" onclick="setPairColor(2, 'blanc')" id="form-p2-color-blanc"
+                class="flex items-center gap-2.5 p-2.5 rounded-xl bg-white/80 border border-obsidian/15 text-right transition cursor-pointer">
+                <img src="WhatsApp Image 2026-11-01 at 20.52.40;_2.jpeg" alt="أبيض / أحمر" class="w-9 h-9 rounded-lg object-cover shrink-0" onerror="applyMediaFallback(this, 'blanc_studio')" />
+                <span class="text-xs font-extrabold text-obsidian">أبيض / أحمر</span>
+              </button>
+              <button type="button" onclick="setPairColor(2, 'noir')" id="form-p2-color-noir"
+                class="flex items-center gap-2.5 p-2.5 rounded-xl bg-white border-2 border-obsidian text-right transition cursor-pointer">
+                <img src="WhatsApp Image 2026-11-01 at 20.52.40.jpeg" alt="أسود / رمادي" class="w-9 h-9 rounded-lg object-cover shrink-0" onerror="applyMediaFallback(this, 'noir_studio')" />
+                <span class="text-xs font-extrabold text-obsidian">أسود / رمادي</span>
+              </button>
+            </div>
+
+            <div class="grid grid-cols-5 gap-2">
+              <button type="button" onclick="setPairSize(2, '40')" data-size="40" class="form-size-p2 py-2.5 rounded-xl bg-white border border-obsidian/15 font-extrabold text-xs text-obsidian cursor-pointer">40</button>
+              <button type="button" onclick="setPairSize(2, '41')" data-size="41" class="form-size-p2 py-2.5 rounded-xl bg-white border border-obsidian/15 font-extrabold text-xs text-obsidian cursor-pointer">41</button>
+              <button type="button" onclick="setPairSize(2, '42')" data-size="42" class="form-size-p2 py-2.5 rounded-xl bg-white border border-obsidian/15 font-extrabold text-xs text-obsidian cursor-pointer">42</button>
+              <button type="button" onclick="setPairSize(2, '43')" data-size="43" class="form-size-p2 py-2.5 rounded-xl bg-obsidian text-white border-2 border-obsidian font-extrabold text-xs cursor-pointer">43</button>
+              <button type="button" onclick="setPairSize(2, '44')" data-size="44" class="form-size-p2 py-2.5 rounded-xl bg-white border border-obsidian/15 font-extrabold text-xs text-obsidian cursor-pointer">44</button>
+            </div>
+          </div>
+
+          <!-- 4. INFORMATIONS CLIENT (RTL MOROCCAN FIELDS) -->
+          <div class="space-y-4">
+            <label class="block text-xs sm:text-sm font-extrabold text-obsidian">
+              4. معلومات التوصيل :
+            </label>
+
+            <!-- الاسم الكامل -->
+            <div>
+              <input type="text" id="inputName" required placeholder="الاسم الكامل (مثال: يوسف بنعلي) *"
+                class="w-full px-4 py-3.5 rounded-xl bg-alabaster border border-obsidian/20 text-sm font-semibold text-obsidian placeholder:text-obsidian/45 transition text-right" />
+              <p id="errName" class="hidden text-xs text-crimson font-bold mt-1">المرجو إدخال الاسم الكامل.</p>
+            </div>
+
+            <!-- رقم الهاتف -->
+            <div>
+              <input type="tel" id="inputPhone" required dir="ltr" placeholder="رقم الهاتف (06 / 07...) *"
+                class="w-full px-4 py-3.5 rounded-xl bg-alabaster border border-obsidian/20 text-sm font-bold text-obsidian placeholder:text-obsidian/45 transition text-right" />
+              <p id="errPhone" class="hidden text-xs text-crimson font-bold mt-1">المرجو إدخال رقم هاتف مغربي صحيح (مثال: 0612345678).</p>
+            </div>
+
+            <!-- المدينة (Sélecteur des villes marocaines) -->
+            <div>
+              <select id="inputCity" required
+                class="w-full px-4 py-3.5 rounded-xl bg-alabaster border border-obsidian/20 text-sm font-bold text-obsidian transition text-right cursor-pointer">
+                <option value="" disabled selected>اختر المدينة *</option>
+                <option value="الدار البيضاء">الدار البيضاء</option>
+                <option value="الرباط">الرباط</option>
+                <option value="مراكش">مراكش</option>
+                <option value="طنجة">طنجة</option>
+                <option value="فاس">فاس</option>
+                <option value="أكادير">أكادير</option>
+                <option value="وجدة">وجدة</option>
+                <option value="مكناس">مكناس</option>
+                <option value="القنيطرة">القنيطرة</option>
+                <option value="تطوان">تطوان</option>
+                <option value="سلا">سلا</option>
+                <option value="المحمدية">المحمدية</option>
+                <option value="بني ملال">بني ملال</option>
+                <option value="الجديدة">الجديدة</option>
+                <option value="الناظور">الناظور</option>
+                <option value="مدن أخرى">مدن أخرى...</option>
+              </select>
+              <p id="errCity" class="hidden text-xs text-crimson font-bold mt-1">المرجو اختيار المدينة.</p>
+            </div>
+
+            <!-- العنوان (اختياري) -->
+            <div>
+              <input type="text" id="inputAddress" placeholder="العنوان أو الحي (اختياري)"
+                class="w-full px-4 py-3.5 rounded-xl bg-alabaster border border-obsidian/20 text-sm font-semibold text-obsidian placeholder:text-obsidian/45 transition text-right" />
+            </div>
+          </div>
+
+          <!-- Live Recap Bar -->
+          <div class="p-4 rounded-2xl bg-alabaster hairline-border flex items-center justify-between text-xs sm:text-sm">
+            <div>
+              <span class="text-obsidian/65 font-semibold">المجموع الواجب أداؤه عند الاستلام :</span>
+              <div id="formSummaryDetail" class="font-extrabold text-obsidian mt-0.5">أبيض / أحمر • مقاس 42</div>
+            </div>
+            <div id="formTotalDisplay" class="font-display font-black text-2xl text-obsidian">299 درهم</div>
+          </div>
+
+          <!-- Big Animated Submit CTA -->
+          <div>
+            <button type="submit"
+              class="theme-cta-btn w-full py-4 sm:py-5 px-6 rounded-2xl bg-crimson text-white font-display font-black text-sm sm:text-base active:scale-[0.99] transition shadow-xl flex items-center justify-center gap-3 cursor-pointer">
+              <span id="submitBtnLabel">تأكيد الطلب الآن — الدفع عند الاستلام 🛒</span>
+            </button>
+
+            <p class="text-center text-xs font-bold text-obsidian/70 mt-3.5 leading-relaxed">
+              ✓ توصيل مجاني 100% • ✓ افتح الطرد وتأكد من الجودة قبل الدفع • ✓ تبديل المقاس مضمون
+            </p>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       6. FOOTER WITH RAVA MODE BRANDING
+       ===================================================================== -->
+  <footer class="bg-obsidian text-alabaster border-t border-white/10 py-12 text-right">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-3.5">
+        <div class="w-12 h-12 rounded-full overflow-hidden bg-obsidian shrink-0 ring-1 ring-white/20">
+          <img
+            src="image_003970.jpg"
+            alt="شعار RAVA MODE"
+            class="rava-logo-crop"
+            onerror="renderOfficialRavaSvg(this)"
+          />
+        </div>
+        <div>
+          <span dir="ltr" class="font-brand font-extrabold text-base tracking-[0.18em] text-white block">
+            RAVA MODE
+          </span>
+          <span class="text-xs text-white/65">
+            أناقة عصرية • توصيل مجاني لجميع مدن المغرب
+          </span>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-center justify-center gap-6 text-xs font-bold text-white/75">
+        <a href="#videos-zoom" class="hover:text-white transition">شاهد التفاصيل عن قرب</a>
+        <a href="#pourquoi" class="hover:text-white transition">مميزات الحذاء</a>
+        <a href="#commander" class="hover:text-white transition">نموذج الطلب</a>
+      </div>
+
+      <div class="text-xs text-white/55">
+        © 2026 RAVA MODE. جميع الحقوق محفوظة.
+      </div>
+    </div>
+  </footer>
+
+  <!-- =====================================================================
+       7. STICKY MOBILE CONVERSION BAR
+       ===================================================================== -->
+  <div id="stickyMobileBar" class="fixed bottom-0 inset-x-0 z-40 md:hidden bg-white/95 backdrop-blur-md border-t border-obsidian/15 px-4 py-2.5 shadow-[0_-8px_24px_rgba(14,14,16,0.1)] transition-transform duration-300">
+    <div class="flex items-center justify-between gap-3">
+      <div class="flex items-center gap-2.5 min-w-0">
+        <img
+          id="mobileStickyThumb"
+          src="WhatsApp Image 2026-11-01 at 20.52.40;_2.jpeg"
+          alt="صورة مصغرة"
+          class="w-11 h-11 rounded-xl object-cover bg-stonegray shrink-0 hairline-border"
+          onerror="applyMediaFallback(this, 'blanc_studio')"
+        />
+        <div class="min-w-0 text-right">
+          <div id="mobileStickyTitle" class="text-xs font-extrabold text-obsidian truncate">أبيض / أحمر • مقاس 42</div>
+          <div id="mobileStickyPrice" class="text-[11px] font-bold text-emerald-700">299 درهم • توصيل مجاني</div>
+        </div>
+      </div>
+      <a href="#commander" class="theme-cta-btn shrink-0 px-4 py-2.5 rounded-xl bg-crimson text-white font-extrabold text-xs shadow-sm active:scale-95 transition">
+        اطلب الآن بـ 299 درهم • توصيل مجاني
+      </a>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       8. SIZE GUIDE MODAL (ARABIC)
+       ===================================================================== -->
+  <div id="sizeGuideModal" class="hidden fixed inset-0 z-50 bg-obsidian/75 backdrop-blur-xs flex items-center justify-center p-4 text-right">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 hairline-border-strong shadow-2xl">
+      <div class="flex items-center justify-between pb-4 border-b border-obsidian/10">
+        <div>
+          <span class="text-[11px] font-bold text-obsidian/55">RAVA RUNNER 01</span>
+          <h3 class="font-display font-extrabold text-xl text-obsidian mt-0.5">دليل المقاسات</h3>
+        </div>
+        <button type="button" onclick="closeSizeGuide()" class="w-8 h-8 rounded-full bg-alabaster hover:bg-stonegray flex items-center justify-center text-obsidian cursor-pointer">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <p class="text-xs text-obsidian/75 mt-4 leading-relaxed">
+        <strong>المقاسات مضبوطة 100% :</strong> خذ نفس المقاس اللي كتلبس عادة. إذا كنت متردداً بين مقاسين، اختر المقاس الأكبر.
+      </p>
+      <div class="mt-4 overflow-hidden rounded-2xl hairline-border">
+        <table class="w-full text-right text-xs">
+          <thead class="bg-alabaster font-extrabold text-obsidian">
+            <tr>
+              <th class="px-4 py-3">المقاس (EU)</th>
+              <th class="px-4 py-3">طول القدم (سم)</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-obsidian/10 font-semibold">
+            <tr><td class="px-4 py-2.5 font-extrabold">40</td><td class="px-4 py-2.5">25.5 سم</td></tr>
+            <tr><td class="px-4 py-2.5 font-extrabold">41</td><td class="px-4 py-2.5">26.2 سم</td></tr>
+            <tr><td class="px-4 py-2.5 font-extrabold">42</td><td class="px-4 py-2.5">26.8 سم</td></tr>
+            <tr><td class="px-4 py-2.5 font-extrabold">43</td><td class="px-4 py-2.5">27.5 سم</td></tr>
+            <tr><td class="px-4 py-2.5 font-extrabold">44</td><td class="px-4 py-2.5">28.2 سم</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <button type="button" onclick="closeSizeGuide()" class="mt-6 w-full py-3 rounded-xl bg-obsidian text-alabaster font-extrabold text-xs cursor-pointer">
+        إغلاق
+      </button>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       11. ORDER CONFIRMATION MODAL WITH DIRECT WHATSAPP ACTION (ARABIC)
+       ===================================================================== -->
+  <div id="orderConfirmModal" class="hidden fixed inset-0 z-50 bg-obsidian/75 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 hairline-border-strong shadow-2xl text-center">
+      <div class="w-14 h-14 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto mb-4">
+        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+      </div>
+      <span id="confirmOrderRef" class="px-3 py-1 rounded-full bg-alabaster hairline-border text-xs font-extrabold text-obsidian">
+        رقم الطلب #RV-2026
+      </span>
+      <h3 class="font-display font-black text-2xl text-obsidian mt-3">
+        شكراً لك، تم تسجيل طلبك بنجاح!
+      </h3>
+      <p class="text-xs sm:text-sm text-obsidian/75 mt-2 leading-relaxed">
+        فريق <strong class="text-obsidian">RAVA MODE</strong> سيتصل بك قريباً لتأكيد الإرسال. الدفع نقداً عند الاستلام بعد معاينة الحذاء.
+      </p>
+
+      <div id="confirmRecapBox" class="mt-5 p-4 rounded-2xl bg-alabaster hairline-border text-right text-xs space-y-2">
+        <!-- Populated dynamically -->
+      </div>
+
+      <div class="mt-6 space-y-2.5">
+        <a id="whatsappConfirmLink" href="#" target="_blank" rel="noopener noreferrer"
+          class="w-full py-3.5 px-5 rounded-xl bg-[#1FAF58] hover:bg-[#19994B] text-white font-extrabold text-xs flex items-center justify-center gap-2 transition shadow-md">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824z"/></svg>
+          <span>تأكيد الطلب مباشرة عبر واتساب</span>
+        </a>
+        <button type="button" onclick="closeOrderModal()" class="w-full py-3 rounded-xl bg-alabaster hover:bg-stonegray text-obsidian font-bold text-xs cursor-pointer transition">
+          متابعة التصفح
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       10. JAVASCRIPT: SILENT VIDEOS + KEN BURNS FALLBACK + ARABIC COD
+       ===================================================================== -->
+  <script>
+    // =========================================================================
+    // 4. DYNAMIC PAGE THEME + COLORWAY, SIZE & OFFER SYNCHRONIZATION
+    // =========================================================================
+    function applyPageTheme(colorKey) {
+      const body = document.body;
+      const topBar = document.getElementById('topAnnouncementBar');
+      const heroDot = document.getElementById('heroThemeDot');
+      const heroBadgeText = document.getElementById('heroThemeBadgeText');
+      const headlineUnderline = document.getElementById('headlineUnderline');
+      const formBanner = document.getElementById('formHeaderBanner');
+
+      if (colorKey === 'noir') {
+        body.classList.remove('theme-blanc');
+        body.classList.add('theme-noir');
+
+        if (topBar) {
+          topBar.className = 'bg-[#181A20] text-[#DFD4C0] text-[11px] sm:text-xs font-bold py-2.5 px-4 text-center border-b border-white/10 transition-colors duration-500';
+        }
+        if (heroDot) {
+          heroDot.className = 'w-2.5 h-2.5 rounded-full bg-[#DFD4C0] animate-pulse';
+        }
+        if (heroBadgeText) {
+          heroBadgeText.textContent = 'ثيم أسود / رمادي • المجموعة الحصرية 2026';
+        }
+        if (headlineUnderline) {
+          headlineUnderline.className = 'absolute bottom-1 right-0 w-full h-3 bg-[#DFD4C0]/25 -z-10 rounded-full transition-colors duration-500';
+        }
+        if (formBanner) {
+          formBanner.className = 'bg-[#1D2026] text-white px-6 sm:px-10 py-6 sm:py-8 border-b border-white/10 transition-colors duration-500';
+        }
+      } else {
+        body.classList.remove('theme-noir');
+        body.classList.add('theme-blanc');
+
+        if (topBar) {
+          topBar.className = 'bg-crimson text-white text-[11px] sm:text-xs font-bold py-2.5 px-4 text-center border-b border-white/10 transition-colors duration-500';
+        }
+        if (heroDot) {
+          heroDot.className = 'w-2.5 h-2.5 rounded-full bg-crimson animate-pulse';
+        }
+        if (heroBadgeText) {
+          heroBadgeText.textContent = 'ثيم أبيض / أحمر • المجموعة الحصرية 2026';
+        }
+        if (headlineUnderline) {
+          headlineUnderline.className = 'absolute bottom-1 right-0 w-full h-3 bg-crimson/20 -z-10 rounded-full transition-colors duration-500';
+        }
+        if (formBanner) {
+          formBanner.className = 'bg-crimson text-white px-6 sm:px-10 py-6 sm:py-8 transition-colors duration-500';
+        }
+      }
+    }
+
+    function highlightMatchingVideoCards(colorKey) {
+      VIDEOS_CONFIG.forEach((vid, idx) => {
+        const card = document.getElementById(`video-card-${idx}`);
+        if (!card) return;
+        if (vid.colorKey === colorKey) {
+          card.classList.add('ring-2', colorKey === 'blanc' ? 'ring-crimson' : 'ring-[#DFD4C0]');
+          card.classList.remove(colorKey === 'blanc' ? 'ring-[#DFD4C0]' : 'ring-crimson');
+        } else {
+          card.classList.remove('ring-2', 'ring-obsidian', 'ring-crimson', 'ring-[#DFD4C0]');
+        }
+      });
+    }
+
+    function selectColorway(colorKey) {
+      orderState.pair1.color = colorKey;
+      const meta = COLOR_META[colorKey];
+
+      applyPageTheme(colorKey);
+
+      document.getElementById('heroActiveColorLabel').textContent = meta.label;
+      const heroBlanc = document.getElementById('hero-color-blanc');
+      const heroNoir = document.getElementById('hero-color-noir');
+
+      if (colorKey === 'blanc') {
+        heroBlanc.className = 'flex items-center gap-3 p-2.5 rounded-2xl bg-white border-2 border-crimson shadow-md text-right transition-all cursor-pointer';
+        heroNoir.className = 'flex items-center gap-3 p-2.5 rounded-2xl bg-white/75 hover:bg-white border border-obsidian/15 text-right transition-all cursor-pointer';
+        switchHeroVideo(0);
+      } else {
+        heroNoir.className = 'flex items-center gap-3 p-2.5 rounded-2xl bg-white border-2 border-[#DFD4C0] shadow-md text-right transition-all cursor-pointer';
+        heroBlanc.className = 'flex items-center gap-3 p-2.5 rounded-2xl bg-white/75 hover:bg-white border border-obsidian/15 text-right transition-all cursor-pointer';
+        switchHeroVideo(2);
+      }
+
+      highlightMatchingVideoCards(colorKey);
+      setPairColor(1, colorKey);
+    }
+
+    function selectSizeFromHero(sizeVal) {
+      setPairSize(1, sizeVal);
+    }
+
+    function chooseColorAndScroll(colorKey) {
+      selectColorway(colorKey);
+      const formEl = document.getElementById('commander');
+      if (formEl) formEl.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function setPairColor(pairNum, colorKey) {
+      if (pairNum === 1) {
+        orderState.pair1.color = colorKey;
+        const meta = COLOR_META[colorKey];
+
+        // Keep full page theme synchronized even if user clicks the color inside the order form
+        if ((colorKey === 'noir' && !document.body.classList.contains('theme-noir')) ||
+            (colorKey === 'blanc' && !document.body.classList.contains('theme-blanc'))) {
+          applyPageTheme(colorKey);
+          highlightMatchingVideoCards(colorKey);
+          document.getElementById('heroActiveColorLabel').textContent = meta.label;
+          const heroBlanc = document.getElementById('hero-color-blanc');
+          const heroNoir = document.getElementById('hero-color-noir');
+          if (colorKey === 'blanc') {
+            heroBlanc.className = 'flex items-center gap-3 p-2.5 rounded-2xl bg-white border-2 border-crimson shadow-md text-right transition-all cursor-pointer';
+            heroNoir.className = 'flex items-center gap-3 p-2.5 rounded-2xl bg-white/75 hover:bg-white border border-obsidian/15 text-right transition-all cursor-pointer';
+          } else {
+            heroNoir.className = 'flex items-center gap-3 p-2.5 rounded-2xl bg-white border-2 border-[#DFD4C0] shadow-md text-right transition-all cursor-pointer';
+            heroBlanc.className = 'flex items-center gap-3 p-2.5 rounded-2xl bg-white/75 hover:bg-white border border-obsidian/15 text-right transition-all cursor-pointer';
+          }
+        }
+
+        const fBlanc = document.getElementById('form-color-blanc');
+        const fNoir = document.getElementById('form-color-noir');
+        if (colorKey === 'blanc') {
+          fBlanc.className = 'flex items-center gap-3 p-3 rounded-2xl bg-alabaster border-2 border-crimson text-right transition cursor-pointer';
+          fNoir.className = 'flex items-center gap-3 p-3 rounded-2xl bg-white hover:bg-alabaster border border-obsidian/15 text-right transition cursor-pointer';
+        } else {
+          fNoir.className = 'flex items-center gap-3 p-3 rounded-2xl bg-alabaster border-2 border-[#DFD4C0] text-right transition cursor-pointer';
+          fBlanc.className = 'flex items-center gap-3 p-3 rounded-2xl bg-white hover:bg-alabaster border border-obsidian/15 text-right transition cursor-pointer';
+        }
+
+        document.getElementById('formPreviewTitle').textContent = `RAVA RUNNER 01 — ${meta.label}`;
+        syncAllPreviewThumbnails();
+      } else {
+        orderState.pair2.color = colorKey;
+        const p2Blanc = document.getElementById('form-p2-color-blanc');
+        const p2Noir = document.getElementById('form-p2-color-noir');
+        if (colorKey === 'blanc') {
+          p2Blanc.className = 'flex items-center gap-2.5 p-2.5 rounded-xl bg-white border-2 border-crimson text-right transition cursor-pointer';
+          p2Noir.className = 'flex items-center gap-2.5 p-2.5 rounded-xl bg-white/80 border border-obsidian/15 text-right transition cursor-pointer';
+        } else {
+          p2Noir.className = 'flex items-center gap-2.5 p-2.5 rounded-xl bg-white border-2 border-[#DFD4C0] text-right transition cursor-pointer';
+          p2Blanc.className = 'flex items-center gap-2.5 p-2.5 rounded-xl bg-white/80 border border-obsidian/15 text-right transition cursor-pointer';
+        }
+      }
+
+      refreshOrderSummary();
+    }
+
+    function setPairSize(pairNum, sizeVal) {
+      if (pairNum === 1) {
+        orderState.pair1.size = sizeVal;
+
+        document.querySelectorAll('.hero-size-btn').forEach(btn => {
+          const active = btn.getAttribute('data-hero-size') === sizeVal;
+          btn.className = active
+            ? 'hero-size-btn py-2.5 rounded-xl bg-obsidian text-white border-2 border-obsidian font-extrabold text-sm transition cursor-pointer'
+            : 'hero-size-btn py-2.5 rounded-xl bg-white border border-obsidian/15 font-bold text-sm text-obsidian hover:border-obsidian transition cursor-pointer';
+        });
+
+        document.querySelectorAll('.form-size-p1').forEach(btn => {
+          const active = btn.getAttribute('data-size') === sizeVal;
+          btn.className = active
+            ? 'form-size-p1 py-3.5 rounded-xl bg-obsidian text-white border-2 border-obsidian font-extrabold text-sm transition cursor-pointer'
+            : 'form-size-p1 py-3.5 rounded-xl bg-white border border-obsidian/15 font-extrabold text-sm text-obsidian hover:border-obsidian transition cursor-pointer';
+        });
+      } else {
+        orderState.pair2.size = sizeVal;
+        document.querySelectorAll('.form-size-p2').forEach(btn => {
+          const active = btn.getAttribute('data-size') === sizeVal;
+          btn.className = active
+            ? 'form-size-p2 py-2.5 rounded-xl bg-obsidian text-white border-2 border-obsidian font-extrabold text-xs transition cursor-pointer'
+            : 'form-size-p2 py-2.5 rounded-xl bg-white border border-obsidian/15 font-extrabold text-xs text-obsidian cursor-pointer';
+        });
+      }
+
+      refreshOrderSummary();
+    }
+
+    function selectOffer(offerKey) {
+      orderState.offer = offerKey;
+      const btnSolo = document.getElementById('offer-btn-solo');
+      const btnDuo = document.getElementById('offer-btn-duo');
+      const pair2Box = document.getElementById('pair2Box');
+
+      if (offerKey === 'solo') {
+        btnSolo.className = 'p-4 rounded-2xl border-2 border-obsidian bg-alabaster text-right transition cursor-pointer';
+        btnDuo.className = 'relative p-4 rounded-2xl border border-obsidian/20 bg-white hover:border-obsidian/50 text-right transition cursor-pointer';
+        pair2Box.classList.add('hidden');
+      } else {
+        btnDuo.className = 'relative p-4 rounded-2xl border-2 border-obsidian bg-alabaster text-right transition cursor-pointer';
+        btnSolo.className = 'p-4 rounded-2xl border border-obsidian/20 bg-white hover:border-obsidian/50 text-right transition cursor-pointer';
+        pair2Box.classList.remove('hidden');
+      }
+
+      refreshOrderSummary();
+    }
+
+    function refreshOrderSummary() {
+      const total = orderState.offer === 'solo' ? 299 : 548;
+      const p1Meta = COLOR_META[orderState.pair1.color];
+      const p2Meta = COLOR_META[orderState.pair2.color];
+
+      document.getElementById('formTotalDisplay').textContent = `${total} درهم`;
+
+      if (orderState.offer === 'solo') {
+        document.getElementById('formPreviewSub').innerHTML =
+          `المقاس : <strong class="text-obsidian">${orderState.pair1.size}</strong> • <span class="text-emerald-700 font-bold">توصيل مجاني</span>`;
+        document.getElementById('formSummaryDetail').textContent =
+          `${p1Meta.label} • مقاس ${orderState.pair1.size}`;
+        document.getElementById('mobileStickyTitle').textContent =
+          `${p1Meta.shortLabel} • مقاس ${orderState.pair1.size}`;
+        document.getElementById('mobileStickyPrice').textContent =
+          `299 درهم • توصيل مجاني`;
+      } else {
+        document.getElementById('formPreviewSub').innerHTML =
+          `عرض الثنائي : <strong class="text-obsidian">مقاس ${orderState.pair1.size}</strong> + <strong class="text-obsidian">مقاس ${orderState.pair2.size}</strong> • <span class="text-crimson font-bold">توفير 50 درهم</span>`;
+        document.getElementById('formSummaryDetail').textContent =
+          `عرض الثنائي : ${p1Meta.shortLabel} (${orderState.pair1.size}) + ${p2Meta.shortLabel} (${orderState.pair2.size})`;
+        document.getElementById('mobileStickyTitle').textContent =
+          `عرض الثنائي • مقاس ${orderState.pair1.size} و ${orderState.pair2.size}`;
+        document.getElementById('mobileStickyPrice').textContent =
+          `548 درهم • توصيل مجاني`;
+      }
+    }
+
+    // =========================================================================
+    // 5. SIZE GUIDE & ARABIC COD ORDER SUBMISSION
+    // =========================================================================
+    function openSizeGuide() {
+      document.getElementById('sizeGuideModal').classList.remove('hidden');
+    }
+
+    function closeSizeGuide() {
+      document.getElementById('sizeGuideModal').classList.add('hidden');
+    }
+
+    function closeOrderModal() {
+      document.getElementById('orderConfirmModal').classList.add('hidden');
+    }
+
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    function submitOrder(e) {
+      e.preventDefault();
+
+      const name = document.getElementById('inputName').value.trim();
+      const phone = document.getElementById('inputPhone').value.replace(/\s+/g, '');
+      const city = document.getElementById('inputCity').value;
+      const address = document.getElementById('inputAddress').value.trim();
+
+      let valid = true;
+
+      if (name.length < 3) {
+        document.getElementById('errName').classList.remove('hidden');
+        valid = false;
+      } else {
+        document.getElementById('errName').classList.add('hidden');
+      }
+
+      const phoneRegex = /^(?:\+?212|0)?[567]\d{8}$/;
+      if (!phoneRegex.test(phone)) {
+        document.getElementById('errPhone').classList.remove('hidden');
+        valid = false;
+      } else {
+        document.getElementById('errPhone').classList.add('hidden');
+      }
+
+      if (!city) {
+        document.getElementById('errCity').classList.remove('hidden');
+        valid = false;
+      } else {
+        document.getElementById('errCity').classList.add('hidden');
+      }
+
+      if (!valid) return;
+
+      const orderRef = 'RV-' + Math.floor(1000 + Math.random() * 9000);
+      const total = orderState.offer === 'solo' ? 299 : 548;
+
+      const itemsSummary = orderState.offer === 'solo'
+        ? `• 1x سنيكرز RAVA RUNNER 01 (${COLOR_META[orderState.pair1.color].label}) — مقاس ${orderState.pair1.size}`
+        : `• الحذاء 1 : ${COLOR_META[orderState.pair1.color].label} (مقاس ${orderState.pair1.size})\n• الحذاء 2 : ${COLOR_META[orderState.pair2.color].label} (مقاس ${orderState.pair2.size})`;
+
+      const fullLocation = address ? `${city} — ${address}` : city;
+
+      document.getElementById('confirmOrderRef').textContent = `رقم الطلب #${orderRef}`;
+      document.getElementById('confirmRecapBox').innerHTML = `
+        <div class="flex justify-between"><span class="text-obsidian/60">الاسم الكامل :</span><strong class="text-obsidian">${escapeHtml(name)}</strong></div>
+        <div class="flex justify-between"><span class="text-obsidian/60">رقم الهاتف :</span><strong dir="ltr" class="text-obsidian">${escapeHtml(phone)}</strong></div>
+        <div class="flex justify-between gap-3"><span class="text-obsidian/60 shrink-0">المدينة والعنوان :</span><strong class="text-obsidian text-left">${escapeHtml(fullLocation)}</strong></div>
+        <div class="pt-2 border-t border-obsidian/10">
+          <div class="text-obsidian/60 mb-1">تفاصيل الطلب :</div>
+          <div class="font-bold text-obsidian whitespace-pre-line">${itemsSummary}</div>
+        </div>
+        <div class="pt-2 border-t border-obsidian/10 flex justify-between items-center">
+          <span class="font-extrabold text-obsidian">المجموع عند الاستلام :</span>
+          <span class="font-display font-black text-base text-emerald-700">${total} درهم (توصيل مجاني)</span>
+        </div>
+      `;
+
+      const waText = encodeURIComponent(
+        `السلام عليكم RAVA MODE 👋،\nأؤكد طلبي رقم *#${orderRef}* :\n` +
+        `${itemsSummary}\n` +
+        `• الاسم : ${name}\n` +
+        `• الهاتف : ${phone}\n` +
+        `• المدينة : ${fullLocation}\n` +
+        `• المجموع عند الاستلام : *${total} درهم*`
+      );
+      document.getElementById('whatsappConfirmLink').href = `https://wa.me/212600000000?text=${waText}`;
+
+      document.getElementById('orderConfirmModal').classList.remove('hidden');
+    }
+
+    function setupMobileStickyObserver() {
+      const formSection = document.getElementById('commander');
+      const stickyBar = document.getElementById('stickyMobileBar');
+      if (!formSection || !stickyBar || !('IntersectionObserver' in window)) return;
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            stickyBar.classList.add('translate-y-full');
+          } else {
+            stickyBar.classList.remove('translate-y-full');
+          }
+        });
+      }, { threshold: 0.15 });
+
+      observer.observe(formSection);
+    }
+
+    window.addEventListener('load', () => {
+      startSmoothProgressLoop();
+      setupMobileStickyObserver();
+      selectColorway('blanc');
+      refreshOrderSummary();
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          closeSizeGuide();
+          closeOrderModal();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
