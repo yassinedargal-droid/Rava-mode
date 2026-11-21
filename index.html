@@ -814,11 +814,13 @@
               <video
                 id="heroMainVideo"
                 src="sneaker_white_navy_flat_9x16_with_voiceover 2.mp4"
+                poster="WhatsApp Image 2026-11-01 at 20.52.40;.jpeg"
                 class="w-full h-full object-cover"
                 autoplay
                 muted
                 playsinline
                 preload="auto"
+                fetchpriority="high"
                 onerror="activateHeroKenBurnsFallback()"
               ></video>
 
@@ -898,13 +900,13 @@
             <div class="relative aspect-[4/5] sm:aspect-[9/14] w-full rounded-xl sm:rounded-2xl overflow-hidden bg-obsidian">
               <video
                 id="gridVideo-0"
-                src="sneaker_white_navy_flat_9x16_with_voiceover 2.mp4"
-                class="w-full h-full object-cover"
-                autoplay
+                data-src="sneaker_white_navy_flat_9x16_with_voiceover 2.mp4"
+                poster="WhatsApp Image 2026-11-01 at 20.52.40;.jpeg"
+                class="w-full h-full object-cover lazy-grid-video"
                 muted
                 loop
                 playsinline
-                preload="metadata"
+                preload="none"
                 onerror="activateGridKenBurnsFallback(0)"
               ></video>
 
@@ -935,13 +937,13 @@
             <div class="relative aspect-[4/5] sm:aspect-[9/14] w-full rounded-xl sm:rounded-2xl overflow-hidden bg-obsidian">
               <video
                 id="gridVideo-1"
-                src="sneakers_sidewalk_handheld_9x16_silent 3.mp4"
-                class="w-full h-full object-cover"
-                autoplay
+                data-src="sneakers_sidewalk_handheld_9x16_silent 3.mp4"
+                poster="hbnk.jfif"
+                class="w-full h-full object-cover lazy-grid-video"
                 muted
                 loop
                 playsinline
-                preload="metadata"
+                preload="none"
                 onerror="activateGridKenBurnsFallback(1)"
               ></video>
 
@@ -972,13 +974,13 @@
             <div class="relative aspect-[4/5] sm:aspect-[9/14] w-full rounded-xl sm:rounded-2xl overflow-hidden bg-obsidian">
               <video
                 id="gridVideo-2"
-                src="sneaker_black_exact_9x16_with_voiceover_v2 3.mp4"
-                class="w-full h-full object-cover"
-                autoplay
+                data-src="sneaker_black_exact_9x16_with_voiceover_v2 3.mp4"
+                poster="WhatsApp Image 2026-11-01 at 20.52.40.jpeg"
+                class="w-full h-full object-cover lazy-grid-video"
                 muted
                 loop
                 playsinline
-                preload="metadata"
+                preload="none"
                 onerror="activateGridKenBurnsFallback(2)"
               ></video>
 
@@ -1009,13 +1011,13 @@
             <div class="relative aspect-[4/5] sm:aspect-[9/14] w-full rounded-xl sm:rounded-2xl overflow-hidden bg-obsidian">
               <video
                 id="gridVideo-3"
-                src="sneaker_step_9x16_with_voiceover 1.mp4"
-                class="w-full h-full object-cover"
-                autoplay
+                data-src="sneaker_step_9x16_with_voiceover 1.mp4"
+                poster="ijp.jfif"
+                class="w-full h-full object-cover lazy-grid-video"
                 muted
                 loop
                 playsinline
-                preload="metadata"
+                preload="none"
                 onerror="activateGridKenBurnsFallback(3)"
               ></video>
 
@@ -2287,17 +2289,47 @@
 
       VIDEOS_CONFIG.forEach((vid, idx) => {
         const card = document.getElementById(`video-card-${idx}`);
+        const gVid = document.getElementById('gridVideo-' + idx);
         if (!card) return;
         if (vid.colorKey === colorKey) {
           card.classList.remove('hidden');
-          const gVid = document.getElementById('gridVideo-' + idx);
           if (gVid && !gVid.classList.contains('hidden')) {
-            gVid.play().catch(() => {});
+            if (!gVid.src && gVid.dataset.src) {
+              gVid.src = gVid.dataset.src;
+            }
+            if (window._videosSectionVisible) {
+              gVid.play().catch(() => {});
+            }
           }
         } else {
           card.classList.add('hidden');
+          if (gVid) gVid.pause();
         }
       });
+    }
+
+    function setupLazyGridVideosObserver() {
+      window._videosSectionVisible = false;
+      const section = document.getElementById('videos-zoom');
+      if (!section || !('IntersectionObserver' in window)) {
+        window._videosSectionVisible = true;
+        highlightMatchingVideoCards(window.orderState.pair1.color);
+        return;
+      }
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            window._videosSectionVisible = true;
+            highlightMatchingVideoCards(window.orderState.pair1.color);
+          } else {
+            window._videosSectionVisible = false;
+            document.querySelectorAll('.lazy-grid-video').forEach(v => v.pause());
+          }
+        });
+      }, { rootMargin: '200px 0px', threshold: 0.05 });
+
+      observer.observe(section);
     }
 
     function selectColorway(colorKey) {
@@ -3145,9 +3177,13 @@
         if (gVid && src) {
           if (gFb) gFb.classList.add('hidden');
           gVid.classList.remove('hidden');
-          gVid.src = src;
-          gVid.load();
-          gVid.play().catch(() => activateGridKenBurnsFallback(i));
+          gVid.dataset.src = src;
+          gVid.poster = window.VIDEOS_CONFIG[i].fallbackImg || '';
+          if (window._videosSectionVisible && window.VIDEOS_CONFIG[i].colorKey === window.orderState.pair1.color) {
+            gVid.src = src;
+            gVid.load();
+            gVid.play().catch(() => activateGridKenBurnsFallback(i));
+          }
         }
         const tEl = document.getElementById('cmsGridTitle' + i);
         if (tEl && vidTitles[i]) tEl.textContent = vidTitles[i];
@@ -3502,6 +3538,7 @@
     window.addEventListener('load', async () => {
       startSmoothProgressLoop();
       setupMobileStickyObserver();
+      setupLazyGridVideosObserver();
       applyCmsConfigToPage();
       renderCmsOrdersList();
       selectColorway('blanc');
