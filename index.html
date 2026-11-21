@@ -1858,6 +1858,19 @@
         <div class="flex gap-2">
           <button type="submit" class="flex-1 py-3 rounded-xl bg-obsidian hover:bg-anthracite text-white font-extrabold text-xs cursor-pointer transition">
             دخول 🔓
+          </button>
+          <button type="button" onclick="closeCmsPinModal()" class="py-3 px-4 rounded-xl bg-stonegray hover:bg-obsidian/15 text-obsidian font-bold text-xs cursor-pointer transition">
+            إلغاء
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       14. MAIN INTERACTIVE ENGINE (THEME, VIDEOS, FORM & SMART CMS)
+       ===================================================================== -->
+  <script>
     let logoTapCount = 0;
     let logoTapTimer = null;
     function handleLogoSecretTap(e) {
@@ -1872,24 +1885,21 @@
       logoTapTimer = setTimeout(() => { logoTapCount = 0; }, 700);
     }
 
-    function openSmartCms() {
-      const pinModal = document.getElementById('cmsPinModal');
-      const cmsModal = document.getElementById('smartCmsModal');
-      if (sessionStorage.getItem('rava_cms_unlocked') !== '1') {
-        const pinInput = document.getElementById('cmsPinInput');
-        const pinErr = document.getElementById('cmsPinError');
-        if (pinErr) pinErr.classList.add('hidden');
-        if (pinInput) pinInput.value = '';
-        if (pinModal) {
-          pinModal.classList.remove('hidden');
-          setTimeout(() => pinInput && pinInput.focus(), 60);
+    function applyPageTheme(colorKey) {
+      const body = document.body;
+      const topBar = document.getElementById('topAnnouncementBar');
+      const heroDot = document.getElementById('heroThemeDot');
+      const heroBadgeText = document.getElementById('heroThemeBadgeText');
+      const headlineUnderline = document.getElementById('heroHeadlineUnderline');
+      const formBanner = document.getElementById('formHeaderBanner');
+
+      if (colorKey === 'noir') {
+        body.classList.remove('theme-blanc');
+        body.classList.add('theme-noir');
+
+        if (topBar) {
+          topBar.className = 'bg-[#1D2026] text-warmsand text-[10px] sm:text-xs font-bold py-1.5 sm:py-2 px-3 text-center border-b border-white/10 transition-colors duration-500';
         }
-        return;
-      }
-      populateCmsInputs();
-      renderCmsOrdersList();
-      if (cmsModal) cmsModal.classList.remove('hidden');
-    }
         if (heroDot) {
           heroDot.className = 'w-2.5 h-2.5 rounded-full bg-[#DFD4C0] animate-pulse';
         }
