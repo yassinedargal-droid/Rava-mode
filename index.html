@@ -5,6 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RAVA MODE — سنيكرز RAVA RUNNER 01 | التشكيلة الحصرية بالمغرب</title>
 
+  <!-- Open Graph & Canonical SEO Meta Tags -->
+  <meta property="og:title" content="RAVA MODE — سنيكرز RAVA RUNNER 01 | التشكيلة الحصرية بالمغرب" />
+  <meta property="og:description" content="موديل واحد بتصميم عصري بجودة عالية، نعل مريح 4.5 سم وتهوية مثالية طوال اليوم. توصيل مجاني والدفع عند الاستلام." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.ravamode.ma/" />
+  <link rel="canonical" href="https://www.ravamode.ma/" />
+
   <!-- Supabase JS SDK v2 -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -562,7 +569,7 @@
       box-shadow: 0 0 0 3px rgba(223, 212, 192, 0.18) !important;
     }
 
-    /* Keep CMS Drawer strictly in light high-contrast mode even when page is theme-noir */
+    /* Keep CMS Drawer & PIN Modal strictly in light high-contrast mode even when page is theme-noir */
     #smartCmsModal .bg-white,
     #cmsPinModal .bg-white {
       background-color: #FFFFFF !important;
@@ -1363,7 +1370,7 @@
   </section>
 
   <!-- =====================================================================
-       6. FOOTER WITH RAVA MODE BRANDING
+       6. FOOTER WITH RAVA MODE BRANDING & DISCREET ADMIN CMS BUTTON
        ===================================================================== -->
   <footer class="bg-obsidian text-alabaster border-t border-white/10 py-12 text-right">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
@@ -1390,9 +1397,6 @@
         <a href="#videos-zoom" class="hover:text-white transition">شاهد التفاصيل عن قرب</a>
         <a href="#pourquoi" class="hover:text-white transition">مميزات الحذاء</a>
         <a href="#commander" class="hover:text-white transition">نموذج الطلب</a>
-        <button type="button" onclick="openSmartCms()" class="text-white/40 hover:text-white transition cursor-pointer">
-          إدارة المتجر ⚙️
-        </button>
       </div>
 
       <div id="cmsFooterCopyright" class="text-xs text-white/55">
@@ -1930,7 +1934,7 @@
 
             <div class="pt-2 border-t border-obsidian/10 flex flex-wrap items-center justify-between gap-2">
               <span class="text-[10px] text-obsidian/60 font-semibold">
-                SEO automatique (Canonical + Schema.org Product + Conversion Purchase COD)
+                SEO automatique (Canonical + og:url + Schema.org Product + Purchase COD)
               </span>
               <div class="flex items-center gap-2">
                 <button type="button" onclick="downloadSitemapXml()"
@@ -1964,6 +1968,41 @@
           إعادة ضبط
         </button>
       </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       13. CMS SECURITY PIN LOCK MODAL (CODE D'ACCÈS ADMINISTRATEUR)
+       ===================================================================== -->
+  <div id="cmsPinModal" class="hidden fixed inset-0 z-[60] bg-obsidian/85 backdrop-blur-md flex items-center justify-center p-4 text-center">
+    <div class="bg-white text-obsidian rounded-3xl max-w-xs w-full p-6 hairline-border-strong shadow-2xl space-y-4">
+      <div class="w-12 h-12 rounded-2xl bg-obsidian text-warmsand flex items-center justify-center mx-auto text-xl">
+        🔒
+      </div>
+      <div>
+        <h3 class="font-display font-black text-lg text-obsidian">دخول الإدارة — RAVA CMS</h3>
+        <p class="text-xs text-obsidian/65 mt-1">أدخل الرمز السري للوصول إلى الطلبات وتعديل الموقع</p>
+      </div>
+      <form onsubmit="verifyCmsPin(event)" class="space-y-3">
+        <input
+          type="password"
+          id="cmsPinInput"
+          inputmode="numeric"
+          maxlength="12"
+          placeholder="••••"
+          dir="ltr"
+          class="w-full py-3 px-4 rounded-xl bg-alabaster border border-obsidian/20 text-center font-display font-black text-xl tracking-[0.35em] text-obsidian"
+        />
+        <p id="cmsPinError" class="hidden text-xs text-crimson font-extrabold">الرمز السري غير صحيح، حاول مرة أخرى.</p>
+        <div class="flex gap-2">
+          <button type="submit" class="flex-1 py-3 rounded-xl bg-obsidian hover:bg-anthracite text-white font-extrabold text-xs cursor-pointer transition">
+            دخول 🔓
+          </button>
+          <button type="button" onclick="closeCmsPinModal()" class="py-3 px-4 rounded-xl bg-stonegray hover:bg-obsidian/15 text-obsidian font-bold text-xs cursor-pointer transition">
+            إلغاء
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 
@@ -2523,7 +2562,7 @@
     }
 
     // =========================================================================
-    // 6. SMART MINI CMS ENGINE (CONTENT, STORAGE UPLOAD & ORDERS MANAGEMENT)
+    // 6. SMART MINI CMS ENGINE (INSTANT UI OPEN + SUPABASE SYNC + STORAGE)
     // =========================================================================
     function getStoredOrders() {
       try {
@@ -2677,8 +2716,13 @@
       }).join('');
     }
 
-    async function openSmartCms() {
-      if (sessionStorage.getItem('rava_cms_unlocked') !== '1') {
+    function openSmartCms() {
+      let unlocked = false;
+      try {
+        unlocked = sessionStorage.getItem('rava_cms_unlocked') === '1';
+      } catch (e) {}
+
+      if (!unlocked) {
         const pinModal = document.getElementById('cmsPinModal');
         const pinInput = document.getElementById('cmsPinInput');
         const pinErr = document.getElementById('cmsPinError');
@@ -2690,9 +2734,11 @@
         }
         return;
       }
+
       populateCmsInputs();
+      renderCmsOrdersList();
       document.getElementById('smartCmsModal').classList.remove('hidden');
-      await loadOrdersFromSupabase();
+      loadOrdersFromSupabase();
     }
 
     function closeCmsPinModal() {
@@ -2700,16 +2746,19 @@
       if (pinModal) pinModal.classList.add('hidden');
     }
 
-    async function verifyCmsPin(e) {
+    function verifyCmsPin(e) {
       e.preventDefault();
       const entered = (document.getElementById('cmsPinInput').value || '').trim();
       const expected = String(window.cmsConfig.cmsPin || '2026').trim();
       if (entered === expected) {
-        sessionStorage.setItem('rava_cms_unlocked', '1');
+        try {
+          sessionStorage.setItem('rava_cms_unlocked', '1');
+        } catch (err) {}
         closeCmsPinModal();
         populateCmsInputs();
+        renderCmsOrdersList();
         document.getElementById('smartCmsModal').classList.remove('hidden');
-        await loadOrdersFromSupabase();
+        loadOrdersFromSupabase();
       } else {
         document.getElementById('cmsPinError').classList.remove('hidden');
       }
@@ -2808,7 +2857,7 @@
         inputEl.dataset.fileName = file.name;
       }
 
-      // Attempt permanent upload to Supabase Storage bucket 'rava-media'
+      // Permanent upload to Supabase Storage bucket 'rava-media'
       if (window.sbClient) {
         try {
           setSupabaseBadgeState(true, 'جاري رفع الملف إلى Supabase...');
@@ -2827,7 +2876,7 @@
             }
           } else {
             console.warn('Storage bucket rava-media fallback to local blob:', error && error.message);
-            setSupabaseBadgeState(true, 'معاينة محلية (أنشئ Bucket: rava-media للرفع الدائم)');
+            setSupabaseBadgeState(true, 'معاينة محلية (تحقق من Bucket: rava-media)');
           }
         } catch (err) {
           console.warn('Storage upload exception:', err);
@@ -3069,7 +3118,7 @@
       const gaId = (c.ga4MeasurementId || '').trim();
       const pixelId = (c.metaPixelId || '').trim().replace(/\D/g, '');
       const rawSiteUrl = (c.sitePublicUrl || '').trim().replace(/\/+$/, '');
-      const effectiveUrl = rawSiteUrl || window.location.origin;
+      const effectiveUrl = rawSiteUrl || 'https://www.ravamode.ma';
 
       // 1. Update CMS status badge
       const statusBadge = document.getElementById('analyticsActiveStatusBadge');
@@ -3086,7 +3135,7 @@
         }
       }
 
-      // 2. Canonical URL & Schema.org Product JSON-LD for SEO
+      // 2. Canonical URL, og:url & Schema.org Product JSON-LD for SEO
       let canonicalEl = document.querySelector('link[rel="canonical"]');
       if (!canonicalEl) {
         canonicalEl = document.createElement('link');
@@ -3094,6 +3143,9 @@
         document.head.appendChild(canonicalEl);
       }
       canonicalEl.setAttribute('href', effectiveUrl + '/');
+
+      const ogUrlEl = document.querySelector('meta[property="og:url"]');
+      if (ogUrlEl) ogUrlEl.setAttribute('content', effectiveUrl + '/');
 
       let ldJsonEl = document.getElementById('ravaSchemaOrgProduct');
       if (!ldJsonEl) {
@@ -3147,7 +3199,7 @@
 
     function downloadSitemapXml() {
       const inputVal = (document.getElementById('cmsInputSiteUrl')?.value || window.cmsConfig.sitePublicUrl || '').trim().replace(/\/+$/, '');
-      const baseUrl = inputVal || window.location.origin;
+      const baseUrl = inputVal || 'https://www.ravamode.ma';
       const today = new Date().toISOString().slice(0, 10);
       const xml = `<?xml version="1.0" encoding="UTF-8"?>\n` +
         `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
@@ -3169,7 +3221,7 @@
 
     function downloadRobotsTxt() {
       const inputVal = (document.getElementById('cmsInputSiteUrl')?.value || window.cmsConfig.sitePublicUrl || '').trim().replace(/\/+$/, '');
-      const baseUrl = inputVal || window.location.origin;
+      const baseUrl = inputVal || 'https://www.ravamode.ma';
       const txt = `User-agent: *\nAllow: /\n\nSitemap: ${baseUrl}/sitemap.xml\n`;
       const blob = new Blob([txt], { type: 'text/plain;charset=utf-8' });
       const url = URL.createObjectURL(blob);
@@ -3312,10 +3364,6 @@
       selectColorway('blanc');
       refreshOrderSummary();
 
-      // Fetch latest live configuration and orders from Supabase
-      await loadConfigFromSupabase();
-      await loadOrdersFromSupabase();
-
       if (window.location.search.includes('cms=1')) {
         openSmartCms();
       }
@@ -3332,7 +3380,20 @@
           closeSmartCms();
         }
       });
-    });
-  </script>
-</body>
-</html>
+
+      // Fetch latest live configuration and orders from Supabase
+      await loadConfigFromSupabase();
+      await loadOrdersFromSupabase();
+
+      if (window.location.search.includes('cms=1') || window.location.hash === '#cms') {
+        openSmartCms();
+      }
+
+      window.addEventListener('hashchange', () => {
+        if (window.location.hash === '#cms') {
+          openSmartCms();
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.altKey && (e.key === 'e' || e.key === 'E')) {
