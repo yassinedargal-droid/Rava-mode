@@ -83,6 +83,7 @@
       priceOld: 449,
       priceDuo: 548,
       whatsappNumber: '212600000000',
+      cmsPin: '2026',
       logoSrc: 'image_003970.jpg',
       colorBlancLabel: 'أبيض / أحمر',
       colorBlancSub: 'إطلالة مشرقة وعصرية',
@@ -490,11 +491,11 @@
 <body class="theme-blanc antialiased selection:bg-crimson selection:text-white pb-24 md:pb-0">
 
   <!-- =====================================================================
-       0. TOP MOROCCO COD ANNOUNCEMENT BAR
+       0. TOP MOROCCO COD ANNOUNCEMENT BAR (COMPACT SINGLE-LINE ON MOBILE)
        ===================================================================== -->
-  <div id="topAnnouncementBar" class="bg-crimson text-white text-[11px] sm:text-xs font-bold py-2.5 px-4 text-center border-b border-white/10 transition-colors duration-500">
-    <p id="cmsTopAnnouncementText" class="max-w-7xl mx-auto tracking-wide">
-      🚚 التوصيل فابور لجميع المدن المغربية (24-48 ساعة) • 💵 الدفع عند الاستلام حتى تقلب السلعة بيديك
+  <div id="topAnnouncementBar" class="bg-crimson text-white text-[10px] sm:text-xs font-bold py-1.5 sm:py-2 px-3 text-center border-b border-white/10 transition-colors duration-500">
+    <p id="cmsTopAnnouncementText" class="max-w-7xl mx-auto tracking-wide truncate">
+      🚚 توصيل فابور (24-48س) • 💵 الدفع عند الاستلام بعد المعاينة
     </p>
   </div>
 
@@ -502,7 +503,7 @@
        1. STICKY HEADER WITH OFFICIAL RAVA MODE LOGO + SMART CMS TRIGGER
        ===================================================================== -->
   <header class="sticky top-0 z-40 bg-alabaster/92 backdrop-blur-md border-b border-obsidian/10">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 sm:h-20 flex items-center justify-between">
       
       <!-- Brand Emblem + RAVA MODE Wordmark -->
       <a href="#" class="flex items-center gap-3 group focus:outline-none">
@@ -1645,6 +1646,41 @@
   </div>
 
   <!-- =====================================================================
+       13. CMS SECURITY PIN LOCK MODAL (CODE D'ACCÈS ADMINISTRATEUR)
+       ===================================================================== -->
+  <div id="cmsPinModal" class="hidden fixed inset-0 z-[60] bg-obsidian/85 backdrop-blur-md flex items-center justify-center p-4 text-center">
+    <div class="bg-white text-obsidian rounded-3xl max-w-xs w-full p-6 hairline-border-strong shadow-2xl space-y-4">
+      <div class="w-12 h-12 rounded-2xl bg-obsidian text-warmsand flex items-center justify-center mx-auto text-xl">
+        🔒
+      </div>
+      <div>
+        <h3 class="font-display font-black text-lg text-obsidian">دخول الإدارة — RAVA CMS</h3>
+        <p class="text-xs text-obsidian/65 mt-1">أدخل الرمز السري للوصول إلى الطلبات وتعديل الموقع</p>
+      </div>
+      <form onsubmit="verifyCmsPin(event)" class="space-y-3">
+        <input
+          type="password"
+          id="cmsPinInput"
+          inputmode="numeric"
+          maxlength="12"
+          placeholder="••••"
+          dir="ltr"
+          class="w-full py-3 px-4 rounded-xl bg-alabaster border border-obsidian/20 text-center font-display font-black text-xl tracking-[0.35em] text-obsidian"
+        />
+        <p id="cmsPinError" class="hidden text-xs text-crimson font-extrabold">الرمز السري غير صحيح، حاول مرة أخرى.</p>
+        <div class="flex gap-2">
+          <button type="submit" class="flex-1 py-3 rounded-xl bg-obsidian hover:bg-anthracite text-white font-extrabold text-xs cursor-pointer transition">
+            دخول 🔓
+          </button>
+          <button type="button" onclick="closeCmsPinModal()" class="px-4 py-3 rounded-xl bg-stonegray text-obsidian font-bold text-xs cursor-pointer">
+            إلغاء
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =====================================================================
        10. JAVASCRIPT: SILENT VIDEOS + KEN BURNS FALLBACK + ARABIC COD + CMS
        ===================================================================== -->
   <script>
@@ -1664,7 +1700,7 @@
         body.classList.add('theme-noir');
 
         if (topBar) {
-          topBar.className = 'bg-[#181A20] text-[#DFD4C0] text-[11px] sm:text-xs font-bold py-2.5 px-4 text-center border-b border-white/10 transition-colors duration-500';
+          topBar.className = 'bg-[#181A20] text-[#DFD4C0] text-[10px] sm:text-xs font-bold py-1.5 sm:py-2 px-3 text-center border-b border-white/10 transition-colors duration-500';
         }
         if (heroDot) {
           heroDot.className = 'w-2.5 h-2.5 rounded-full bg-[#DFD4C0] animate-pulse';
@@ -1683,7 +1719,7 @@
         body.classList.add('theme-blanc');
 
         if (topBar) {
-          topBar.className = 'bg-crimson text-white text-[11px] sm:text-xs font-bold py-2.5 px-4 text-center border-b border-white/10 transition-colors duration-500';
+          topBar.className = 'bg-crimson text-white text-[10px] sm:text-xs font-bold py-1.5 sm:py-2 px-3 text-center border-b border-white/10 transition-colors duration-500';
         }
         if (heroDot) {
           heroDot.className = 'w-2.5 h-2.5 rounded-full bg-crimson animate-pulse';
@@ -2126,9 +2162,41 @@
     }
 
     function openSmartCms() {
+      if (sessionStorage.getItem('rava_cms_unlocked') !== '1') {
+        const pinModal = document.getElementById('cmsPinModal');
+        const pinInput = document.getElementById('cmsPinInput');
+        const pinErr = document.getElementById('cmsPinError');
+        if (pinErr) pinErr.classList.add('hidden');
+        if (pinInput) pinInput.value = '';
+        if (pinModal) {
+          pinModal.classList.remove('hidden');
+          setTimeout(() => pinInput && pinInput.focus(), 60);
+        }
+        return;
+      }
       populateCmsInputs();
       renderCmsOrdersList();
       document.getElementById('smartCmsModal').classList.remove('hidden');
+    }
+
+    function closeCmsPinModal() {
+      const pinModal = document.getElementById('cmsPinModal');
+      if (pinModal) pinModal.classList.add('hidden');
+    }
+
+    function verifyCmsPin(e) {
+      e.preventDefault();
+      const entered = (document.getElementById('cmsPinInput').value || '').trim();
+      const expected = String(window.cmsConfig.cmsPin || '2026').trim();
+      if (entered === expected) {
+        sessionStorage.setItem('rava_cms_unlocked', '1');
+        closeCmsPinModal();
+        populateCmsInputs();
+        renderCmsOrdersList();
+        document.getElementById('smartCmsModal').classList.remove('hidden');
+      } else {
+        document.getElementById('cmsPinError').classList.remove('hidden');
+      }
     }
 
     function closeSmartCms() {
@@ -2287,6 +2355,7 @@
       window.cmsConfig = {
         brandName: document.getElementById('cmsInputBrandName').value.trim() || 'RAVA MODE',
         whatsappNumber: document.getElementById('cmsInputWhatsapp').value.trim() || '212600000000',
+        cmsPin: window.cmsConfig.cmsPin || '2026',
         announcement: document.getElementById('cmsInputAnnouncement').value.trim(),
         heroTitle: document.getElementById('cmsInputHeroTitle').value.trim(),
         heroSubtitle: document.getElementById('cmsInputHeroSubtitle').value.trim(),
@@ -2380,6 +2449,7 @@
         if (e.key === 'Escape') {
           closeSizeGuide();
           closeOrderModal();
+          closeCmsPinModal();
           closeSmartCms();
         }
       });
