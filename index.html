@@ -144,7 +144,10 @@
       formSubtitle: 'عمّر المعلومات أسفله وسنتصل بك لتأكيد الإرسال لباب منزلك.',
       formSubmitText: 'تأكيد الطلب الآن — الدفع عند الاستلام 🛒',
       footerTagline: 'أناقة عصرية • توصيل مجاني لجميع مدن المغرب',
-      footerCopyright: '© 2026 RAVA MODE. جميع الحقوق محفوظة.'
+      footerCopyright: '© 2026 RAVA MODE. جميع الحقوق محفوظة.',
+      ga4MeasurementId: '',
+      metaPixelId: '',
+      sitePublicUrl: ''
     };
 
     window.cmsConfig = Object.assign({}, window.DEFAULT_CMS_CONFIG);
@@ -1869,6 +1872,79 @@
             </div>
           </div>
 
+          <!-- SECTION F: MESURE D'AUDIENCE & RÉFÉRENCEMENT (GA4, META PIXEL, SITEMAP & SEO) -->
+          <div dir="ltr" class="p-4 rounded-2xl bg-white hairline-border space-y-3 text-left font-sans">
+            <div class="border-b border-obsidian/10 pb-2.5">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <h4 class="font-extrabold text-sm text-obsidian">
+                  6️⃣ Mesure d'audience &amp; référencement
+                </h4>
+                <span id="analyticsActiveStatusBadge" class="px-2.5 py-0.5 rounded-full bg-stonegray text-obsidian/70 text-[10px] font-bold">
+                  Suivi inactif
+                </span>
+              </div>
+              <p class="text-[11px] text-obsidian/65 mt-1 leading-relaxed">
+                Laissez vide pour désactiver. Si un identifiant est renseigné, une bannière demande le consentement des visiteurs avant tout suivi.
+              </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+              <div>
+                <label class="block text-[11px] font-bold text-obsidian mb-1">
+                  Google Analytics 4 (ID « G-XXXXXXXXXX »)
+                </label>
+                <input
+                  type="text"
+                  id="cmsInputGa4Id"
+                  placeholder="G-XXXXXXXXXX"
+                  dir="ltr"
+                  class="w-full px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-semibold"
+                />
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-obsidian mb-1">
+                  Pixel Meta (ID numérique)
+                </label>
+                <input
+                  type="text"
+                  id="cmsInputMetaPixelId"
+                  inputmode="numeric"
+                  placeholder="123456789012345"
+                  dir="ltr"
+                  class="w-full px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-semibold"
+                />
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-obsidian mb-1">
+                  Adresse du site (pour le plan du site)
+                </label>
+                <input
+                  type="url"
+                  id="cmsInputSiteUrl"
+                  placeholder="https://www.ravamode.ma"
+                  dir="ltr"
+                  class="w-full px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-semibold"
+                />
+              </div>
+            </div>
+
+            <div class="pt-2 border-t border-obsidian/10 flex flex-wrap items-center justify-between gap-2">
+              <span class="text-[10px] text-obsidian/60 font-semibold">
+                SEO automatique (Canonical + Schema.org Product + Conversion Purchase COD)
+              </span>
+              <div class="flex items-center gap-2">
+                <button type="button" onclick="downloadSitemapXml()"
+                  class="px-2.5 py-1.5 rounded-lg bg-stonegray hover:bg-obsidian hover:text-white text-obsidian font-bold text-[11px] transition cursor-pointer">
+                  🗺️ Télécharger sitemap.xml
+                </button>
+                <button type="button" onclick="downloadRobotsTxt()"
+                  class="px-2.5 py-1.5 rounded-lg bg-stonegray hover:bg-obsidian hover:text-white text-obsidian font-bold text-[11px] transition cursor-pointer">
+                  🤖 Télécharger robots.txt
+                </button>
+              </div>
+            </div>
+          </div>
+
         </div>
 
       </div>
@@ -1892,42 +1968,34 @@
   </div>
 
   <!-- =====================================================================
-       13. CMS SECURITY PIN LOCK MODAL (CODE D'ACCÈS ADMINISTRATEUR)
+       14. VISITOR COOKIE CONSENT BANNER (ACTIVE ONLY IF GA4 OR META PIXEL SET)
        ===================================================================== -->
-  <div id="cmsPinModal" class="hidden fixed inset-0 z-[60] bg-obsidian/85 backdrop-blur-md flex items-center justify-center p-4 text-center">
-    <div class="bg-white text-obsidian rounded-3xl max-w-xs w-full p-6 hairline-border-strong shadow-2xl space-y-4">
-      <div class="w-12 h-12 rounded-2xl bg-obsidian text-warmsand flex items-center justify-center mx-auto text-xl">
-        🔒
-      </div>
-      <div>
-        <h3 class="font-display font-black text-lg text-obsidian">دخول الإدارة — RAVA CMS</h3>
-        <p class="text-xs text-obsidian/65 mt-1">أدخل الرمز السري للوصول إلى الطلبات وتعديل الموقع</p>
-      </div>
-      <form onsubmit="verifyCmsPin(event)" class="space-y-3">
-        <input
-          type="password"
-          id="cmsPinInput"
-          inputmode="numeric"
-          maxlength="12"
-          placeholder="••••"
-          dir="ltr"
-          class="w-full py-3 px-4 rounded-xl bg-alabaster border border-obsidian/20 text-center font-display font-black text-xl tracking-[0.35em] text-obsidian"
-        />
-        <p id="cmsPinError" class="hidden text-xs text-crimson font-extrabold">الرمز السري غير صحيح، حاول مرة أخرى.</p>
-        <div class="flex gap-2">
-          <button type="submit" class="flex-1 py-3 rounded-xl bg-obsidian hover:bg-anthracite text-white font-extrabold text-xs cursor-pointer transition">
-            دخول 🔓
+  <div id="cookieConsentBanner" class="hidden fixed bottom-20 md:bottom-5 right-4 left-4 md:left-auto md:max-w-md z-50 rounded-2xl bg-obsidian text-white p-4 sm:p-5 shadow-2xl border border-white/15 text-right">
+    <div class="flex items-start gap-3">
+      <span class="text-xl shrink-0">🍪</span>
+      <div class="flex-1 space-y-2.5">
+        <h4 class="font-display font-extrabold text-xs sm:text-sm text-white">
+          ملفات تعريف الارتباط وقياس الزيارات
+        </h4>
+        <p class="text-[11px] text-white/80 leading-relaxed">
+          نستخدم ملفات تعريف الارتباط لتحليل زيارات الموقع وتحسين تجربتك وعروضنا الإعلانية. يمكنك القبول أو الرفض في أي وقت.
+        </p>
+        <div class="flex items-center gap-2 pt-1">
+          <button type="button" onclick="acceptAnalyticsConsent()"
+            class="flex-1 py-2 px-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold text-xs transition cursor-pointer">
+            موافق (Accepter)
           </button>
-          <button type="button" onclick="closeCmsPinModal()" class="py-3 px-4 rounded-xl bg-stonegray hover:bg-obsidian/15 text-obsidian font-bold text-xs cursor-pointer transition">
-            إلغاء
+          <button type="button" onclick="declineAnalyticsConsent()"
+            class="py-2 px-3 rounded-xl bg-white/15 hover:bg-white/25 text-white/90 font-bold text-xs transition cursor-pointer">
+            رفض
           </button>
         </div>
-      </form>
+      </div>
     </div>
   </div>
 
   <!-- =====================================================================
-       14. MAIN INTERACTIVE ENGINE (THEME, VIDEOS, FORM, SUPABASE & SMART CMS)
+       15. MAIN INTERACTIVE ENGINE (THEME, VIDEOS, FORM, SUPABASE, SEO & CMS)
        ===================================================================== -->
   <script>
     let logoTapCount = 0;
@@ -2419,6 +2487,9 @@
       saveNewOrderToCms(orderPayload);
       await saveOrderToSupabase(orderPayload);
 
+      // Track Purchase conversion on GA4 & Meta Pixel if visitor consented
+      trackPurchaseConversion(orderPayload);
+
       if (submitBtn) submitBtn.disabled = false;
       if (submitLabel) submitLabel.textContent = originalLabel;
 
@@ -2709,6 +2780,10 @@
       document.getElementById('cmsInputFooterTagline').value = c.footerTagline || '';
       document.getElementById('cmsInputFooterCopyright').value = c.footerCopyright || '';
 
+      document.getElementById('cmsInputGa4Id').value = c.ga4MeasurementId || '';
+      document.getElementById('cmsInputMetaPixelId').value = c.metaPixelId || '';
+      document.getElementById('cmsInputSiteUrl').value = c.sitePublicUrl || '';
+
       document.getElementById('cmsInputLogoSrc').value = c.logoSrc || '';
       document.getElementById('cmsInputColorBlancImg').value = c.colorBlancImg || '';
       document.getElementById('cmsInputColorNoirImg').value = c.colorNoirImg || '';
@@ -2890,6 +2965,219 @@
       switchHeroVideo(window.orderState.activeHeroVideoIdx);
       syncAllPreviewThumbnails();
       refreshOrderSummary();
+      applySeoAndAudienceTracking();
+    }
+
+    // =========================================================================
+    // AUDIENCE TRACKING (GA4 + META PIXEL + CONSENT BANNER) & SEO ENGINE
+    // =========================================================================
+    window._loadedGa4Id = null;
+    window._loadedMetaPixelId = null;
+
+    function injectGoogleAnalytics4(gaId) {
+      if (!gaId || !/^G-[A-Z0-9]+$/i.test(gaId) || window._loadedGa4Id === gaId) return;
+      window._loadedGa4Id = gaId;
+
+      const s = document.createElement('script');
+      s.async = true;
+      s.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(gaId)}`;
+      document.head.appendChild(s);
+
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = window.gtag || function() { window.dataLayer.push(arguments); };
+      window.gtag('js', new Date());
+      window.gtag('config', gaId, { anonymize_ip: true });
+    }
+
+    function injectMetaPixel(pixelId) {
+      if (!pixelId || !/^\d{5,25}$/.test(pixelId) || window._loadedMetaPixelId === pixelId) return;
+      window._loadedMetaPixelId = pixelId;
+
+      if (!window.fbq) {
+        !(function(f, b, e, v, n, t, s) {
+          if (f.fbq) return;
+          n = f.fbq = function() {
+            n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+          };
+          if (!f._fbq) f._fbq = n;
+          n.push = n;
+          n.loaded = true;
+          n.version = '2.0';
+          n.queue = [];
+          t = b.createElement(e);
+          t.async = true;
+          t.src = v;
+          s = b.getElementsByTagName(e)[0];
+          s.parentNode.insertBefore(t, s);
+        })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+      }
+
+      window.fbq('init', pixelId);
+      window.fbq('track', 'PageView');
+    }
+
+    function trackPurchaseConversion(orderPayload) {
+      try {
+        if (localStorage.getItem('rava_cookie_consent_v1') !== 'granted') return;
+        const totalMad = Number(orderPayload.total) || 299;
+
+        if (window._loadedGa4Id && typeof window.gtag === 'function') {
+          window.gtag('event', 'purchase', {
+            transaction_id: orderPayload.ref,
+            value: totalMad,
+            currency: 'MAD',
+            items: [{
+              item_id: 'RAVA-RUNNER-01',
+              item_name: 'RAVA RUNNER 01',
+              price: totalMad,
+              quantity: window.orderState.offer === 'duo' ? 2 : 1
+            }]
+          });
+        }
+
+        if (window._loadedMetaPixelId && typeof window.fbq === 'function') {
+          window.fbq('track', 'Purchase', {
+            value: totalMad,
+            currency: 'MAD',
+            content_ids: ['RAVA-RUNNER-01'],
+            content_type: 'product',
+            num_items: window.orderState.offer === 'duo' ? 2 : 1
+          });
+        }
+      } catch (e) {}
+    }
+
+    function acceptAnalyticsConsent() {
+      try {
+        localStorage.setItem('rava_cookie_consent_v1', 'granted');
+      } catch (e) {}
+      const banner = document.getElementById('cookieConsentBanner');
+      if (banner) banner.classList.add('hidden');
+      applySeoAndAudienceTracking();
+    }
+
+    function declineAnalyticsConsent() {
+      try {
+        localStorage.setItem('rava_cookie_consent_v1', 'denied');
+      } catch (e) {}
+      const banner = document.getElementById('cookieConsentBanner');
+      if (banner) banner.classList.add('hidden');
+    }
+
+    function applySeoAndAudienceTracking() {
+      const c = window.cmsConfig;
+      const gaId = (c.ga4MeasurementId || '').trim();
+      const pixelId = (c.metaPixelId || '').trim().replace(/\D/g, '');
+      const rawSiteUrl = (c.sitePublicUrl || '').trim().replace(/\/+$/, '');
+      const effectiveUrl = rawSiteUrl || window.location.origin;
+
+      // 1. Update CMS status badge
+      const statusBadge = document.getElementById('analyticsActiveStatusBadge');
+      if (statusBadge) {
+        const activeTools = [];
+        if (gaId) activeTools.push('GA4');
+        if (pixelId) activeTools.push('Meta Pixel');
+        if (activeTools.length) {
+          statusBadge.className = 'px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-extrabold';
+          statusBadge.textContent = 'Actif : ' + activeTools.join(' + ');
+        } else {
+          statusBadge.className = 'px-2.5 py-0.5 rounded-full bg-stonegray text-obsidian/70 text-[10px] font-bold';
+          statusBadge.textContent = 'Suivi inactif';
+        }
+      }
+
+      // 2. Canonical URL & Schema.org Product JSON-LD for SEO
+      let canonicalEl = document.querySelector('link[rel="canonical"]');
+      if (!canonicalEl) {
+        canonicalEl = document.createElement('link');
+        canonicalEl.setAttribute('rel', 'canonical');
+        document.head.appendChild(canonicalEl);
+      }
+      canonicalEl.setAttribute('href', effectiveUrl + '/');
+
+      let ldJsonEl = document.getElementById('ravaSchemaOrgProduct');
+      if (!ldJsonEl) {
+        ldJsonEl = document.createElement('script');
+        ldJsonEl.id = 'ravaSchemaOrgProduct';
+        ldJsonEl.type = 'application/ld+json';
+        document.head.appendChild(ldJsonEl);
+      }
+      ldJsonEl.textContent = JSON.stringify({
+        '@context': 'https://schema.org/',
+        '@type': 'Product',
+        name: `${c.brandName || 'RAVA MODE'} — RAVA RUNNER 01`,
+        description: c.heroSubtitle || '',
+        brand: {
+          '@type': 'Brand',
+          name: c.brandName || 'RAVA MODE'
+        },
+        offers: {
+          '@type': 'Offer',
+          url: effectiveUrl + '/',
+          priceCurrency: 'MAD',
+          price: String(Number(c.priceSolo) || 299),
+          availability: 'https://schema.org/InStock',
+          itemCondition: 'https://schema.org/NewCondition'
+        }
+      });
+
+      // 3. Consent check before injecting GA4 / Meta Pixel
+      const banner = document.getElementById('cookieConsentBanner');
+      const hasTracker = Boolean(gaId || pixelId);
+      if (!hasTracker) {
+        if (banner) banner.classList.add('hidden');
+        return;
+      }
+
+      let consent = null;
+      try {
+        consent = localStorage.getItem('rava_cookie_consent_v1');
+      } catch (e) {}
+
+      if (consent === 'granted') {
+        if (banner) banner.classList.add('hidden');
+        if (gaId) injectGoogleAnalytics4(gaId);
+        if (pixelId) injectMetaPixel(pixelId);
+      } else if (consent === 'denied') {
+        if (banner) banner.classList.add('hidden');
+      } else {
+        if (banner) banner.classList.remove('hidden');
+      }
+    }
+
+    function downloadSitemapXml() {
+      const inputVal = (document.getElementById('cmsInputSiteUrl')?.value || window.cmsConfig.sitePublicUrl || '').trim().replace(/\/+$/, '');
+      const baseUrl = inputVal || window.location.origin;
+      const today = new Date().toISOString().slice(0, 10);
+      const xml = `<?xml version="1.0" encoding="UTF-8"?>\n` +
+        `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
+        `  <url>\n` +
+        `    <loc>${baseUrl}/</loc>\n` +
+        `    <lastmod>${today}</lastmod>\n` +
+        `    <changefreq>weekly</changefreq>\n` +
+        `    <priority>1.0</priority>\n` +
+        `  </url>\n` +
+        `</urlset>\n`;
+      const blob = new Blob([xml], { type: 'application/xml;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'sitemap.xml';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function downloadRobotsTxt() {
+      const inputVal = (document.getElementById('cmsInputSiteUrl')?.value || window.cmsConfig.sitePublicUrl || '').trim().replace(/\/+$/, '');
+      const baseUrl = inputVal || window.location.origin;
+      const txt = `User-agent: *\nAllow: /\n\nSitemap: ${baseUrl}/sitemap.xml\n`;
+      const blob = new Blob([txt], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'robots.txt';
+      a.click();
+      URL.revokeObjectURL(url);
     }
 
     async function saveCmsChanges(silent) {
@@ -2935,6 +3223,9 @@
         formSubmitText: val('cmsInputFormSubmitText'),
         footerTagline: val('cmsInputFooterTagline'),
         footerCopyright: val('cmsInputFooterCopyright'),
+        ga4MeasurementId: val('cmsInputGa4Id'),
+        metaPixelId: val('cmsInputMetaPixelId').replace(/\D/g, ''),
+        sitePublicUrl: val('cmsInputSiteUrl'),
         logoSrc: val('cmsInputLogoSrc'),
         colorBlancImg: val('cmsInputColorBlancImg'),
         colorNoirImg: val('cmsInputColorNoirImg'),
