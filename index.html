@@ -5,8 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RAVA MODE — سنيكرز RAVA RUNNER 01 | التشكيلة الحصرية بالمغرب</title>
 
+  <!-- Supabase JS SDK v2 -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <!-- Core Media State & Early Global Helpers (Prevents ReferenceError on inline onerror handlers) -->
   <script>
+    // =========================================================================
+    // SUPABASE LIVE CONNECTION CONFIGURATION (yassinedata)
+    // =========================================================================
+    window.SUPABASE_URL = 'https://cnovkkilcvobthwjjkvr.supabase.co';
+    window.SUPABASE_KEY = 'sb_publishable_FmH6WZl2WnBiC3KFizbfxw_5V2_yka1';
+    window.sbClient = null;
+    try {
+      if (window.supabase && typeof window.supabase.createClient === 'function') {
+        window.sbClient = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_KEY);
+      }
+    } catch (err) {
+      console.warn('Supabase client init warning:', err);
+    }
+
     window.FALLBACK_IMAGES = {
       blanc_studio: 'https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?auto=format&fit=crop&w=900&q=85',
       blanc_street: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=900&q=85',
@@ -257,7 +274,6 @@
     }
 
     function startSmoothProgressLoop() {
-      const vid = document.getElementById('heroMainVideo');
       const SLIDE_DURATION_MS = 2600;
 
       setInterval(function() {
@@ -361,7 +377,7 @@
       background-size: 22px 22px;
     }
 
-    input:focus, select:focus {
+    input:focus, select:focus, textarea:focus {
       outline: none;
       border-color: #0E0E10;
       box-shadow: 0 0 0 3px rgba(14, 14, 16, 0.08);
@@ -542,6 +558,34 @@
       border-color: #DFD4C0 !important;
       box-shadow: 0 0 0 3px rgba(223, 212, 192, 0.18) !important;
     }
+
+    /* Keep CMS Drawer strictly in light high-contrast mode even when page is theme-noir */
+    #smartCmsModal .bg-white,
+    #cmsPinModal .bg-white {
+      background-color: #FFFFFF !important;
+      color: #0E0E10 !important;
+    }
+    #smartCmsModal .bg-alabaster,
+    #cmsPinModal .bg-alabaster {
+      background-color: #FAF9F6 !important;
+      color: #0E0E10 !important;
+    }
+    #smartCmsModal .bg-stonegray,
+    #cmsPinModal .bg-stonegray {
+      background-color: #EAE7E1 !important;
+      color: #0E0E10 !important;
+    }
+    #smartCmsModal .text-obsidian,
+    #cmsPinModal .text-obsidian {
+      color: #0E0E10 !important;
+    }
+    #smartCmsModal input,
+    #smartCmsModal textarea,
+    #cmsPinModal input {
+      background-color: #FFFFFF !important;
+      color: #0E0E10 !important;
+      border-color: rgba(14, 14, 16, 0.2) !important;
+    }
   </style>
 </head>
 <body class="theme-blanc antialiased selection:bg-crimson selection:text-white pb-24 md:pb-0">
@@ -561,7 +605,7 @@
   <header class="sticky top-0 z-40 bg-alabaster/92 backdrop-blur-md border-b border-obsidian/10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 sm:h-20 flex items-center justify-between">
       
-      <!-- Brand Emblem + RAVA MODE Wordmark -->
+      <!-- Brand Emblem + RAVA MODE Wordmark (Triple-tap opens Admin CMS) -->
       <a href="#" onclick="handleLogoSecretTap(event)" class="flex items-center gap-3 group focus:outline-none">
         <div id="headerLogoWrapper" class="w-12 h-12 rounded-full overflow-hidden bg-obsidian shrink-0 shadow-sm ring-1 ring-obsidian/15 group-hover:scale-105 transition-transform duration-300">
           <img
@@ -589,7 +633,7 @@
         <a href="#commander" class="hover:text-obsidian transition">اطلب الآن</a>
       </nav>
 
-      <!-- Header Actions: Fast Order CTA (CMS accessible secretly via ?cms=1 or Alt+E) -->
+      <!-- Header Actions: Fast Order CTA -->
       <div class="flex items-center gap-2 sm:gap-3">
         <a href="#commander" class="theme-cta-btn px-4 sm:px-6 py-2.5 rounded-full bg-crimson text-white text-xs sm:text-sm font-extrabold active:scale-[0.98] transition shadow-sm">
           اطلب الآن
@@ -778,7 +822,7 @@
                 />
               </div>
 
-              <!-- Bottom Gradient Overlay: Reactive 2-Color Switcher (Matches "شاهد التفاصيل عن قرب" logic) -->
+              <!-- Bottom Gradient Overlay: Reactive 2-Color Switcher -->
               <div class="absolute bottom-0 inset-x-0 z-30 pt-12 pb-3.5 px-3.5 bg-gradient-to-t from-black/85 via-black/45 to-transparent">
                 <div class="flex items-center gap-2 p-1 rounded-full bg-black/45 backdrop-blur-md border border-white/15">
                   <button type="button" onclick="selectColorway('blanc')" id="hero-vid-color-blanc"
@@ -820,7 +864,7 @@
           </h2>
         </div>
 
-        <!-- Reactive Color Switcher Pills (Shows only the 2 matching videos -> 60% less scroll!) -->
+        <!-- Reactive Color Switcher Pills -->
         <div class="inline-flex items-center p-1 rounded-full bg-stonegray hairline-border self-start sm:self-auto">
           <button type="button" onclick="selectColorway('blanc')" id="vid-filter-blanc"
             class="px-3.5 py-1.5 rounded-full bg-crimson text-white text-xs font-extrabold shadow-xs transition flex items-center gap-1.5 cursor-pointer">
@@ -835,7 +879,7 @@
         </div>
       </div>
 
-      <!-- Compact 2-Column Reactive Grid (Side-by-side even on Mobile: grid-cols-2!) -->
+      <!-- Compact 2-Column Reactive Grid -->
       <div class="grid grid-cols-2 gap-3 sm:gap-6">
         
         <!-- VIDEO CARD 1: أبيض / أحمر — زوم ماكرو -->
@@ -1003,7 +1047,7 @@
         </h2>
       </div>
 
-      <!-- 3 Value Proposition Cards (Compact Horizontal Pill Rows on Mobile, 3-Col Cards on Desktop) -->
+      <!-- 3 Value Proposition Cards -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-6">
         <!-- Card 1 -->
         <div class="rounded-2xl sm:rounded-3xl bg-alabaster hairline-border p-4 sm:p-7 shadow-xs flex flex-row md:flex-col items-center md:items-start justify-start md:justify-between gap-3.5 sm:gap-0">
@@ -1300,7 +1344,7 @@
 
           <!-- Big Animated Submit CTA -->
           <div>
-            <button type="submit"
+            <button type="submit" id="submitOrderBtn"
               class="theme-cta-btn w-full py-4 sm:py-5 px-6 rounded-2xl bg-crimson text-white font-display font-black text-sm sm:text-base active:scale-[0.99] transition shadow-xl flex items-center justify-center gap-3 cursor-pointer">
               <span id="submitBtnLabel">تأكيد الطلب الآن — الدفع عند الاستلام 🛒</span>
             </button>
@@ -1343,6 +1387,9 @@
         <a href="#videos-zoom" class="hover:text-white transition">شاهد التفاصيل عن قرب</a>
         <a href="#pourquoi" class="hover:text-white transition">مميزات الحذاء</a>
         <a href="#commander" class="hover:text-white transition">نموذج الطلب</a>
+        <button type="button" onclick="openSmartCms()" class="text-white/40 hover:text-white transition cursor-pointer">
+          إدارة المتجر ⚙️
+        </button>
       </div>
 
       <div id="cmsFooterCopyright" class="text-xs text-white/55">
@@ -1461,18 +1508,23 @@
   </div>
 
   <!-- =====================================================================
-       12. SMART MINI CMS DRAWER (MEDIA STUDIO + LIVE EDITOR + ORDERS INBOX)
+       12. SMART MINI CMS DRAWER (SUPABASE LIVE SYNC + MEDIA + ORDERS INBOX)
        ===================================================================== -->
   <div id="smartCmsModal" class="hidden fixed inset-0 z-50 bg-obsidian/80 backdrop-blur-sm flex justify-end text-right">
     <div class="w-full max-w-2xl bg-white text-obsidian h-full flex flex-col shadow-2xl overflow-hidden">
       
-      <!-- CMS Header -->
+      <!-- CMS Header with Live Supabase Status -->
       <div class="px-5 py-4 bg-obsidian text-white flex items-center justify-between shrink-0">
         <div class="flex items-center gap-2.5">
-          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span id="supabaseStatusDot" class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
           <div>
-            <h3 class="font-display font-black text-base sm:text-lg leading-none">لوحة التحكم الذكية — RAVA CMS</h3>
-            <p class="text-[11px] text-white/70 mt-1">تعديل النصوص، رفع الصور والفيديوهات، واستقبال الطلبات</p>
+            <div class="flex flex-wrap items-center gap-2">
+              <h3 class="font-display font-black text-base sm:text-lg leading-none">لوحة التحكم الذكية — RAVA CMS</h3>
+              <span id="supabaseStatusBadge" class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 text-[10px] font-extrabold">
+                متصل بـ Supabase • مزامنة مباشرة
+              </span>
+            </div>
+            <p class="text-[11px] text-white/70 mt-1">تعديل النصوص، رفع الصور والفيديوهات، واستقبال الطلبات أونلاين</p>
           </div>
         </div>
         <button type="button" onclick="closeSmartCms()" class="w-9 h-9 rounded-full bg-white/15 hover:bg-white/25 text-white flex items-center justify-center cursor-pointer">
@@ -1500,14 +1552,17 @@
       <!-- CMS Scrollable Body -->
       <div class="flex-1 overflow-y-auto p-4 sm:p-5 space-y-4 bg-alabaster">
 
-        <!-- TAB 1: ORDERS INBOX (الطلبات الواردة) -->
+        <!-- TAB 1: ORDERS INBOX (الطلبات الواردة من Supabase) -->
         <div id="cms-panel-orders" class="space-y-3">
           <div class="flex flex-wrap items-center justify-between gap-2 bg-white p-3.5 rounded-2xl hairline-border">
             <div>
-              <h4 class="font-display font-extrabold text-sm text-obsidian">سجل الطلبات المستلمة (COD)</h4>
-              <p class="text-[11px] text-obsidian/60">تواصل مع الزبون عبر واتساب أو صدّر القائمة إلى Excel</p>
+              <h4 class="font-display font-extrabold text-sm text-obsidian">سجل الطلبات المستلمة (Supabase COD)</h4>
+              <p class="text-[11px] text-obsidian/60">تتزامن تلقائياً مع قاعدة بيانات yassinedata</p>
             </div>
             <div class="flex items-center gap-2">
+              <button type="button" onclick="loadOrdersFromSupabase()" class="px-3 py-2 rounded-xl bg-obsidian hover:bg-anthracite text-white font-bold text-xs cursor-pointer">
+                🔄 تحديث
+              </button>
               <button type="button" onclick="exportOrdersCsv()" class="px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs cursor-pointer">
                 📥 تصدير Excel
               </button>
@@ -1519,8 +1574,12 @@
           <div id="cmsOrdersListContainer" class="space-y-3"></div>
         </div>
 
-        <!-- TAB 2: MEDIA STUDIO (رفع الصور والفيديوهات) -->
+        <!-- TAB 2: MEDIA STUDIO (رفع الصور والفيديوهات إلى Supabase Storage أو رابط مباشر) -->
         <div id="cms-panel-media" class="hidden space-y-4">
+          <div class="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-900 font-semibold">
+            💡 عند رفع ملف (صورة أو فيديو)، يتم رفعه تلقائياً إلى <strong>Supabase Storage (rava-media)</strong> للحصول على رابط دائم يظهر لجميع الزوار أونلاين.
+          </div>
+
           <div class="p-4 rounded-2xl bg-white hairline-border space-y-3">
             <h4 class="font-display font-extrabold text-sm text-obsidian border-b border-obsidian/10 pb-2">
               🖼️ الشعار وصور الموديلين
@@ -1615,7 +1674,7 @@
           </div>
         </div>
 
-        <!-- TAB 3: ORGANIZED SECTION-BY-SECTION CONTENT EDITOR (تعديل جميع نصوص وأقسام الموقع) -->
+        <!-- TAB 3: ORGANIZED SECTION-BY-SECTION CONTENT EDITOR -->
         <div id="cms-panel-content" class="hidden space-y-4">
 
           <!-- SECTION A: WHATSAPP, SECURITY PIN & BRANDING -->
@@ -1816,13 +1875,13 @@
 
       <!-- CMS Sticky Footer Actions -->
       <div class="p-4 bg-white border-t border-obsidian/10 flex flex-wrap items-center justify-between gap-2 shrink-0">
-        <button type="button" onclick="saveCmsChanges()"
+        <button type="button" id="cmsSaveBtn" onclick="saveCmsChanges()"
           class="flex-1 py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs shadow-sm cursor-pointer">
-          💾 حفظ وتطبيق التعديلات فوراً
+          💾 حفظ ونشر التعديلات أونلاين فوراً
         </button>
         <button type="button" onclick="exportUpdatedHtmlFile()"
           class="py-3 px-4 rounded-xl bg-obsidian hover:bg-anthracite text-white font-extrabold text-xs cursor-pointer">
-          ⬇️ تحميل index.html للنشر
+          ⬇️ تحميل index.html
         </button>
         <button type="button" onclick="resetCmsDefaults()"
           class="py-3 px-3 rounded-xl bg-stonegray hover:bg-crimson hover:text-white text-obsidian font-bold text-xs cursor-pointer">
@@ -1868,7 +1927,7 @@
   </div>
 
   <!-- =====================================================================
-       14. MAIN INTERACTIVE ENGINE (THEME, VIDEOS, FORM & SMART CMS)
+       14. MAIN INTERACTIVE ENGINE (THEME, VIDEOS, FORM, SUPABASE & SMART CMS)
        ===================================================================== -->
   <script>
     let logoTapCount = 0;
@@ -1885,12 +1944,147 @@
       logoTapTimer = setTimeout(() => { logoTapCount = 0; }, 700);
     }
 
+    function setSupabaseBadgeState(isConnected, customLabel) {
+      const dot = document.getElementById('supabaseStatusDot');
+      const badge = document.getElementById('supabaseStatusBadge');
+      if (!dot || !badge) return;
+      if (isConnected) {
+        dot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse';
+        badge.className = 'px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 text-[10px] font-extrabold';
+        badge.textContent = customLabel || 'متصل بـ Supabase • مزامنة مباشرة';
+      } else {
+        dot.className = 'w-2.5 h-2.5 rounded-full bg-amber-400';
+        badge.className = 'px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-200 border border-amber-400/30 text-[10px] font-extrabold';
+        badge.textContent = customLabel || 'وضع محلي (تحقق من جداول Supabase)';
+      }
+    }
+
+    // =========================================================================
+    // SUPABASE LIVE SYNC FUNCTIONS (site_config, orders, storage)
+    // =========================================================================
+    async function loadConfigFromSupabase() {
+      if (!window.sbClient) {
+        setSupabaseBadgeState(false);
+        return;
+      }
+      try {
+        const { data, error } = await window.sbClient
+          .from('site_config')
+          .select('config')
+          .eq('id', 'rava_runner_01')
+          .maybeSingle();
+
+        if (error) {
+          console.warn('Supabase loadConfig error:', error.message);
+          setSupabaseBadgeState(false, 'بانتظار إنشاء جدول site_config');
+          return;
+        }
+
+        setSupabaseBadgeState(true);
+        if (data && data.config) {
+          window.cmsConfig = Object.assign({}, window.DEFAULT_CMS_CONFIG, data.config);
+          try {
+            localStorage.setItem('rava_smart_cms_v1', JSON.stringify(window.cmsConfig));
+          } catch (e) {}
+          applyCmsConfigToPage();
+        }
+      } catch (err) {
+        console.warn('Supabase loadConfig exception:', err);
+        setSupabaseBadgeState(false);
+      }
+    }
+
+    async function publishConfigToSupabase(cfg) {
+      if (!window.sbClient) return false;
+      try {
+        setSupabaseBadgeState(true, 'جاري النشر على Supabase...');
+        const { error } = await window.sbClient
+          .from('site_config')
+          .upsert({
+            id: 'rava_runner_01',
+            config: cfg,
+            updated_at: new Date().toISOString()
+          });
+
+        if (error) {
+          console.error('Supabase publishConfig error:', error.message);
+          setSupabaseBadgeState(false, 'خطأ في المزامنة: ' + error.message);
+          return false;
+        }
+        setSupabaseBadgeState(true, 'متصل بـ Supabase • تم النشر بنجاح ✓');
+        setTimeout(() => setSupabaseBadgeState(true), 2500);
+        return true;
+      } catch (err) {
+        setSupabaseBadgeState(false);
+        return false;
+      }
+    }
+
+    async function loadOrdersFromSupabase() {
+      if (!window.sbClient) {
+        renderCmsOrdersList();
+        return;
+      }
+      try {
+        const { data, error } = await window.sbClient
+          .from('orders')
+          .select('*')
+          .order('created_at', { ascending: false });
+
+        if (!error && Array.isArray(data)) {
+          const mapped = data.map(row => ({
+            dbId: row.id,
+            ref: row.ref,
+            date: row.created_at ? new Date(row.created_at).toLocaleString('fr-MA') : '',
+            name: row.customer_name,
+            phone: row.phone,
+            city: row.city_address,
+            items: row.items_summary,
+            total: row.total_dh,
+            status: row.status || 'جديد'
+          }));
+          try {
+            localStorage.setItem('rava_cms_orders_v1', JSON.stringify(mapped));
+          } catch (e) {}
+          setSupabaseBadgeState(true);
+        }
+      } catch (err) {
+        console.warn('Supabase loadOrders exception:', err);
+      }
+      renderCmsOrdersList();
+    }
+
+    async function saveOrderToSupabase(orderObj) {
+      if (!window.sbClient) return;
+      try {
+        const { error } = await window.sbClient
+          .from('orders')
+          .insert([{
+            ref: orderObj.ref,
+            customer_name: orderObj.name,
+            phone: orderObj.phone,
+            city_address: orderObj.city,
+            offer_type: window.orderState.offer,
+            items_summary: orderObj.items,
+            total_dh: orderObj.total,
+            status: orderObj.status
+          }]);
+
+        if (error) {
+          console.warn('Supabase insert order warning:', error.message);
+        } else {
+          await loadOrdersFromSupabase();
+        }
+      } catch (err) {
+        console.warn('Supabase saveOrder exception:', err);
+      }
+    }
+
     function applyPageTheme(colorKey) {
       const body = document.body;
       const topBar = document.getElementById('topAnnouncementBar');
       const heroDot = document.getElementById('heroThemeDot');
       const heroBadgeText = document.getElementById('heroThemeBadgeText');
-      const headlineUnderline = document.getElementById('heroHeadlineUnderline');
       const formBanner = document.getElementById('formHeaderBanner');
 
       if (colorKey === 'noir') {
@@ -1904,10 +2098,7 @@
           heroDot.className = 'w-2.5 h-2.5 rounded-full bg-[#DFD4C0] animate-pulse';
         }
         if (heroBadgeText) {
-          heroBadgeText.textContent = 'ثيم أسود / رمادي • المجموعة الحصرية 2026';
-        }
-        if (headlineUnderline) {
-          headlineUnderline.className = 'absolute bottom-1 right-0 w-full h-3 bg-[#DFD4C0]/25 -z-10 rounded-full transition-colors duration-500';
+          heroBadgeText.textContent = `ثيم ${window.cmsConfig.colorNoirLabel || 'أسود / رمادي'} • المجموعة الحصرية 2026`;
         }
         if (formBanner) {
           formBanner.className = 'bg-[#1D2026] text-white px-6 sm:px-10 py-6 sm:py-8 border-b border-white/10 transition-colors duration-500';
@@ -1923,10 +2114,7 @@
           heroDot.className = 'w-2.5 h-2.5 rounded-full bg-crimson animate-pulse';
         }
         if (heroBadgeText) {
-          heroBadgeText.textContent = 'ثيم أبيض / أحمر • المجموعة الحصرية 2026';
-        }
-        if (headlineUnderline) {
-          headlineUnderline.className = 'absolute bottom-1 right-0 w-full h-3 bg-crimson/20 -z-10 rounded-full transition-colors duration-500';
+          heroBadgeText.textContent = `ثيم ${window.cmsConfig.colorBlancLabel || 'أبيض / أحمر'} • المجموعة الحصرية 2026`;
         }
         if (formBanner) {
           formBanner.className = 'bg-crimson text-white px-6 sm:px-10 py-6 sm:py-8 transition-colors duration-500';
@@ -2002,7 +2190,6 @@
         orderState.pair1.color = colorKey;
         const meta = COLOR_META[colorKey];
 
-        // Keep full page theme synchronized even if user clicks the color inside the order form
         if ((colorKey === 'noir' && !document.body.classList.contains('theme-noir')) ||
             (colorKey === 'blanc' && !document.body.classList.contains('theme-blanc'))) {
           applyPageTheme(colorKey);
@@ -2166,7 +2353,7 @@
       return div.innerHTML;
     }
 
-    function submitOrder(e) {
+    async function submitOrder(e) {
       e.preventDefault();
 
       const name = document.getElementById('inputName').value.trim();
@@ -2200,6 +2387,12 @@
 
       if (!valid) return;
 
+      const submitBtn = document.getElementById('submitOrderBtn');
+      const submitLabel = document.getElementById('submitBtnLabel');
+      const originalLabel = submitLabel ? submitLabel.textContent : '';
+      if (submitBtn) submitBtn.disabled = true;
+      if (submitLabel) submitLabel.textContent = 'جاري تسجيل طلبك... ⏳';
+
       const orderRef = 'RV-' + Math.floor(1000 + Math.random() * 9000);
       const soloPrice = Number(window.cmsConfig.priceSolo) || 299;
       const duoPrice = Number(window.cmsConfig.priceDuo) || 548;
@@ -2211,8 +2404,7 @@
 
       const fullLocation = address ? `${city} — ${address}` : city;
 
-      // Save Order into Smart Mini CMS Inbox
-      saveNewOrderToCms({
+      const orderPayload = {
         ref: orderRef,
         date: new Date().toLocaleString('fr-MA'),
         name: name,
@@ -2221,7 +2413,14 @@
         items: itemsSummary,
         total: total,
         status: 'جديد'
-      });
+      };
+
+      // Save locally + push live to Supabase orders table
+      saveNewOrderToCms(orderPayload);
+      await saveOrderToSupabase(orderPayload);
+
+      if (submitBtn) submitBtn.disabled = false;
+      if (submitLabel) submitLabel.textContent = originalLabel;
 
       document.getElementById('confirmOrderRef').textContent = `رقم الطلب #${orderRef}`;
       document.getElementById('confirmRecapBox').innerHTML = `
@@ -2253,7 +2452,7 @@
     }
 
     // =========================================================================
-    // 6. SMART MINI CMS ENGINE (CONTENT, MEDIA UPLOAD & ORDERS MANAGEMENT)
+    // 6. SMART MINI CMS ENGINE (CONTENT, STORAGE UPLOAD & ORDERS MANAGEMENT)
     // =========================================================================
     function getStoredOrders() {
       try {
@@ -2272,24 +2471,54 @@
       } catch (e) {}
     }
 
-    function updateOrderStatus(idx, newStatus) {
+    async function updateOrderStatus(idx, newStatus) {
       const list = getStoredOrders();
-      if (!list[idx]) return;
-      list[idx].status = newStatus;
+      const target = list[idx];
+      if (!target) return;
+      target.status = newStatus;
       localStorage.setItem('rava_cms_orders_v1', JSON.stringify(list));
       renderCmsOrdersList();
+
+      if (window.sbClient && target.ref) {
+        try {
+          await window.sbClient
+            .from('orders')
+            .update({ status: newStatus })
+            .eq('ref', target.ref);
+        } catch (err) {}
+      }
     }
 
-    function deleteSingleOrder(idx) {
+    async function deleteSingleOrder(idx) {
       const list = getStoredOrders();
+      const target = list[idx];
       list.splice(idx, 1);
       localStorage.setItem('rava_cms_orders_v1', JSON.stringify(list));
       renderCmsOrdersList();
+
+      if (window.sbClient && target && target.ref) {
+        try {
+          await window.sbClient
+            .from('orders')
+            .delete()
+            .eq('ref', target.ref);
+        } catch (err) {}
+      }
     }
 
-    function clearAllOrders() {
+    async function clearAllOrders() {
+      const list = getStoredOrders();
       localStorage.removeItem('rava_cms_orders_v1');
       renderCmsOrdersList();
+
+      if (window.sbClient && list.length) {
+        try {
+          const refs = list.map(o => o.ref).filter(Boolean);
+          if (refs.length) {
+            await window.sbClient.from('orders').delete().in('ref', refs);
+          }
+        } catch (err) {}
+      }
     }
 
     function exportOrdersCsv() {
@@ -2334,7 +2563,7 @@
         container.innerHTML = `
           <div class="p-8 rounded-2xl bg-white hairline-border text-center">
             <p class="text-sm font-extrabold text-obsidian">لا توجد طلبات مسجلة حالياً</p>
-            <p class="text-xs text-obsidian/60 mt-1">بمجرد أن يملأ أي زبون استمارة الطلب في الصفحة، ستظهر طلبيته هنا فوراً.</p>
+            <p class="text-xs text-obsidian/60 mt-1">بمجرد أن يملأ أي زبون استمارة الطلب في الصفحة، ستظهر طلبيته هنا وفي Supabase فوراً.</p>
           </div>
         `;
         return;
@@ -2377,7 +2606,7 @@
       }).join('');
     }
 
-    function openSmartCms() {
+    async function openSmartCms() {
       if (sessionStorage.getItem('rava_cms_unlocked') !== '1') {
         const pinModal = document.getElementById('cmsPinModal');
         const pinInput = document.getElementById('cmsPinInput');
@@ -2391,8 +2620,8 @@
         return;
       }
       populateCmsInputs();
-      renderCmsOrdersList();
       document.getElementById('smartCmsModal').classList.remove('hidden');
+      await loadOrdersFromSupabase();
     }
 
     function closeCmsPinModal() {
@@ -2400,7 +2629,7 @@
       if (pinModal) pinModal.classList.add('hidden');
     }
 
-    function verifyCmsPin(e) {
+    async function verifyCmsPin(e) {
       e.preventDefault();
       const entered = (document.getElementById('cmsPinInput').value || '').trim();
       const expected = String(window.cmsConfig.cmsPin || '2026').trim();
@@ -2408,8 +2637,8 @@
         sessionStorage.setItem('rava_cms_unlocked', '1');
         closeCmsPinModal();
         populateCmsInputs();
-        renderCmsOrdersList();
         document.getElementById('smartCmsModal').classList.remove('hidden');
+        await loadOrdersFromSupabase();
       } else {
         document.getElementById('cmsPinError').classList.remove('hidden');
       }
@@ -2493,16 +2722,44 @@
       document.getElementById('cmsInputVid3Title').value = c.video3Title || '';
     }
 
-    function handleCmsFileUpload(event, targetInputId) {
+    async function handleCmsFileUpload(event, targetInputId) {
       const file = event.target.files && event.target.files[0];
       if (!file) return;
-      const objectUrl = URL.createObjectURL(file);
       const inputEl = document.getElementById(targetInputId);
+      const localBlobUrl = URL.createObjectURL(file);
+
       if (inputEl) {
-        inputEl.value = objectUrl;
+        inputEl.value = localBlobUrl;
         inputEl.dataset.fileName = file.name;
       }
-      saveCmsChanges(true);
+
+      // Attempt permanent upload to Supabase Storage bucket 'rava-media'
+      if (window.sbClient) {
+        try {
+          setSupabaseBadgeState(true, 'جاري رفع الملف إلى Supabase...');
+          const cleanName = `${Date.now()}_${file.name.replace(/[^a-zA-Z0-9._-]/g, '_')}`;
+          const { data, error } = await window.sbClient.storage
+            .from('rava-media')
+            .upload(cleanName, file, { upsert: true });
+
+          if (!error && data) {
+            const { data: pub } = window.sbClient.storage
+              .from('rava-media')
+              .getPublicUrl(cleanName);
+            if (pub && pub.publicUrl && inputEl) {
+              inputEl.value = pub.publicUrl;
+              setSupabaseBadgeState(true, 'تم رفع الملف أونلاين بنجاح ✓');
+            }
+          } else {
+            console.warn('Storage bucket rava-media fallback to local blob:', error && error.message);
+            setSupabaseBadgeState(true, 'معاينة محلية (أنشئ Bucket: rava-media للرفع الدائم)');
+          }
+        } catch (err) {
+          console.warn('Storage upload exception:', err);
+        }
+      }
+
+      await saveCmsChanges(true);
     }
 
     function applyCmsConfigToPage() {
@@ -2629,12 +2886,13 @@
         if (tEl && vidTitles[i]) tEl.textContent = vidTitles[i];
       });
 
+      applyPageTheme(window.orderState.pair1.color);
       switchHeroVideo(window.orderState.activeHeroVideoIdx);
       syncAllPreviewThumbnails();
       refreshOrderSummary();
     }
 
-    function saveCmsChanges(silent) {
+    async function saveCmsChanges(silent) {
       const val = (id) => (document.getElementById(id) ? document.getElementById(id).value.trim() : '');
       window.cmsConfig = {
         brandName: val('cmsInputBrandName') || 'RAVA MODE',
@@ -2695,19 +2953,34 @@
       } catch (e) {}
 
       applyCmsConfigToPage();
+
+      const saveBtn = document.getElementById('cmsSaveBtn');
+      const prevBtnText = saveBtn ? saveBtn.textContent : '';
+      if (saveBtn) {
+        saveBtn.disabled = true;
+        saveBtn.textContent = '⏳ جاري الحفظ والنشر أونلاين...';
+      }
+
+      await publishConfigToSupabase(window.cmsConfig);
+
+      if (saveBtn) {
+        saveBtn.disabled = false;
+        saveBtn.textContent = prevBtnText;
+      }
+
       if (!silent) closeSmartCms();
     }
 
-    function resetCmsDefaults() {
+    async function resetCmsDefaults() {
       localStorage.removeItem('rava_smart_cms_v1');
       window.cmsConfig = Object.assign({}, window.DEFAULT_CMS_CONFIG);
       populateCmsInputs();
       applyCmsConfigToPage();
+      await publishConfigToSupabase(window.cmsConfig);
     }
 
     function exportUpdatedHtmlFile() {
       saveCmsChanges(true);
-      // Prepare clean file references for export (using filename if local blob was uploaded)
       const exportCfg = Object.assign({}, window.cmsConfig);
       [
         ['cmsInputLogoSrc', 'logoSrc'],
@@ -2740,13 +3013,17 @@
       URL.revokeObjectURL(url);
     }
 
-    window.addEventListener('load', () => {
+    window.addEventListener('load', async () => {
       startSmoothProgressLoop();
       setupMobileStickyObserver();
       applyCmsConfigToPage();
       renderCmsOrdersList();
       selectColorway('blanc');
       refreshOrderSummary();
+
+      // Fetch latest live configuration and orders from Supabase
+      await loadConfigFromSupabase();
+      await loadOrdersFromSupabase();
 
       if (window.location.search.includes('cms=1')) {
         openSmartCms();
