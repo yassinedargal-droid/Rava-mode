@@ -185,19 +185,26 @@
     }
 
     function activateHeroKenBurnsFallback() {
-      const vidEl = document.getElementById('heroMainVideo');
+      const bufA = document.getElementById('heroVideoBufferA');
+      const bufB = document.getElementById('heroVideoBufferB');
       const stageEl = document.getElementById('heroKenBurnsStage');
       const imgEl = document.getElementById('heroKenBurnsImg');
       const currentCfg = window.VIDEOS_CONFIG[window.orderState.activeHeroVideoIdx] || window.VIDEOS_CONFIG[0];
       if (!stageEl || !imgEl) return;
 
-      if (vidEl) vidEl.classList.add('hidden');
+      if (bufA) bufA.classList.add('opacity-0');
+      if (bufB) bufB.classList.add('opacity-0');
       stageEl.classList.remove('hidden');
+      stageEl.classList.add('opacity-100');
+
+      const preferredImg = currentCfg.colorKey === 'noir'
+        ? (window.cmsConfig.colorNoirImg || currentCfg.fallbackImg)
+        : (window.cmsConfig.colorBlancImg || currentCfg.fallbackImg);
 
       imgEl.onerror = function() {
         applyMediaFallback(imgEl, currentCfg.fallbackKey);
       };
-      imgEl.src = currentCfg.fallbackImg;
+      imgEl.src = preferredImg;
     }
 
     function activateGridKenBurnsFallback(idx) {
@@ -221,10 +228,14 @@
       }
     }
 
+    window._activeHeroBuffer = 'A';
+    window._heroSwitchToken = 0;
+
     function switchHeroVideo(idx, isAutoCycle) {
       window.orderState.activeHeroVideoIdx = idx;
       window.orderState.heroAutoSlideStart = Date.now();
       const cfg = window.VIDEOS_CONFIG[idx] || window.VIDEOS_CONFIG[0];
+      const switchToken = ++window._heroSwitchToken;
 
       const badge = document.getElementById('heroVideoBadge');
       if (badge) badge.textContent = cfg.badge;
@@ -243,25 +254,74 @@
         }
       }
 
-      const vidEl = document.getElementById('heroMainVideo');
+      const bufA = document.getElementById('heroVideoBufferA');
+      const bufB = document.getElementById('heroVideoBufferB');
       const stageEl = document.getElementById('heroKenBurnsStage');
+      if (!bufA || !bufB) return;
 
-      if (vidEl) {
-        if (stageEl) stageEl.classList.add('hidden');
-        vidEl.classList.remove('hidden');
-        vidEl.loop = false;
-        vidEl.onended = function() {
-          const nextIdx = (window.orderState.activeHeroVideoIdx + 1) % 4;
-          switchHeroVideo(nextIdx, true);
-        };
-        vidEl.src = cfg.file;
-        vidEl.load();
-        const playPromise = vidEl.play();
-        if (playPromise && typeof playPromise.catch === 'function') {
-          playPromise.catch(function() {
-            activateHeroKenBurnsFallback();
-          });
+      const outgoingVid = window._activeHeroBuffer === 'A' ? bufA : bufB;
+      const incomingVid = window._activeHeroBuffer === 'A' ? bufB : bufA;
+      const nextBufferName = window._activeHeroBuffer === 'A' ? 'B' : 'A';
+
+      incomingVid.removeAttribute('poster');
+      incomingVid.loop = false;
+      incomingVid.muted = true;
+      incomingVid.playsInline = true;
+
+      let revealed = false;
+      const revealIncomingSmoothly = function() {
+        if (revealed || switchToken !== window._heroSwitchToken) return;
+        revealed = true;
+
+        if (stageEl) {
+          stageEl.classList.remove('opacity-100');
+          stageEl.classList.add('opacity-0');
+          setTimeout(function() {
+            if (switchToken === window._heroSwitchToken) stageEl.classList.add('hidden');
+          }, 520);
         }
+
+        incomingVid.classList.remove('opacity-0', 'scale-[1.03]');
+        incomingVid.classList.add('opacity-100', 'scale-100', 'z-20');
+
+        outgoingVid.classList.remove('opacity-100', 'scale-100', 'z-20');
+        outgoingVid.classList.add('opacity-0', 'scale-[1.03]', 'z-10');
+
+        window._activeHeroBuffer = nextBufferName;
+
+        setTimeout(function() {
+          if (switchToken === window._heroSwitchToken) {
+            outgoingVid.pause();
+          }
+        }, 550);
+      };
+
+      incomingVid.onended = function() {
+        if (switchToken !== window._heroSwitchToken) return;
+        const nextIdx = (window.orderState.activeHeroVideoIdx + 1) % 4;
+        switchHeroVideo(nextIdx, true);
+      };
+
+      incomingVid.onloadeddata = revealIncomingSmoothly;
+      incomingVid.oncanplay = revealIncomingSmoothly;
+      incomingVid.onerror = function() {
+        if (switchToken === window._heroSwitchToken) {
+          activateHeroKenBurnsFallback();
+        }
+      };
+
+      incomingVid.src = cfg.file;
+      incomingVid.load();
+
+      const playPromise = incomingVid.play();
+      if (playPromise && typeof playPromise.then === 'function') {
+        playPromise.then(function() {
+          revealIncomingSmoothly();
+        }).catch(function() {
+          if (switchToken === window._heroSwitchToken) {
+            activateHeroKenBurnsFallback();
+          }
+        });
       }
     }
 
@@ -284,7 +344,7 @@
     }
 
     function startSmoothProgressLoop() {
-      const SLIDE_DURATION_MS = 2600;
+      const SLIDE_DURATION_MS = 3200;
 
       setInterval(function() {
         const currentIdx = window.orderState.activeHeroVideoIdx || 0;
@@ -387,7 +447,7 @@
       background-size: 22px 22px;
     }
 
-    input:focus, select:focus, textarea:focus {
+    input:focus, select:focus {
       outline: none;
       border-color: #0E0E10;
       box-shadow: 0 0 0 3px rgba(14, 14, 16, 0.08);
@@ -401,7 +461,6 @@
       scrollbar-width: none;
     }
 
-    /* Official RAVA MODE Logo Circular Crop when image_003970.jpg loads */
     .rava-logo-crop {
       width: 100%;
       height: 100%;
@@ -410,9 +469,6 @@
       transform: scale(2.15);
     }
 
-    /* =====================================================================
-       DYNAMIC CREATIVE THEME ENGINE (BLANC/ROUGE vs NOIR/GRIS)
-       ===================================================================== */
     :root {
       --theme-bg: #FAF9F6;
       --theme-surface: #FFFFFF;
@@ -528,7 +584,6 @@
       border-color: rgba(255, 255, 255, 0.18) !important;
     }
 
-    /* Active Selected Buttons adapt to Theme */
     body.theme-blanc .theme-cta-btn {
       background-color: #D92B2B !important;
       color: #FFFFFF !important;
@@ -547,7 +602,6 @@
       background-color: #DFD4C0 !important;
     }
 
-    /* Active Size / Color Selection Pill in Dark Noir Theme */
     body.theme-noir .bg-obsidian.text-white {
       background-color: #DFD4C0 !important;
       color: #0E0E10 !important;
@@ -568,40 +622,12 @@
       border-color: #DFD4C0 !important;
       box-shadow: 0 0 0 3px rgba(223, 212, 192, 0.18) !important;
     }
-
-    /* Keep CMS Drawer & PIN Modal strictly in light high-contrast mode even when page is theme-noir */
-    #smartCmsModal .bg-white,
-    #cmsPinModal .bg-white {
-      background-color: #FFFFFF !important;
-      color: #0E0E10 !important;
-    }
-    #smartCmsModal .bg-alabaster,
-    #cmsPinModal .bg-alabaster {
-      background-color: #FAF9F6 !important;
-      color: #0E0E10 !important;
-    }
-    #smartCmsModal .bg-stonegray,
-    #cmsPinModal .bg-stonegray {
-      background-color: #EAE7E1 !important;
-      color: #0E0E10 !important;
-    }
-    #smartCmsModal .text-obsidian,
-    #cmsPinModal .text-obsidian {
-      color: #0E0E10 !important;
-    }
-    #smartCmsModal input,
-    #smartCmsModal textarea,
-    #cmsPinModal input {
-      background-color: #FFFFFF !important;
-      color: #0E0E10 !important;
-      border-color: rgba(14, 14, 16, 0.2) !important;
-    }
   </style>
 </head>
 <body class="theme-blanc antialiased selection:bg-crimson selection:text-white pb-24 md:pb-0">
 
   <!-- =====================================================================
-       0. TOP MOROCCO COD ANNOUNCEMENT BAR (COMPACT SINGLE-LINE ON MOBILE)
+       0. TOP MOROCCO COD ANNOUNCEMENT BAR
        ===================================================================== -->
   <div id="topAnnouncementBar" class="bg-crimson text-white text-[10px] sm:text-xs font-bold py-1.5 sm:py-2 px-3 text-center border-b border-white/10 transition-colors duration-500">
     <p id="cmsTopAnnouncementText" class="max-w-7xl mx-auto tracking-wide truncate">
@@ -610,12 +636,12 @@
   </div>
 
   <!-- =====================================================================
-       1. STICKY HEADER WITH OFFICIAL RAVA MODE LOGO + SMART CMS TRIGGER
+       1. STICKY HEADER WITH OFFICIAL RAVA MODE LOGO + SECRET CMS TRIGGER
        ===================================================================== -->
   <header class="sticky top-0 z-40 bg-alabaster/92 backdrop-blur-md border-b border-obsidian/10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 sm:h-20 flex items-center justify-between">
       
-      <!-- Brand Emblem + RAVA MODE Wordmark (Triple-tap opens Admin CMS) -->
+      <!-- Brand Emblem + RAVA MODE Wordmark (Triple-tap opens CMS) -->
       <a href="#" onclick="handleLogoSecretTap(event)" class="flex items-center gap-3 group focus:outline-none">
         <div id="headerLogoWrapper" class="w-12 h-12 rounded-full overflow-hidden bg-obsidian shrink-0 shadow-sm ring-1 ring-obsidian/15 group-hover:scale-105 transition-transform duration-300">
           <img
@@ -659,10 +685,9 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
         
-        <!-- RIGHT COLUMN IN RTL: HEADLINE, SOCIAL PROOF, COLORWAYS, SIZES & CTA (6 cols) -->
+        <!-- RIGHT COLUMN IN RTL: HEADLINE, PRICING, COLORWAYS, SIZES & CTA -->
         <div class="lg:col-span-6 flex flex-col items-start text-right order-2 lg:order-1">
           
-          <!-- Exclusive Drop Badge + Live Theme Indicator -->
           <div class="flex flex-wrap items-center gap-2.5 mb-5">
             <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-stonegray hairline-border">
               <span id="heroThemeDot" class="w-2.5 h-2.5 rounded-full bg-crimson animate-pulse"></span>
@@ -672,12 +697,10 @@
             </div>
           </div>
 
-          <!-- High-Impact Arabic / Darija Headline -->
           <h1 id="cmsHeroHeadline" class="font-display font-black text-3xl sm:text-5xl lg:text-[48px] text-obsidian leading-[1.18] mb-5">
             الأناقة والراحة فخطوة وحدة — سنيكرز RAVA MODE الجديد
           </h1>
 
-          <!-- Subtitle -->
           <p id="cmsHeroSubtitle" class="text-sm sm:text-base text-obsidian/80 leading-relaxed max-w-xl mb-6 font-medium">
             موديل واحد بتصميم عصري بجودة عالية، نعل مريح 4.5 سم وتهوية مثالية طوال اليوم. متوفر بلونين حصريين ومقاسات من 40 إلى 44.
           </p>
@@ -702,7 +725,7 @@
             </p>
           </div>
 
-          <!-- Interactive Colorway Switcher (Synchronizes Hero Video + Form + Sticky Bar) -->
+          <!-- Interactive Colorway Switcher -->
           <div class="w-full mb-6">
             <div class="flex items-center justify-between mb-2.5">
               <span class="text-xs sm:text-sm font-bold text-obsidian/75">
@@ -781,13 +804,12 @@
           </a>
         </div>
 
-        <!-- LEFT COLUMN IN RTL: CLEAN AUTO-CYCLING VERTICAL VIDEO FRAME (6 cols) -->
+        <!-- LEFT COLUMN IN RTL: CLEAN AUTO-CYCLING VERTICAL VIDEO FRAME -->
         <div class="lg:col-span-6 flex flex-col items-center justify-center order-1 lg:order-2">
           <div class="relative w-[275px] sm:w-[315px] lg:w-[340px] aspect-[9/16] rounded-[34px] p-2 bg-obsidian shadow-2xl shadow-obsidian/25 ring-1 ring-obsidian/15">
-            <!-- Inner Vertical Frame (100% Clean Auto-Cycling Video View) -->
             <div class="relative w-full h-full rounded-[26px] overflow-hidden bg-obsidian select-none">
               
-              <!-- 4-Segment Auto-Progress Story Bars (Shows auto-cycling across both models) -->
+              <!-- 4-Segment Auto-Progress Story Bars -->
               <div class="absolute top-3 left-3.5 right-3.5 z-30 grid grid-cols-4 gap-1.5">
                 <div class="h-1 rounded-full bg-white/30 overflow-hidden backdrop-blur-xs">
                   <div id="heroStoryBar-0" class="h-full bg-white w-full transition-all duration-100"></div>
@@ -810,22 +832,27 @@
                 </span>
               </div>
 
-              <!-- REAL SILENT MP4 VIDEO (Auto-cycles through both colorways) -->
+              <!-- DUAL-BUFFER SILENT MP4 VIDEOS (Smooth 500ms Crossfade, Zero Image Flash) -->
               <video
-                id="heroMainVideo"
-                src="sneaker_white_navy_flat_9x16_with_voiceover 2.mp4"
-                poster="WhatsApp Image 2026-11-01 at 20.52.40;.jpeg"
-                class="w-full h-full object-cover"
+                id="heroVideoBufferA"
+                class="absolute inset-0 w-full h-full object-cover opacity-100 scale-100 z-20 transition-all duration-500 ease-out"
                 autoplay
                 muted
                 playsinline
                 preload="auto"
                 fetchpriority="high"
-                onerror="activateHeroKenBurnsFallback()"
               ></video>
 
-              <!-- HIGH-RESOLUTION KEN BURNS MACRO FALLBACK STAGE (Guarantees zero black screen in preview) -->
-              <div id="heroKenBurnsStage" class="hidden absolute inset-0 w-full h-full overflow-hidden bg-obsidian">
+              <video
+                id="heroVideoBufferB"
+                class="absolute inset-0 w-full h-full object-cover opacity-0 scale-[1.03] z-10 transition-all duration-500 ease-out"
+                muted
+                playsinline
+                preload="auto"
+              ></video>
+
+              <!-- HIGH-RESOLUTION KEN BURNS MACRO FALLBACK STAGE (Smooth Fade if Video Unavailable) -->
+              <div id="heroKenBurnsStage" class="hidden opacity-0 transition-opacity duration-500 ease-out absolute inset-0 w-full h-full overflow-hidden bg-obsidian z-20">
                 <img
                   id="heroKenBurnsImg"
                   src=""
@@ -3172,13 +3199,22 @@
       const vidTitles = [c.video0Title, c.video1Title, c.video2Title, c.video3Title];
       vidSources.forEach((src, i) => {
         window.VIDEOS_CONFIG[i].file = src;
+        const colorSpecificPoster = window.VIDEOS_CONFIG[i].colorKey === 'noir'
+          ? (c.colorNoirImg || window.VIDEOS_CONFIG[i].fallbackImg)
+          : (c.colorBlancImg || window.VIDEOS_CONFIG[i].fallbackImg);
+        window.VIDEOS_CONFIG[i].fallbackImg = colorSpecificPoster;
+
         const gVid = document.getElementById('gridVideo-' + i);
         const gFb = document.getElementById('gridFallback-' + i);
+        const gFbImg = document.getElementById('gridFallbackImg-' + i);
+        if (gFbImg && colorSpecificPoster) {
+          gFbImg.src = colorSpecificPoster;
+        }
         if (gVid && src) {
           if (gFb) gFb.classList.add('hidden');
           gVid.classList.remove('hidden');
           gVid.dataset.src = src;
-          gVid.poster = window.VIDEOS_CONFIG[i].fallbackImg || '';
+          gVid.poster = colorSpecificPoster || '';
           if (window._videosSectionVisible && window.VIDEOS_CONFIG[i].colorKey === window.orderState.pair1.color) {
             gVid.src = src;
             gVid.load();
