@@ -91,6 +91,7 @@
       offer: 'solo',
       pair1: { color: 'blanc', size: '42' },
       pair2: { color: 'noir', size: '43' },
+      modelSizes: { blanc: '42', noir: '43' },
       activeHeroVideoIdx: 0,
       heroAutoPlayEnabled: true,
       heroAutoSlideStart: Date.now()
@@ -222,11 +223,11 @@
       if (!pillBlanc || !pillNoir) return;
 
       if (colorKey === 'blanc') {
-        pillBlanc.className = 'flex-1 py-2 px-2.5 sm:px-3 rounded-full text-[11px] sm:text-xs font-extrabold whitespace-nowrap bg-crimson text-white shadow-sm transition flex items-center justify-center gap-1.5 cursor-pointer';
-        pillNoir.className = 'flex-1 py-2 px-2.5 sm:px-3 rounded-full text-[11px] sm:text-xs font-extrabold whitespace-nowrap bg-white/15 text-white/90 hover:bg-white/25 backdrop-blur-md transition flex items-center justify-center gap-1.5 cursor-pointer';
+        pillBlanc.className = 'flex-1 py-2 px-3 rounded-full text-xs font-extrabold bg-crimson text-white shadow-sm transition flex items-center justify-center gap-1.5 cursor-pointer';
+        pillNoir.className = 'flex-1 py-2 px-3 rounded-full text-xs font-extrabold bg-white/15 text-white/90 hover:bg-white/25 backdrop-blur-md transition flex items-center justify-center gap-1.5 cursor-pointer';
       } else {
-        pillNoir.className = 'flex-1 py-2 px-2.5 sm:px-3 rounded-full text-[11px] sm:text-xs font-extrabold whitespace-nowrap bg-[#DFD4C0] text-[#0E0E10] shadow-sm transition flex items-center justify-center gap-1.5 cursor-pointer';
-        pillBlanc.className = 'flex-1 py-2 px-2.5 sm:px-3 rounded-full text-[11px] sm:text-xs font-extrabold whitespace-nowrap bg-white/15 text-white/90 hover:bg-white/25 backdrop-blur-md transition flex items-center justify-center gap-1.5 cursor-pointer';
+        pillNoir.className = 'flex-1 py-2 px-3 rounded-full text-xs font-extrabold bg-[#DFD4C0] text-[#0E0E10] shadow-sm transition flex items-center justify-center gap-1.5 cursor-pointer';
+        pillBlanc.className = 'flex-1 py-2 px-3 rounded-full text-xs font-extrabold bg-white/15 text-white/90 hover:bg-white/25 backdrop-blur-md transition flex items-center justify-center gap-1.5 cursor-pointer';
       }
     }
 
@@ -471,6 +472,14 @@
       transform: scale(2.15);
     }
 
+    #smartCmsModal.hidden,
+    #cmsPinModal.hidden,
+    #sizeGuideModal.hidden,
+    #orderConfirmModal.hidden,
+    #cookieConsentBanner.hidden {
+      display: none !important;
+    }
+
     :root {
       --theme-bg: #FAF9F6;
       --theme-surface: #FFFFFF;
@@ -640,11 +649,11 @@
        1. STICKY HEADER WITH OFFICIAL RAVA MODE LOGO + RS + SECRET CMS TRIGGER
        ===================================================================== -->
   <header class="sticky top-0 z-40 bg-alabaster/90 backdrop-blur-md border-b border-obsidian/10">
-    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-14 sm:h-20 flex items-center justify-between gap-1.5 sm:gap-3">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 sm:h-20 flex items-center justify-between">
       
       <!-- Brand Emblem + RAVA MODE Wordmark (Triple-tap opens CMS) -->
-      <a href="#" onclick="handleLogoSecretTap(event)" class="flex items-center gap-2 sm:gap-3 min-w-0 group focus:outline-none">
-        <div id="headerLogoWrapper" class="w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden bg-obsidian shrink-0 shadow-sm ring-1 ring-obsidian/15 group-hover:scale-105 transition-transform duration-300">
+      <a href="#" onclick="handleLogoSecretTap(event)" class="flex items-center gap-3 group focus:outline-none">
+        <div id="headerLogoWrapper" class="w-12 h-12 rounded-full overflow-hidden bg-obsidian shrink-0 shadow-sm ring-1 ring-obsidian/15 group-hover:scale-105 transition-transform duration-300">
           <svg viewBox="0 0 120 120" class="w-full h-full" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="RAVA MODE">
             <circle cx="60" cy="60" r="60" fill="#0E0E10"></circle>
             <circle cx="60" cy="46" r="21" fill="none" stroke="#FFFFFF" stroke-width="2.2"></circle>
@@ -652,9 +661,9 @@
             <text x="60" y="86" text-anchor="middle" fill="#FFFFFF" font-family="Montserrat, sans-serif" font-weight="700" font-size="11.5" letter-spacing="2.4">RAVA MODE</text>
           </svg>
         </div>
-        <div class="flex flex-col text-right min-w-0">
-          <span id="cmsHeaderBrandName" dir="ltr" class="font-brand font-extrabold text-sm sm:text-lg tracking-[0.14em] sm:tracking-[0.18em] text-obsidian leading-none whitespace-nowrap">RAVA MODE</span>
-          <span id="cmsHeaderTagline" class="text-[10px] sm:text-[11px] text-obsidian/65 mt-0.5 sm:mt-1 font-semibold truncate max-w-[125px] sm:max-w-none">المجموعة الحصرية 2026</span>
+        <div class="flex flex-col text-right">
+          <span id="cmsHeaderBrandName" dir="ltr" class="font-brand font-extrabold text-base sm:text-lg tracking-[0.18em] text-obsidian leading-none">RAVA MODE</span>
+          <span id="cmsHeaderTagline" class="text-[11px] text-obsidian/65 mt-1 font-semibold">المجموعة الحصرية 2026</span>
         </div>
       </a>
 
@@ -666,20 +675,20 @@
       </nav>
 
       <!-- Header Actions: Social Media (RS) + Fast Order CTA -->
-      <div class="flex items-center gap-1.5 sm:gap-3 shrink-0">
-        <div class="flex items-center gap-1 sm:gap-1.5 shrink-0" aria-label="مواقع التواصل الاجتماعي">
-          <a id="headerInstagramLink" href="https://www.instagram.com/ravamode.ma" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-stonegray/85 hover:bg-obsidian hover:text-white text-obsidian inline-flex items-center justify-center shrink-0 transition hairline-border">
-            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      <div class="flex items-center gap-2 sm:gap-3">
+        <div class="flex items-center gap-1.5" aria-label="مواقع التواصل الاجتماعي">
+          <a id="headerInstagramLink" href="https://www.instagram.com/ravamode.ma" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-stonegray/85 hover:bg-obsidian hover:text-white text-obsidian flex items-center justify-center transition hairline-border">
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
           </a>
-          <a id="headerTiktokLink" href="https://www.tiktok.com/@ravamode.ma" target="_blank" rel="noopener noreferrer" aria-label="TikTok" class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-stonegray/85 hover:bg-obsidian hover:text-white text-obsidian inline-flex items-center justify-center shrink-0 transition hairline-border">
-            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
+          <a id="headerTiktokLink" href="https://www.tiktok.com/@ravamode.ma" target="_blank" rel="noopener noreferrer" aria-label="TikTok" class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-stonegray/85 hover:bg-obsidian hover:text-white text-obsidian flex items-center justify-center transition hairline-border">
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
           </a>
-          <a id="headerFacebookLink" href="https://www.facebook.com/ravamode.ma" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-stonegray/85 hover:bg-obsidian hover:text-white text-obsidian inline-flex items-center justify-center shrink-0 transition hairline-border">
-            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current" viewBox="0 0 24 24"><path d="M13.5 21v-8.2h2.75l.41-3.2H13.5V7.56c0-.93.26-1.56 1.59-1.56h1.7V3.14c-.29-.04-1.3-.14-2.48-.14-2.45 0-4.13 1.5-4.13 4.25V9.6H7.4v3.2h2.78V21h3.32z"/></svg>
+          <a id="headerFacebookLink" href="https://www.facebook.com/ravamode.ma" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="hidden sm:flex w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-stonegray/85 hover:bg-obsidian hover:text-white text-obsidian items-center justify-center transition hairline-border">
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/></svg>
           </a>
         </div>
 
-        <a href="#commander" class="theme-cta-btn whitespace-nowrap shrink-0 px-3 sm:px-6 py-2 sm:py-2.5 rounded-full bg-crimson text-white text-[11px] sm:text-sm font-extrabold active:scale-[0.98] transition shadow-sm">
+        <a href="#commander" class="theme-cta-btn px-4 sm:px-6 py-2.5 rounded-full bg-crimson text-white text-xs sm:text-sm font-extrabold active:scale-[0.98] transition shadow-sm">
           اطلب الآن
         </a>
       </div>
@@ -828,11 +837,11 @@
               <!-- Bottom Gradient Overlay: Reactive 2-Color Switcher -->
               <div class="absolute bottom-0 inset-x-0 z-30 pt-12 pb-3.5 px-3.5 bg-gradient-to-t from-black/85 via-black/45 to-transparent">
                 <div class="flex items-center gap-2 p-1 rounded-full bg-black/45 backdrop-blur-md border border-white/15">
-                  <button type="button" onclick="selectColorway('blanc')" id="hero-vid-color-blanc" class="flex-1 py-2 px-2.5 sm:px-3 rounded-full text-[11px] sm:text-xs font-extrabold whitespace-nowrap bg-crimson text-white shadow-sm transition flex items-center justify-center gap-1.5 cursor-pointer">
+                  <button type="button" onclick="selectColorway('blanc')" id="hero-vid-color-blanc" class="flex-1 py-2 px-3 rounded-full text-xs font-extrabold bg-crimson text-white shadow-sm transition flex items-center justify-center gap-1.5 cursor-pointer">
                     <span class="w-2 h-2 rounded-full bg-white shrink-0"></span>
                     <span id="cmsHeroVidPillBlanc">أبيض / أحمر</span>
                   </button>
-                  <button type="button" onclick="selectColorway('noir')" id="hero-vid-color-noir" class="flex-1 py-2 px-2.5 sm:px-3 rounded-full text-[11px] sm:text-xs font-extrabold whitespace-nowrap bg-white/15 text-white/90 hover:bg-white/25 backdrop-blur-md transition flex items-center justify-center gap-1.5 cursor-pointer">
+                  <button type="button" onclick="selectColorway('noir')" id="hero-vid-color-noir" class="flex-1 py-2 px-3 rounded-full text-xs font-extrabold bg-white/15 text-white/90 hover:bg-white/25 backdrop-blur-md transition flex items-center justify-center gap-1.5 cursor-pointer">
                     <span class="w-2 h-2 rounded-full bg-obsidian border border-white/50 shrink-0"></span>
                     <span id="cmsHeroVidPillNoir">أسود / رمادي</span>
                   </button>
@@ -1067,8 +1076,8 @@
         <!-- Form Content -->
         <form id="codOrderForm" onsubmit="submitOrder(event)" novalidate class="p-6 sm:p-10 space-y-7">
           
-          <!-- Dynamic Visual Preview of Active Selection -->
-          <div class="flex items-center gap-4 p-4 rounded-2xl bg-alabaster hairline-border">
+          <!-- Dynamic Visual Preview of Active Selection (Solo Mode) -->
+          <div id="soloPreviewBox" class="flex items-center gap-4 p-4 rounded-2xl bg-alabaster hairline-border">
             <img id="formPreviewImg" src="https://cnovkkilcvobthwjjkvr.supabase.co/storage/v1/object/public/rava-media/1795284591460_rava_clean_1795284591460.jpg" alt="معاينة سنيكرز RAVA MODE" class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl object-cover bg-stonegray shrink-0 hairline-border" onerror="applyMediaFallback(this, 'blanc_studio')">
             <div class="min-w-0 flex-1">
               <span class="text-[11px] font-bold text-obsidian/60">اختيارك الحالي :</span>
@@ -1077,20 +1086,63 @@
             </div>
           </div>
 
+          <!-- Dual Side-by-Side Visual Preview (Duo Mode: Each Model & Its Own Size Always Visible) -->
+          <div id="duoPreviewBox" class="hidden p-4 rounded-2xl bg-alabaster hairline-border space-y-2.5">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-extrabold text-obsidian/70">اختيارك في عرض الثنائي (كل موديل بمقاسه الخاص) :</span>
+              <span id="duoPreviewSaveTag" class="text-[11px] font-extrabold text-crimson">توفير 50 درهم</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              <!-- Pair 1 Card -->
+              <div class="flex items-center gap-3 p-2.5 rounded-xl bg-white hairline-border">
+                <img id="duoPreviewImg1" src="https://cnovkkilcvobthwjjkvr.supabase.co/storage/v1/object/public/rava-media/1795284591460_rava_clean_1795284591460.jpg" alt="الحذاء الأول" class="w-14 h-14 rounded-xl object-cover bg-stonegray shrink-0 hairline-border" onerror="applyMediaFallback(this, 'blanc_studio')">
+                <div class="min-w-0 flex-1">
+                  <span class="inline-block px-2 py-0.5 rounded-full bg-obsidian text-white text-[10px] font-extrabold">الحذاء 1</span>
+                  <div id="duoPreviewColor1" class="text-xs font-extrabold text-obsidian truncate mt-1">أبيض / أحمر</div>
+                  <div id="duoPreviewSize1" class="text-xs font-black text-crimson mt-0.5">المقاس المختار : 42</div>
+                </div>
+              </div>
+              <!-- Pair 2 Card -->
+              <div class="flex items-center gap-3 p-2.5 rounded-xl bg-white hairline-border">
+                <img id="duoPreviewImg2" src="https://cnovkkilcvobthwjjkvr.supabase.co/storage/v1/object/public/rava-media/1795284601030_rava_clean_1795284601030.jpg" alt="الحذاء الثاني" class="w-14 h-14 rounded-xl object-cover bg-stonegray shrink-0 hairline-border" onerror="applyMediaFallback(this, 'noir_studio')">
+                <div class="min-w-0 flex-1">
+                  <span class="inline-block px-2 py-0.5 rounded-full bg-obsidian text-white text-[10px] font-extrabold">الحذاء 2</span>
+                  <div id="duoPreviewColor2" class="text-xs font-extrabold text-obsidian truncate mt-1">أسود / رمادي</div>
+                  <div id="duoPreviewSize2" class="text-xs font-black text-crimson mt-0.5">المقاس المختار : 43</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <!-- 1. CHOIX DU COLORIS -->
           <div>
-            <label class="block text-xs sm:text-sm font-extrabold text-obsidian mb-3">
-              1. اختر اللون :
-            </label>
+            <div class="flex items-center justify-between mb-3">
+              <label id="formStep1Label" class="block text-xs sm:text-sm font-extrabold text-obsidian">
+                1. اختر اللون :
+              </label>
+              <span id="formStep1Badge" class="hidden px-2.5 py-0.5 rounded-full bg-obsidian text-white text-[11px] font-extrabold">
+                أبيض / أحمر • مقاس 42
+              </span>
+            </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <button type="button" onclick="setPairColor(1, 'blanc')" id="form-color-blanc" class="flex items-center gap-3 p-3 rounded-2xl bg-alabaster border-2 border-crimson text-right transition cursor-pointer">
-                <img id="formThumbBlanc" src="https://cnovkkilcvobthwjjkvr.supabase.co/storage/v1/object/public/rava-media/1795284591460_rava_clean_1795284591460.jpg" alt="أبيض / أحمر" class="w-12 h-12 rounded-xl object-cover shrink-0 hairline-border" onerror="applyMediaFallback(this, 'blanc_studio')">
-                <span id="cmsFormColorBlancLabel" class="text-xs font-extrabold text-obsidian">أبيض / أحمر</span>
+              <button type="button" onclick="setPairColor(1, 'blanc')" id="form-color-blanc" class="flex items-center justify-between gap-3 p-3 rounded-2xl bg-alabaster border-2 border-crimson text-right transition cursor-pointer">
+                <div class="flex items-center gap-3 min-w-0">
+                  <img id="formThumbBlanc" src="https://cnovkkilcvobthwjjkvr.supabase.co/storage/v1/object/public/rava-media/1795284591460_rava_clean_1795284591460.jpg" alt="أبيض / أحمر" class="w-12 h-12 rounded-xl object-cover shrink-0 hairline-border" onerror="applyMediaFallback(this, 'blanc_studio')">
+                  <div class="min-w-0">
+                    <span id="cmsFormColorBlancLabel" class="block text-xs font-extrabold text-obsidian truncate">أبيض / أحمر</span>
+                    <span id="formColorBlancSizeTag" class="block text-[11px] font-bold text-crimson mt-0.5">المقاس : 42</span>
+                  </div>
+                </div>
               </button>
 
-              <button type="button" onclick="setPairColor(1, 'noir')" id="form-color-noir" class="flex items-center gap-3 p-3 rounded-2xl bg-white hover:bg-alabaster border border-obsidian/15 text-right transition cursor-pointer">
-                <img id="formThumbNoir" src="https://cnovkkilcvobthwjjkvr.supabase.co/storage/v1/object/public/rava-media/1795284601030_rava_clean_1795284601030.jpg" alt="أسود / رمادي" class="w-12 h-12 rounded-xl object-cover shrink-0 hairline-border" onerror="applyMediaFallback(this, 'noir_studio')">
-                <span id="cmsFormColorNoirLabel" class="text-xs font-extrabold text-obsidian">أسود / رمادي</span>
+              <button type="button" onclick="setPairColor(1, 'noir')" id="form-color-noir" class="flex items-center justify-between gap-3 p-3 rounded-2xl bg-white hover:bg-alabaster border border-obsidian/15 text-right transition cursor-pointer">
+                <div class="flex items-center gap-3 min-w-0">
+                  <img id="formThumbNoir" src="https://cnovkkilcvobthwjjkvr.supabase.co/storage/v1/object/public/rava-media/1795284601030_rava_clean_1795284601030.jpg" alt="أسود / رمادي" class="w-12 h-12 rounded-xl object-cover shrink-0 hairline-border" onerror="applyMediaFallback(this, 'noir_studio')">
+                  <div class="min-w-0">
+                    <span id="cmsFormColorNoirLabel" class="block text-xs font-extrabold text-obsidian truncate">أسود / رمادي</span>
+                    <span id="formColorNoirSizeTag" class="block text-[11px] font-bold text-obsidian/60 mt-0.5">المقاس : 43</span>
+                  </div>
+                </div>
               </button>
             </div>
           </div>
@@ -1098,7 +1150,7 @@
           <!-- 2. CHOIX DE LA POINTURE (40 - 44) -->
           <div>
             <div class="flex flex-wrap items-center justify-between gap-2 mb-2.5">
-              <label class="text-xs sm:text-sm font-extrabold text-obsidian">
+              <label id="formStep2Label" class="text-xs sm:text-sm font-extrabold text-obsidian">
                 2. اختر المقاس (Pointure) :
               </label>
               <button type="button" onclick="openSizeGuide()" class="text-xs font-bold text-obsidian/75 hover:text-obsidian underline underline-offset-4 cursor-pointer">
@@ -1149,19 +1201,29 @@
 
           <!-- PAIR 2 SELECTOR (WHEN DUO OFFER IS CHOSEN) -->
           <div id="pair2Box" class="hidden p-5 rounded-2xl bg-stonegray/65 hairline-border space-y-4">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-extrabold text-obsidian">الحذاء الثاني — اختر اللون والمقاس :</span>
-              <span class="text-[11px] font-bold text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-full">مشمول في عرض الثنائي</span>
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <span class="text-xs sm:text-sm font-extrabold text-obsidian">الحذاء الثاني — اختر اللون والمقاس بحرية :</span>
+              <span id="formStep2P2Badge" class="text-[11px] font-extrabold text-emerald-900 bg-emerald-100 px-2.5 py-0.5 rounded-full">أسود / رمادي • مقاس 43</span>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-              <button type="button" onclick="setPairColor(2, 'blanc')" id="form-p2-color-blanc" class="flex items-center gap-2.5 p-2.5 rounded-xl bg-white/80 border border-obsidian/15 text-right transition cursor-pointer">
-                <img src="https://cnovkkilcvobthwjjkvr.supabase.co/storage/v1/object/public/rava-media/1795284591460_rava_clean_1795284591460.jpg" alt="أبيض / أحمر" class="w-9 h-9 rounded-lg object-cover shrink-0" onerror="applyMediaFallback(this, 'blanc_studio')">
-                <span class="text-xs font-extrabold text-obsidian">أبيض / أحمر</span>
+              <button type="button" onclick="setPairColor(2, 'blanc')" id="form-p2-color-blanc" class="flex items-center justify-between gap-2.5 p-2.5 rounded-xl bg-white/80 border border-obsidian/15 text-right transition cursor-pointer">
+                <div class="flex items-center gap-2.5 min-w-0">
+                  <img id="formP2ThumbBlanc" src="https://cnovkkilcvobthwjjkvr.supabase.co/storage/v1/object/public/rava-media/1795284591460_rava_clean_1795284591460.jpg" alt="أبيض / أحمر" class="w-10 h-10 rounded-lg object-cover shrink-0" onerror="applyMediaFallback(this, 'blanc_studio')">
+                  <div class="min-w-0">
+                    <span id="cmsFormP2ColorBlancLabel" class="block text-xs font-extrabold text-obsidian truncate">أبيض / أحمر</span>
+                    <span id="formP2BlancSizeTag" class="block text-[10px] font-bold text-obsidian/60">المقاس : 42</span>
+                  </div>
+                </div>
               </button>
-              <button type="button" onclick="setPairColor(2, 'noir')" id="form-p2-color-noir" class="flex items-center gap-2.5 p-2.5 rounded-xl bg-white border-2 border-obsidian text-right transition cursor-pointer">
-                <img src="https://cnovkkilcvobthwjjkvr.supabase.co/storage/v1/object/public/rava-media/1795284601030_rava_clean_1795284601030.jpg" alt="أسود / رمادي" class="w-9 h-9 rounded-lg object-cover shrink-0" onerror="applyMediaFallback(this, 'noir_studio')">
-                <span class="text-xs font-extrabold text-obsidian">أسود / رمادي</span>
+              <button type="button" onclick="setPairColor(2, 'noir')" id="form-p2-color-noir" class="flex items-center justify-between gap-2.5 p-2.5 rounded-xl bg-white border-2 border-obsidian text-right transition cursor-pointer">
+                <div class="flex items-center gap-2.5 min-w-0">
+                  <img id="formP2ThumbNoir" src="https://cnovkkilcvobthwjjkvr.supabase.co/storage/v1/object/public/rava-media/1795284601030_rava_clean_1795284601030.jpg" alt="أسود / رمادي" class="w-10 h-10 rounded-lg object-cover shrink-0" onerror="applyMediaFallback(this, 'noir_studio')">
+                  <div class="min-w-0">
+                    <span id="cmsFormP2ColorNoirLabel" class="block text-xs font-extrabold text-obsidian truncate">أسود / رمادي</span>
+                    <span id="formP2NoirSizeTag" class="block text-[10px] font-bold text-crimson">المقاس : 43</span>
+                  </div>
+                </div>
               </button>
             </div>
 
@@ -1281,8 +1343,8 @@
           <a id="footerTiktokLink" href="https://www.tiktok.com/@ravamode.ma" target="_blank" rel="noopener noreferrer" aria-label="TikTok" class="w-9 h-9 rounded-full bg-white/10 hover:bg-white hover:text-obsidian text-white flex items-center justify-center transition">
             <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
           </a>
-          <a id="footerFacebookLink" href="https://www.facebook.com/ravamode.ma" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="w-9 h-9 rounded-full bg-white/10 hover:bg-white hover:text-obsidian text-white inline-flex items-center justify-center shrink-0 transition">
-            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M13.5 21v-8.2h2.75l.41-3.2H13.5V7.56c0-.93.26-1.56 1.59-1.56h1.7V3.14c-.29-.04-1.3-.14-2.48-.14-2.45 0-4.13 1.5-4.13 4.25V9.6H7.4v3.2h2.78V21h3.32z"/></svg>
+          <a id="footerFacebookLink" href="https://www.facebook.com/ravamode.ma" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="w-9 h-9 rounded-full bg-white/10 hover:bg-white hover:text-obsidian text-white flex items-center justify-center transition">
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/></svg>
           </a>
         </div>
         <div id="cmsFooterCopyright" class="text-xs text-white/55">© 2026 RAVA MODE. جميع الحقوق محفوظة.</div>
@@ -2199,6 +2261,9 @@
     function setPairColor(pairNum, colorKey) {
       if (pairNum === 1) {
         orderState.pair1.color = colorKey;
+        if (orderState.modelSizes && orderState.modelSizes[colorKey]) {
+          orderState.pair1.size = orderState.modelSizes[colorKey];
+        }
         const meta = COLOR_META[colorKey];
 
         if ((colorKey === 'noir' && !document.body.classList.contains('theme-noir')) ||
@@ -2220,58 +2285,82 @@
         const fBlanc = document.getElementById('form-color-blanc');
         const fNoir = document.getElementById('form-color-noir');
         if (colorKey === 'blanc') {
-          fBlanc.className = 'flex items-center gap-3 p-3 rounded-2xl bg-alabaster border-2 border-crimson text-right transition cursor-pointer';
-          fNoir.className = 'flex items-center gap-3 p-3 rounded-2xl bg-white hover:bg-alabaster border border-obsidian/15 text-right transition cursor-pointer';
+          fBlanc.className = 'flex items-center justify-between gap-3 p-3 rounded-2xl bg-alabaster border-2 border-crimson text-right transition cursor-pointer';
+          fNoir.className = 'flex items-center justify-between gap-3 p-3 rounded-2xl bg-white hover:bg-alabaster border border-obsidian/15 text-right transition cursor-pointer';
         } else {
-          fNoir.className = 'flex items-center gap-3 p-3 rounded-2xl bg-alabaster border-2 border-[#DFD4C0] text-right transition cursor-pointer';
-          fBlanc.className = 'flex items-center gap-3 p-3 rounded-2xl bg-white hover:bg-alabaster border border-obsidian/15 text-right transition cursor-pointer';
+          fNoir.className = 'flex items-center justify-between gap-3 p-3 rounded-2xl bg-alabaster border-2 border-[#DFD4C0] text-right transition cursor-pointer';
+          fBlanc.className = 'flex items-center justify-between gap-3 p-3 rounded-2xl bg-white hover:bg-alabaster border border-obsidian/15 text-right transition cursor-pointer';
         }
 
         document.getElementById('formPreviewTitle').textContent = `RAVA RUNNER 01 — ${meta.label}`;
         syncAllPreviewThumbnails();
+        syncSizeButtonsVisual();
       } else {
         orderState.pair2.color = colorKey;
+        if (orderState.modelSizes && orderState.modelSizes[colorKey]) {
+          orderState.pair2.size = orderState.modelSizes[colorKey];
+        }
         const p2Blanc = document.getElementById('form-p2-color-blanc');
         const p2Noir = document.getElementById('form-p2-color-noir');
         if (colorKey === 'blanc') {
-          p2Blanc.className = 'flex items-center gap-2.5 p-2.5 rounded-xl bg-white border-2 border-crimson text-right transition cursor-pointer';
-          p2Noir.className = 'flex items-center gap-2.5 p-2.5 rounded-xl bg-white/80 border border-obsidian/15 text-right transition cursor-pointer';
+          p2Blanc.className = 'flex items-center justify-between gap-2.5 p-2.5 rounded-xl bg-white border-2 border-crimson text-right transition cursor-pointer';
+          p2Noir.className = 'flex items-center justify-between gap-2.5 p-2.5 rounded-xl bg-white/80 border border-obsidian/15 text-right transition cursor-pointer';
         } else {
-          p2Noir.className = 'flex items-center gap-2.5 p-2.5 rounded-xl bg-white border-2 border-[#DFD4C0] text-right transition cursor-pointer';
-          p2Blanc.className = 'flex items-center gap-2.5 p-2.5 rounded-xl bg-white/80 border border-obsidian/15 text-right transition cursor-pointer';
+          p2Noir.className = 'flex items-center justify-between gap-2.5 p-2.5 rounded-xl bg-white border-2 border-[#DFD4C0] text-right transition cursor-pointer';
+          p2Blanc.className = 'flex items-center justify-between gap-2.5 p-2.5 rounded-xl bg-white/80 border border-obsidian/15 text-right transition cursor-pointer';
         }
+        syncSizeButtonsVisual();
       }
 
       refreshOrderSummary();
     }
 
+    function syncSizeButtonsVisual() {
+      const s1 = orderState.pair1.size;
+      const s2 = orderState.pair2.size;
+
+      document.querySelectorAll('.hero-size-btn').forEach(btn => {
+        const active = btn.getAttribute('data-hero-size') === s1;
+        btn.className = active
+          ? 'hero-size-btn py-2.5 rounded-xl bg-obsidian text-white border-2 border-obsidian font-extrabold text-sm transition cursor-pointer'
+          : 'hero-size-btn py-2.5 rounded-xl bg-white border border-obsidian/15 font-bold text-sm text-obsidian hover:border-obsidian transition cursor-pointer';
+      });
+
+      document.querySelectorAll('.form-size-p1').forEach(btn => {
+        const active = btn.getAttribute('data-size') === s1;
+        btn.className = active
+          ? 'form-size-p1 py-3.5 rounded-xl bg-obsidian text-white border-2 border-obsidian font-extrabold text-sm transition cursor-pointer'
+          : 'form-size-p1 py-3.5 rounded-xl bg-white border border-obsidian/15 font-extrabold text-sm text-obsidian hover:border-obsidian transition cursor-pointer';
+      });
+
+      document.querySelectorAll('.form-size-p2').forEach(btn => {
+        const active = btn.getAttribute('data-size') === s2;
+        btn.className = active
+          ? 'form-size-p2 py-2.5 rounded-xl bg-obsidian text-white border-2 border-obsidian font-extrabold text-xs transition cursor-pointer'
+          : 'form-size-p2 py-2.5 rounded-xl bg-white border border-obsidian/15 font-extrabold text-xs text-obsidian cursor-pointer';
+      });
+    }
+
     function setPairSize(pairNum, sizeVal) {
       if (pairNum === 1) {
         orderState.pair1.size = sizeVal;
-
-        document.querySelectorAll('.hero-size-btn').forEach(btn => {
-          const active = btn.getAttribute('data-hero-size') === sizeVal;
-          btn.className = active
-            ? 'hero-size-btn py-2.5 rounded-xl bg-obsidian text-white border-2 border-obsidian font-extrabold text-sm transition cursor-pointer'
-            : 'hero-size-btn py-2.5 rounded-xl bg-white border border-obsidian/15 font-bold text-sm text-obsidian hover:border-obsidian transition cursor-pointer';
-        });
-
-        document.querySelectorAll('.form-size-p1').forEach(btn => {
-          const active = btn.getAttribute('data-size') === sizeVal;
-          btn.className = active
-            ? 'form-size-p1 py-3.5 rounded-xl bg-obsidian text-white border-2 border-obsidian font-extrabold text-sm transition cursor-pointer'
-            : 'form-size-p1 py-3.5 rounded-xl bg-white border border-obsidian/15 font-extrabold text-sm text-obsidian hover:border-obsidian transition cursor-pointer';
-        });
+        if (orderState.modelSizes) {
+          orderState.modelSizes[orderState.pair1.color] = sizeVal;
+        }
+        if (orderState.pair2.color === orderState.pair1.color) {
+          orderState.pair2.size = sizeVal;
+        }
       } else {
         orderState.pair2.size = sizeVal;
-        document.querySelectorAll('.form-size-p2').forEach(btn => {
-          const active = btn.getAttribute('data-size') === sizeVal;
-          btn.className = active
-            ? 'form-size-p2 py-2.5 rounded-xl bg-obsidian text-white border-2 border-obsidian font-extrabold text-xs transition cursor-pointer'
-            : 'form-size-p2 py-2.5 rounded-xl bg-white border border-obsidian/15 font-extrabold text-xs text-obsidian cursor-pointer';
-        });
+        if (orderState.modelSizes) {
+          orderState.modelSizes[orderState.pair2.color] = sizeVal;
+        }
+        if (orderState.pair1.color === orderState.pair2.color) {
+          orderState.pair1.size = sizeVal;
+        }
       }
 
+      syncSizeButtonsVisual();
       refreshOrderSummary();
     }
 
@@ -2280,15 +2369,37 @@
       const btnSolo = document.getElementById('offer-btn-solo');
       const btnDuo = document.getElementById('offer-btn-duo');
       const pair2Box = document.getElementById('pair2Box');
+      const soloPreviewBox = document.getElementById('soloPreviewBox');
+      const duoPreviewBox = document.getElementById('duoPreviewBox');
+      const step1Label = document.getElementById('formStep1Label');
+      const step2Label = document.getElementById('formStep2Label');
+      const step1Badge = document.getElementById('formStep1Badge');
 
       if (offerKey === 'solo') {
         btnSolo.className = 'p-4 rounded-2xl border-2 border-obsidian bg-alabaster text-right transition cursor-pointer';
         btnDuo.className = 'relative p-4 rounded-2xl border border-obsidian/20 bg-white hover:border-obsidian/50 text-right transition cursor-pointer';
         pair2Box.classList.add('hidden');
+        if (soloPreviewBox) soloPreviewBox.classList.remove('hidden');
+        if (duoPreviewBox) duoPreviewBox.classList.add('hidden');
+        if (step1Label) step1Label.textContent = '1. اختر اللون :';
+        if (step2Label) step2Label.textContent = '2. اختر المقاس (Pointure) :';
+        if (step1Badge) step1Badge.classList.add('hidden');
       } else {
         btnDuo.className = 'relative p-4 rounded-2xl border-2 border-obsidian bg-alabaster text-right transition cursor-pointer';
         btnSolo.className = 'p-4 rounded-2xl border border-obsidian/20 bg-white hover:border-obsidian/50 text-right transition cursor-pointer';
         pair2Box.classList.remove('hidden');
+        if (soloPreviewBox) soloPreviewBox.classList.add('hidden');
+        if (duoPreviewBox) duoPreviewBox.classList.remove('hidden');
+        if (step1Label) step1Label.textContent = '1. الحذاء الأول — اختر اللون :';
+        if (step2Label) step2Label.textContent = '2. الحذاء الأول — اختر المقاس :';
+        if (step1Badge) step1Badge.classList.remove('hidden');
+
+        // Default Pair 2 to the complementary colorway if both are currently identical
+        if (orderState.pair2.color === orderState.pair1.color) {
+          const otherColor = orderState.pair1.color === 'blanc' ? 'noir' : 'blanc';
+          setPairColor(2, otherColor);
+          return;
+        }
       }
 
       refreshOrderSummary();
@@ -2301,6 +2412,8 @@
       const savedAmount = Math.max(0, (soloPrice * 2) - duoPrice);
       const p1Meta = COLOR_META[orderState.pair1.color];
       const p2Meta = COLOR_META[orderState.pair2.color];
+      const blancSize = (orderState.modelSizes && orderState.modelSizes.blanc) || '42';
+      const noirSize = (orderState.modelSizes && orderState.modelSizes.noir) || '43';
 
       const totalDisplayEl = document.getElementById('formTotalDisplay');
       const previewSubEl = document.getElementById('formPreviewSub');
@@ -2309,6 +2422,70 @@
       const stickyPriceEl = document.getElementById('mobileStickyPrice');
 
       if (totalDisplayEl) totalDisplayEl.textContent = `${total} درهم`;
+
+      // Update per-model size tags on Pair 1 & Pair 2 color buttons
+      const p1BlancTag = document.getElementById('formColorBlancSizeTag');
+      const p1NoirTag = document.getElementById('formColorNoirSizeTag');
+      if (p1BlancTag) {
+        p1BlancTag.textContent = `المقاس : ${blancSize}`;
+        p1BlancTag.className = orderState.pair1.color === 'blanc'
+          ? 'block text-[11px] font-extrabold text-crimson mt-0.5'
+          : 'block text-[11px] font-bold text-obsidian/65 mt-0.5';
+      }
+      if (p1NoirTag) {
+        p1NoirTag.textContent = `المقاس : ${noirSize}`;
+        p1NoirTag.className = orderState.pair1.color === 'noir'
+          ? 'block text-[11px] font-extrabold text-crimson mt-0.5'
+          : 'block text-[11px] font-bold text-obsidian/65 mt-0.5';
+      }
+
+      const p2BlancTag = document.getElementById('formP2BlancSizeTag');
+      const p2NoirTag = document.getElementById('formP2NoirSizeTag');
+      if (p2BlancTag) {
+        p2BlancTag.textContent = `المقاس : ${blancSize}`;
+        p2BlancTag.className = orderState.pair2.color === 'blanc'
+          ? 'block text-[10px] font-extrabold text-crimson'
+          : 'block text-[10px] font-bold text-obsidian/65';
+      }
+      if (p2NoirTag) {
+        p2NoirTag.textContent = `المقاس : ${noirSize}`;
+        p2NoirTag.className = orderState.pair2.color === 'noir'
+          ? 'block text-[10px] font-extrabold text-crimson'
+          : 'block text-[10px] font-bold text-obsidian/65';
+      }
+
+      // Update Pair 1 & Pair 2 header badges and side-by-side Duo preview cards
+      const step1Badge = document.getElementById('formStep1Badge');
+      if (step1Badge) {
+        step1Badge.textContent = `${p1Meta.shortLabel} • مقاس ${orderState.pair1.size}`;
+      }
+      const step2P2Badge = document.getElementById('formStep2P2Badge');
+      if (step2P2Badge) {
+        step2P2Badge.textContent = `${p2Meta.shortLabel} • مقاس ${orderState.pair2.size}`;
+      }
+
+      const duoImg1 = document.getElementById('duoPreviewImg1');
+      const duoColor1 = document.getElementById('duoPreviewColor1');
+      const duoSize1 = document.getElementById('duoPreviewSize1');
+      const duoImg2 = document.getElementById('duoPreviewImg2');
+      const duoColor2 = document.getElementById('duoPreviewColor2');
+      const duoSize2 = document.getElementById('duoPreviewSize2');
+      const duoSaveTag = document.getElementById('duoPreviewSaveTag');
+
+      if (duoImg1) {
+        duoImg1.onerror = function() { applyMediaFallback(duoImg1, p1Meta.fallbackKey); };
+        duoImg1.src = p1Meta.primaryFile;
+      }
+      if (duoColor1) duoColor1.textContent = p1Meta.label;
+      if (duoSize1) duoSize1.textContent = `المقاس المختار : ${orderState.pair1.size}`;
+
+      if (duoImg2) {
+        duoImg2.onerror = function() { applyMediaFallback(duoImg2, p2Meta.fallbackKey); };
+        duoImg2.src = p2Meta.primaryFile;
+      }
+      if (duoColor2) duoColor2.textContent = p2Meta.label;
+      if (duoSize2) duoSize2.textContent = `المقاس المختار : ${orderState.pair2.size}`;
+      if (duoSaveTag) duoSaveTag.textContent = `توفير ${savedAmount} درهم + توصيل مجاني`;
 
       if (orderState.offer === 'solo') {
         if (previewSubEl) {
@@ -2327,15 +2504,15 @@
       } else {
         if (previewSubEl) {
           previewSubEl.innerHTML =
-            `عرض الثنائي : <strong class="text-obsidian">مقاس ${orderState.pair1.size}</strong> + <strong class="text-obsidian">مقاس ${orderState.pair2.size}</strong> • <span class="text-crimson font-bold">توفير ${savedAmount} درهم</span>`;
+            `عرض الثنائي : <strong class="text-obsidian">${p1Meta.shortLabel} (مقاس ${orderState.pair1.size})</strong> + <strong class="text-obsidian">${p2Meta.shortLabel} (مقاس ${orderState.pair2.size})</strong>`;
         }
         if (summaryDetailEl) {
           summaryDetailEl.textContent =
-            `عرض الثنائي : ${p1Meta.shortLabel} (${orderState.pair1.size}) + ${p2Meta.shortLabel} (${orderState.pair2.size})`;
+            `عرض الثنائي : ${p1Meta.shortLabel} (مقاس ${orderState.pair1.size}) + ${p2Meta.shortLabel} (مقاس ${orderState.pair2.size})`;
         }
         if (stickyTitleEl) {
           stickyTitleEl.textContent =
-            `عرض الثنائي • مقاس ${orderState.pair1.size} و ${orderState.pair2.size}`;
+            `${p1Meta.shortLabel} (${orderState.pair1.size}) + ${p2Meta.shortLabel} (${orderState.pair2.size})`;
         }
         if (stickyPriceEl) {
           stickyPriceEl.textContent = `${duoPrice} درهم • توصيل مجاني`;
@@ -2922,6 +3099,8 @@
       setText('submitBtnLabel', c.formSubmitText);
       setText('cmsFormColorBlancLabel', c.colorBlancLabel);
       setText('cmsFormColorNoirLabel', c.colorNoirLabel);
+      setText('cmsFormP2ColorBlancLabel', c.colorBlancLabel);
+      setText('cmsFormP2ColorNoirLabel', c.colorNoirLabel);
       setText('cmsFooterTagline', c.footerTagline);
       setText('cmsFooterCopyright', c.footerCopyright);
 
@@ -2965,11 +3144,11 @@
       setText('cmsHeroVidPillBlanc', c.colorBlancLabel);
       setText('cmsHeroVidPillNoir', c.colorNoirLabel);
 
-      ['heroThumbBlanc', 'formThumbBlanc'].forEach(id => {
+      ['heroThumbBlanc', 'formThumbBlanc', 'formP2ThumbBlanc'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.src = c.colorBlancImg;
       });
-      ['heroThumbNoir', 'formThumbNoir'].forEach(id => {
+      ['heroThumbNoir', 'formThumbNoir', 'formP2ThumbNoir'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.src = c.colorNoirImg;
       });
