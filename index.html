@@ -562,7 +562,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 sm:h-20 flex items-center justify-between">
       
       <!-- Brand Emblem + RAVA MODE Wordmark -->
-      <a href="#" class="flex items-center gap-3 group focus:outline-none">
+      <a href="#" onclick="handleLogoSecretTap(event)" class="flex items-center gap-3 group focus:outline-none">
         <div id="headerLogoWrapper" class="w-12 h-12 rounded-full overflow-hidden bg-obsidian shrink-0 shadow-sm ring-1 ring-obsidian/15 group-hover:scale-105 transition-transform duration-300">
           <img
             id="headerLogoImg"
@@ -1494,6 +1494,127 @@
         <button type="button" onclick="switchCmsTab('content')" id="cms-tab-btn-content"
           class="py-2.5 px-3 rounded-xl bg-white/70 text-obsidian font-extrabold text-xs transition cursor-pointer">
           ✏️ النصوص والأسعار
+        </button>
+      </div>
+
+      <!-- CMS Scrollable Body -->
+      <div class="flex-1 overflow-y-auto p-4 sm:p-5 space-y-4 bg-alabaster">
+
+        <!-- TAB 1: ORDERS INBOX (الطلبات الواردة) -->
+        <div id="cms-panel-orders" class="space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2 bg-white p-3.5 rounded-2xl hairline-border">
+            <div>
+              <h4 class="font-display font-extrabold text-sm text-obsidian">سجل الطلبات المستلمة (COD)</h4>
+              <p class="text-[11px] text-obsidian/60">تواصل مع الزبون عبر واتساب أو صدّر القائمة إلى Excel</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button type="button" onclick="exportOrdersCsv()" class="px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs cursor-pointer">
+                📥 تصدير Excel
+              </button>
+              <button type="button" onclick="clearAllOrders()" class="px-3 py-2 rounded-xl bg-stonegray hover:bg-crimson hover:text-white text-obsidian font-bold text-xs cursor-pointer">
+                مسح الكل
+              </button>
+            </div>
+          </div>
+          <div id="cmsOrdersListContainer" class="space-y-3"></div>
+        </div>
+
+        <!-- TAB 2: MEDIA STUDIO (رفع الصور والفيديوهات) -->
+        <div id="cms-panel-media" class="hidden space-y-4">
+          <div class="p-4 rounded-2xl bg-white hairline-border space-y-3">
+            <h4 class="font-display font-extrabold text-sm text-obsidian border-b border-obsidian/10 pb-2">
+              🖼️ الشعار وصور الموديلين
+            </h4>
+            <div class="space-y-2.5">
+              <div>
+                <label class="block text-[11px] font-bold text-obsidian/80 mb-1">الشعار (Logo)</label>
+                <div class="flex gap-2">
+                  <input type="text" id="cmsInputLogoSrc" class="flex-1 px-3 py-2 rounded-xl border border-obsidian/20 text-xs" dir="ltr" />
+                  <label class="px-3 py-2 rounded-xl bg-obsidian text-white font-bold text-xs cursor-pointer shrink-0">
+                    📁 رفع
+                    <input type="file" accept="image/*" class="hidden" onchange="handleCmsFileUpload(event, 'cmsInputLogoSrc')" />
+                  </label>
+                </div>
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-obsidian/80 mb-1">صورة اللون 1 (أبيض / أحمر)</label>
+                <div class="flex gap-2">
+                  <input type="text" id="cmsInputColorBlancImg" class="flex-1 px-3 py-2 rounded-xl border border-obsidian/20 text-xs" dir="ltr" />
+                  <label class="px-3 py-2 rounded-xl bg-obsidian text-white font-bold text-xs cursor-pointer shrink-0">
+                    📁 رفع
+                    <input type="file" accept="image/*" class="hidden" onchange="handleCmsFileUpload(event, 'cmsInputColorBlancImg')" />
+                  </label>
+                </div>
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-obsidian/80 mb-1">صورة اللون 2 (أسود / رمادي)</label>
+                <div class="flex gap-2">
+                  <input type="text" id="cmsInputColorNoirImg" class="flex-1 px-3 py-2 rounded-xl border border-obsidian/20 text-xs" dir="ltr" />
+                  <label class="px-3 py-2 rounded-xl bg-obsidian text-white font-bold text-xs cursor-pointer shrink-0">
+                    📁 رفع
+                    <input type="file" accept="image/*" class="hidden" onchange="handleCmsFileUpload(event, 'cmsInputColorNoirImg')" />
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-white hairline-border space-y-3">
+            <h4 class="font-display font-extrabold text-sm text-obsidian border-b border-obsidian/10 pb-2">
+              🎥 الفيديوهات الأربعة (MP4) وعناوينها
+            </h4>
+            <div class="space-y-3">
+              <div class="p-3 rounded-xl bg-alabaster space-y-1.5">
+                <label class="block text-[11px] font-extrabold text-crimson">فيديو 1 (أبيض / أحمر — ماكرو)</label>
+                <div class="flex gap-2">
+                  <input type="text" id="cmsInputVid0Src" class="flex-1 px-3 py-1.5 rounded-lg border border-obsidian/20 text-xs" dir="ltr" />
+                  <label class="px-3 py-1.5 rounded-lg bg-obsidian text-white font-bold text-xs cursor-pointer shrink-0">
+                    📁 فيديو
+                    <input type="file" accept="video/mp4,video/*" class="hidden" onchange="handleCmsFileUpload(event, 'cmsInputVid0Src')" />
+                  </label>
+                </div>
+                <input type="text" id="cmsInputVid0Title" placeholder="عنوان الفيديو 1" class="w-full px-3 py-1.5 rounded-lg border border-obsidian/20 text-xs font-bold" />
+              </div>
+
+              <div class="p-3 rounded-xl bg-alabaster space-y-1.5">
+                <label class="block text-[11px] font-extrabold text-crimson">فيديو 2 (أبيض / أحمر — تجربة ملبوسة)</label>
+                <div class="flex gap-2">
+                  <input type="text" id="cmsInputVid1Src" class="flex-1 px-3 py-1.5 rounded-lg border border-obsidian/20 text-xs" dir="ltr" />
+                  <label class="px-3 py-1.5 rounded-lg bg-obsidian text-white font-bold text-xs cursor-pointer shrink-0">
+                    📁 فيديو
+                    <input type="file" accept="video/mp4,video/*" class="hidden" onchange="handleCmsFileUpload(event, 'cmsInputVid1Src')" />
+                  </label>
+                </div>
+                <input type="text" id="cmsInputVid1Title" placeholder="عنوان الفيديو 2" class="w-full px-3 py-1.5 rounded-lg border border-obsidian/20 text-xs font-bold" />
+              </div>
+
+              <div class="p-3 rounded-xl bg-alabaster space-y-1.5">
+                <label class="block text-[11px] font-extrabold text-obsidian">فيديو 3 (أسود / رمادي — ماكرو)</label>
+                <div class="flex gap-2">
+                  <input type="text" id="cmsInputVid2Src" class="flex-1 px-3 py-1.5 rounded-lg border border-obsidian/20 text-xs" dir="ltr" />
+                  <label class="px-3 py-1.5 rounded-lg bg-obsidian text-white font-bold text-xs cursor-pointer shrink-0">
+                    📁 فيديو
+                    <input type="file" accept="video/mp4,video/*" class="hidden" onchange="handleCmsFileUpload(event, 'cmsInputVid2Src')" />
+                  </label>
+                </div>
+                <input type="text" id="cmsInputVid2Title" placeholder="عنوان الفيديو 3" class="w-full px-3 py-1.5 rounded-lg border border-obsidian/20 text-xs font-bold" />
+              </div>
+
+              <div class="p-3 rounded-xl bg-alabaster space-y-1.5">
+                <label class="block text-[11px] font-extrabold text-obsidian">فيديو 4 (أسود / رمادي — تجربة ملبوسة)</label>
+                <div class="flex gap-2">
+                  <input type="text" id="cmsInputVid3Src" class="flex-1 px-3 py-1.5 rounded-lg border border-obsidian/20 text-xs" dir="ltr" />
+                  <label class="px-3 py-1.5 rounded-lg bg-obsidian text-white font-bold text-xs cursor-pointer shrink-0">
+                    📁 فيديو
+                    <input type="file" accept="video/mp4,video/*" class="hidden" onchange="handleCmsFileUpload(event, 'cmsInputVid3Src')" />
+                  </label>
+                </div>
+                <input type="text" id="cmsInputVid3Title" placeholder="عنوان الفيديو 4" class="w-full px-3 py-1.5 rounded-lg border border-obsidian/20 text-xs font-bold" />
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- TAB 3: ORGANIZED SECTION-BY-SECTION CONTENT EDITOR (تعديل جميع نصوص وأقسام الموقع) -->
         <div id="cms-panel-content" class="hidden space-y-4">
 
@@ -1737,37 +1858,38 @@
         <div class="flex gap-2">
           <button type="submit" class="flex-1 py-3 rounded-xl bg-obsidian hover:bg-anthracite text-white font-extrabold text-xs cursor-pointer transition">
             دخول 🔓
-          </button>
-          <button type="button" onclick="closeCmsPinModal()" class="px-4 py-3 rounded-xl bg-stonegray text-obsidian font-bold text-xs cursor-pointer">
-            إلغاء
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
+    let logoTapCount = 0;
+    let logoTapTimer = null;
+    function handleLogoSecretTap(e) {
+      e.preventDefault();
+      logoTapCount++;
+      clearTimeout(logoTapTimer);
+      if (logoTapCount >= 3) {
+        logoTapCount = 0;
+        openSmartCms();
+        return;
+      }
+      logoTapTimer = setTimeout(() => { logoTapCount = 0; }, 700);
+    }
 
-  <!-- =====================================================================
-       10. JAVASCRIPT: SILENT VIDEOS + KEN BURNS FALLBACK + ARABIC COD + CMS
-       ===================================================================== -->
-  <script>
-    // =========================================================================
-    // 4. DYNAMIC PAGE THEME + COLORWAY, SIZE & OFFER SYNCHRONIZATION
-    // =========================================================================
-    function applyPageTheme(colorKey) {
-      const body = document.body;
-      const topBar = document.getElementById('topAnnouncementBar');
-      const heroDot = document.getElementById('heroThemeDot');
-      const heroBadgeText = document.getElementById('heroThemeBadgeText');
-      const headlineUnderline = document.getElementById('headlineUnderline');
-      const formBanner = document.getElementById('formHeaderBanner');
-
-      if (colorKey === 'noir') {
-        body.classList.remove('theme-blanc');
-        body.classList.add('theme-noir');
-
-        if (topBar) {
-          topBar.className = 'bg-[#181A20] text-[#DFD4C0] text-[10px] sm:text-xs font-bold py-1.5 sm:py-2 px-3 text-center border-b border-white/10 transition-colors duration-500';
+    function openSmartCms() {
+      const pinModal = document.getElementById('cmsPinModal');
+      const cmsModal = document.getElementById('smartCmsModal');
+      if (sessionStorage.getItem('rava_cms_unlocked') !== '1') {
+        const pinInput = document.getElementById('cmsPinInput');
+        const pinErr = document.getElementById('cmsPinError');
+        if (pinErr) pinErr.classList.add('hidden');
+        if (pinInput) pinInput.value = '';
+        if (pinModal) {
+          pinModal.classList.remove('hidden');
+          setTimeout(() => pinInput && pinInput.focus(), 60);
         }
+        return;
+      }
+      populateCmsInputs();
+      renderCmsOrdersList();
+      if (cmsModal) cmsModal.classList.remove('hidden');
+    }
         if (heroDot) {
           heroDot.className = 'w-2.5 h-2.5 rounded-full bg-[#DFD4C0] animate-pulse';
         }
