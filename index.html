@@ -1540,19 +1540,23 @@
       </div>
 
       <!-- CMS Navigation Tabs -->
-      <div class="grid grid-cols-3 bg-stonegray p-1.5 gap-1.5 border-b border-obsidian/10 shrink-0">
+      <div class="grid grid-cols-4 bg-stonegray p-1.5 gap-1.5 border-b border-obsidian/10 shrink-0">
         <button type="button" onclick="switchCmsTab('orders')" id="cms-tab-btn-orders"
-          class="py-2.5 px-3 rounded-xl bg-obsidian text-white font-extrabold text-xs transition cursor-pointer flex items-center justify-center gap-1.5">
-          <span>📦 الطلبات الواردة</span>
+          class="py-2.5 px-2 rounded-xl bg-obsidian text-white font-extrabold text-[11px] sm:text-xs transition cursor-pointer flex items-center justify-center gap-1">
+          <span>📦 الطلبات</span>
           <span id="cmsTabOrdersCount" class="px-1.5 py-0.5 rounded-full bg-crimson text-white text-[10px]">0</span>
         </button>
         <button type="button" onclick="switchCmsTab('media')" id="cms-tab-btn-media"
-          class="py-2.5 px-3 rounded-xl bg-white/70 text-obsidian font-extrabold text-xs transition cursor-pointer">
-          🎬 الفيديوهات والصور
+          class="py-2.5 px-2 rounded-xl bg-white/70 text-obsidian font-extrabold text-[11px] sm:text-xs transition cursor-pointer">
+          🎬 الفيديوهات
         </button>
         <button type="button" onclick="switchCmsTab('content')" id="cms-tab-btn-content"
-          class="py-2.5 px-3 rounded-xl bg-white/70 text-obsidian font-extrabold text-xs transition cursor-pointer">
-          ✏️ النصوص والأسعار
+          class="py-2.5 px-2 rounded-xl bg-white/70 text-obsidian font-extrabold text-[11px] sm:text-xs transition cursor-pointer">
+          ✏️ النصوص
+        </button>
+        <button type="button" onclick="switchCmsTab('analytics')" id="cms-tab-btn-analytics"
+          class="py-2.5 px-2 rounded-xl bg-white/70 text-obsidian font-extrabold text-[11px] sm:text-xs transition cursor-pointer">
+          📊 التتبع و SEO
         </button>
       </div>
 
@@ -1625,66 +1629,43 @@
             </div>
           </div>
 
+          <!-- STUDIO PHOTO CLEANER & OPTIMIZER (SUPPRESSION TEXTE + NETTETÉ + UPLOAD SUPABASE) -->
           <div class="p-4 rounded-2xl bg-white hairline-border space-y-3">
-            <h4 class="font-display font-extrabold text-sm text-obsidian border-b border-obsidian/10 pb-2">
-              🎥 الفيديوهات الأربعة (MP4) وعناوينها
-            </h4>
-            <div class="space-y-3">
-              <div class="p-3 rounded-xl bg-alabaster space-y-1.5">
-                <label class="block text-[11px] font-extrabold text-crimson">فيديو 1 (أبيض / أحمر — ماكرو)</label>
-                <div class="flex gap-2">
-                  <input type="text" id="cmsInputVid0Src" class="flex-1 px-3 py-1.5 rounded-lg border border-obsidian/20 text-xs" dir="ltr" />
-                  <label class="px-3 py-1.5 rounded-lg bg-obsidian text-white font-bold text-xs cursor-pointer shrink-0">
-                    📁 فيديو
-                    <input type="file" accept="video/mp4,video/*" class="hidden" onchange="handleCmsFileUpload(event, 'cmsInputVid0Src')" />
-                  </label>
-                </div>
-                <input type="text" id="cmsInputVid0Title" placeholder="عنوان الفيديو 1" class="w-full px-3 py-1.5 rounded-lg border border-obsidian/20 text-xs font-bold" />
-              </div>
-
-              <div class="p-3 rounded-xl bg-alabaster space-y-1.5">
-                <label class="block text-[11px] font-extrabold text-crimson">فيديو 2 (أبيض / أحمر — تجربة ملبوسة)</label>
-                <div class="flex gap-2">
-                  <input type="text" id="cmsInputVid1Src" class="flex-1 px-3 py-1.5 rounded-lg border border-obsidian/20 text-xs" dir="ltr" />
-                  <label class="px-3 py-1.5 rounded-lg bg-obsidian text-white font-bold text-xs cursor-pointer shrink-0">
-                    📁 فيديو
-                    <input type="file" accept="video/mp4,video/*" class="hidden" onchange="handleCmsFileUpload(event, 'cmsInputVid1Src')" />
-                  </label>
-                </div>
-                <input type="text" id="cmsInputVid1Title" placeholder="عنوان الفيديو 2" class="w-full px-3 py-1.5 rounded-lg border border-obsidian/20 text-xs font-bold" />
-              </div>
-
-              <div class="p-3 rounded-xl bg-alabaster space-y-1.5">
-                <label class="block text-[11px] font-extrabold text-obsidian">فيديو 3 (أسود / رمادي — ماكرو)</label>
-                <div class="flex gap-2">
-                  <input type="text" id="cmsInputVid2Src" class="flex-1 px-3 py-1.5 rounded-lg border border-obsidian/20 text-xs" dir="ltr" />
-                  <label class="px-3 py-1.5 rounded-lg bg-obsidian text-white font-bold text-xs cursor-pointer shrink-0">
-                    📁 فيديو
-                    <input type="file" accept="video/mp4,video/*" class="hidden" onchange="handleCmsFileUpload(event, 'cmsInputVid2Src')" />
-                  </label>
-                </div>
-                <input type="text" id="cmsInputVid2Title" placeholder="عنوان الفيديو 3" class="w-full px-3 py-1.5 rounded-lg border border-obsidian/20 text-xs font-bold" />
-              </div>
-
-              <div class="p-3 rounded-xl bg-alabaster space-y-1.5">
-                <label class="block text-[11px] font-extrabold text-obsidian">فيديو 4 (أسود / رمادي — تجربة ملبوسة)</label>
-                <div class="flex gap-2">
-                  <input type="text" id="cmsInputVid3Src" class="flex-1 px-3 py-1.5 rounded-lg border border-obsidian/20 text-xs" dir="ltr" />
-                  <label class="px-3 py-1.5 rounded-lg bg-obsidian text-white font-bold text-xs cursor-pointer shrink-0">
-                    📁 فيديو
-                    <input type="file" accept="video/mp4,video/*" class="hidden" onchange="handleCmsFileUpload(event, 'cmsInputVid3Src')" />
-                  </label>
-                </div>
-                <input type="text" id="cmsInputVid3Title" placeholder="عنوان الفيديو 4" class="w-full px-3 py-1.5 rounded-lg border border-obsidian/20 text-xs font-bold" />
+            <div class="flex items-center justify-between border-b border-obsidian/10 pb-2">
+              <h4 class="font-display font-extrabold text-sm text-obsidian">
+                ✨ تنظيف وتحسين الصور (إزالة النصوص + جودة HD)
+              </h4>
+              <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-extrabold">Studio Auto</span>
+            </div>
+            <p class="text-[11px] text-obsidian/70 leading-relaxed">
+              اختر أي صورة تحتوي على نصوص في الأعلى أو الأسفل (مثل SAPUXI) : يقوم النظام تلقائياً بمسح النصوص مع الحفاظ على خلفية الاستوديو وتحسين وضوح الحذاء.
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              <label class="py-2.5 px-3 rounded-xl bg-obsidian hover:bg-anthracite text-white font-extrabold text-xs text-center cursor-pointer transition">
+                📸 اختر صورة للتنظيف
+                <input type="file" accept="image/*" class="hidden" onchange="processStudioCleanImage(event)" />
+              </label>
+              <select id="cleanTargetSelect" class="px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-bold bg-alabaster">
+                <option value="cmsInputColorBlancImg">تعيين كـ : أبيض / أحمر</option>
+                <option value="cmsInputColorNoirImg">تعيين كـ : أسود / رمادي</option>
+                <option value="downloadOnly">تحميل الصورة النظيفة فقط</option>
+              </select>
+            </div>
+            <div id="cleanPreviewBox" class="hidden space-y-2.5 pt-2">
+              <img id="cleanedResultImg" src="" alt="الصورة المنظفة" class="w-full max-h-64 object-contain rounded-xl bg-stonegray hairline-border" />
+              <div class="flex gap-2">
+                <button type="button" onclick="applyAndUploadCleanedImage()" id="btnUploadCleaned"
+                  class="flex-1 py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs cursor-pointer">
+                  ☁️ اعتماد ورفع الصورة إلى Supabase
+                </button>
+                <a id="btnDownloadCleaned" href="#" download="rava_clean_sneaker.jpg"
+                  class="py-2.5 px-3 rounded-xl bg-stonegray hover:bg-obsidian hover:text-white text-obsidian font-extrabold text-xs">
+                  ⬇️ تحميل
+                </a>
               </div>
             </div>
           </div>
-        </div>
 
-        <!-- TAB 3: ORGANIZED SECTION-BY-SECTION CONTENT EDITOR -->
-        <div id="cms-panel-content" class="hidden space-y-4">
-
-          <!-- SECTION A: WHATSAPP, SECURITY PIN & BRANDING -->
           <div class="p-4 rounded-2xl bg-white hairline-border space-y-3">
             <h4 class="font-display font-extrabold text-sm text-emerald-800 border-b border-obsidian/10 pb-2">
               1️⃣ إعدادات واتساب، الهوية والرمز السري
@@ -1876,25 +1857,28 @@
             </div>
           </div>
 
-          <!-- SECTION F: MESURE D'AUDIENCE & RÉFÉRENCEMENT (GA4, META PIXEL, SITEMAP & SEO) -->
-          <div dir="ltr" class="p-4 rounded-2xl bg-white hairline-border space-y-3 text-left font-sans">
-            <div class="border-b border-obsidian/10 pb-2.5">
+        </div>
+
+        <!-- TAB 4: MESURE D'AUDIENCE & RÉFÉRENCEMENT (GA4, META PIXEL, SITEMAP & SEO) -->
+        <div id="cms-panel-analytics" class="hidden space-y-4">
+          <div dir="ltr" class="p-4 sm:p-5 rounded-2xl bg-white hairline-border space-y-4 text-left font-sans">
+            <div class="border-b border-obsidian/10 pb-3">
               <div class="flex flex-wrap items-center justify-between gap-2">
-                <h4 class="font-extrabold text-sm text-obsidian">
-                  6️⃣ Mesure d'audience &amp; référencement
+                <h4 class="font-extrabold text-base text-obsidian">
+                  Mesure d'audience &amp; référencement
                 </h4>
-                <span id="analyticsActiveStatusBadge" class="px-2.5 py-0.5 rounded-full bg-stonegray text-obsidian/70 text-[10px] font-bold">
+                <span id="analyticsActiveStatusBadge" class="px-2.5 py-0.5 rounded-full bg-stonegray text-obsidian/70 text-[11px] font-bold">
                   Suivi inactif
                 </span>
               </div>
-              <p class="text-[11px] text-obsidian/65 mt-1 leading-relaxed">
+              <p class="text-xs text-obsidian/65 mt-1.5 leading-relaxed">
                 Laissez vide pour désactiver. Si un identifiant est renseigné, une bannière demande le consentement des visiteurs avant tout suivi.
               </p>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div>
-                <label class="block text-[11px] font-bold text-obsidian mb-1">
+                <label class="block text-xs font-bold text-obsidian mb-1.5">
                   Google Analytics 4 (ID « G-XXXXXXXXXX »)
                 </label>
                 <input
@@ -1902,11 +1886,11 @@
                   id="cmsInputGa4Id"
                   placeholder="G-XXXXXXXXXX"
                   dir="ltr"
-                  class="w-full px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-semibold"
+                  class="w-full px-3 py-2.5 rounded-xl border border-obsidian/20 text-xs font-semibold"
                 />
               </div>
               <div>
-                <label class="block text-[11px] font-bold text-obsidian mb-1">
+                <label class="block text-xs font-bold text-obsidian mb-1.5">
                   Pixel Meta (ID numérique)
                 </label>
                 <input
@@ -1915,11 +1899,11 @@
                   inputmode="numeric"
                   placeholder="123456789012345"
                   dir="ltr"
-                  class="w-full px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-semibold"
+                  class="w-full px-3 py-2.5 rounded-xl border border-obsidian/20 text-xs font-semibold"
                 />
               </div>
               <div>
-                <label class="block text-[11px] font-bold text-obsidian mb-1">
+                <label class="block text-xs font-bold text-obsidian mb-1.5">
                   Adresse du site (pour le plan du site)
                 </label>
                 <input
@@ -1927,28 +1911,27 @@
                   id="cmsInputSiteUrl"
                   placeholder="https://www.ravamode.ma"
                   dir="ltr"
-                  class="w-full px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-semibold"
+                  class="w-full px-3 py-2.5 rounded-xl border border-obsidian/20 text-xs font-semibold"
                 />
               </div>
             </div>
 
-            <div class="pt-2 border-t border-obsidian/10 flex flex-wrap items-center justify-between gap-2">
-              <span class="text-[10px] text-obsidian/60 font-semibold">
+            <div class="pt-3 border-t border-obsidian/10 flex flex-wrap items-center justify-between gap-2">
+              <span class="text-[11px] text-obsidian/60 font-semibold">
                 SEO automatique (Canonical + og:url + Schema.org Product + Purchase COD)
               </span>
               <div class="flex items-center gap-2">
                 <button type="button" onclick="downloadSitemapXml()"
-                  class="px-2.5 py-1.5 rounded-lg bg-stonegray hover:bg-obsidian hover:text-white text-obsidian font-bold text-[11px] transition cursor-pointer">
+                  class="px-3 py-2 rounded-lg bg-stonegray hover:bg-obsidian hover:text-white text-obsidian font-bold text-xs transition cursor-pointer">
                   🗺️ Télécharger sitemap.xml
                 </button>
                 <button type="button" onclick="downloadRobotsTxt()"
-                  class="px-2.5 py-1.5 rounded-lg bg-stonegray hover:bg-obsidian hover:text-white text-obsidian font-bold text-[11px] transition cursor-pointer">
+                  class="px-3 py-2 rounded-lg bg-stonegray hover:bg-obsidian hover:text-white text-obsidian font-bold text-xs transition cursor-pointer">
                   🤖 Télécharger robots.txt
                 </button>
               </div>
             </div>
           </div>
-
         </div>
 
       </div>
@@ -2769,16 +2752,16 @@
     }
 
     function switchCmsTab(tabName) {
-      ['orders', 'media', 'content'].forEach(t => {
+      ['orders', 'media', 'content', 'analytics'].forEach(t => {
         const panel = document.getElementById('cms-panel-' + t);
         const btn = document.getElementById('cms-tab-btn-' + t);
         if (!panel || !btn) return;
         if (t === tabName) {
           panel.classList.remove('hidden');
-          btn.className = 'py-2.5 px-3 rounded-xl bg-obsidian text-white font-extrabold text-xs transition cursor-pointer flex items-center justify-center gap-1.5';
+          btn.className = 'py-2.5 px-2 rounded-xl bg-obsidian text-white font-extrabold text-[11px] sm:text-xs transition cursor-pointer flex items-center justify-center gap-1';
         } else {
           panel.classList.add('hidden');
-          btn.className = 'py-2.5 px-3 rounded-xl bg-white/70 text-obsidian font-extrabold text-xs transition cursor-pointer flex items-center justify-center gap-1.5';
+          btn.className = 'py-2.5 px-2 rounded-xl bg-white/70 text-obsidian font-extrabold text-[11px] sm:text-xs transition cursor-pointer flex items-center justify-center gap-1';
         }
       });
     }
@@ -2884,6 +2867,98 @@
       }
 
       await saveCmsChanges(true);
+    }
+
+    window._lastCleanedBlob = null;
+
+    function processStudioCleanImage(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+          const maxDim = 1200;
+          const scale = Math.min(1, maxDim / Math.max(img.width, img.height));
+          const w = Math.round(img.width * scale);
+          const h = Math.round(img.height * scale);
+
+          const canvas = document.createElement('canvas');
+          canvas.width = w;
+          canvas.height = h;
+          const ctx = canvas.getContext('2d');
+
+          // Slight contrast & sharpness boost for crisp studio product look
+          ctx.filter = 'contrast(1.06) saturate(1.08) brightness(1.02)';
+          ctx.drawImage(img, 0, 0, w, h);
+          ctx.filter = 'none';
+
+          // Clean top header text band (0% -> 18%) & bottom slogan band (88% -> 100%) by sampling clean studio background rows
+          const cleanBand = (yStart, yEnd, sampleY) => {
+            const sampleRow = ctx.getImageData(0, sampleY, w, 1).data;
+            const imgData = ctx.getImageData(0, yStart, w, yEnd - yStart);
+            const data = imgData.data;
+            for (let y = 0; y < (yEnd - yStart); y++) {
+              for (let x = 0; x < w; x++) {
+                const idx = (y * w + x) * 4;
+                const sIdx = x * 4;
+                data[idx] = sampleRow[sIdx];
+                data[idx + 1] = sampleRow[sIdx + 1];
+                data[idx + 2] = sampleRow[sIdx + 2];
+                data[idx + 3] = 255;
+              }
+            }
+            ctx.putImageData(imgData, 0, yStart);
+          };
+
+          // Detect split/studio background (like SAPUXI cards) vs street photo
+          const topLeft = ctx.getImageData(10, 10, 1, 1).data;
+          const topRight = ctx.getImageData(w - 10, 10, 1, 1).data;
+          const isStudioSplit = Math.abs(topLeft[0] - topLeft[1]) < 25 && Math.abs(topRight[0] - topRight[1]) < 25;
+
+          if (isStudioSplit) {
+            cleanBand(0, Math.round(h * 0.19), Math.round(h * 0.21));
+            cleanBand(Math.round(h * 0.88), h, Math.round(h * 0.86));
+          }
+
+          canvas.toBlob(function(blob) {
+            if (!blob) return;
+            window._lastCleanedBlob = blob;
+            const previewUrl = URL.createObjectURL(blob);
+            document.getElementById('cleanedResultImg').src = previewUrl;
+            document.getElementById('btnDownloadCleaned').href = previewUrl;
+            document.getElementById('cleanPreviewBox').classList.remove('hidden');
+          }, 'image/jpeg', 0.92);
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    async function applyAndUploadCleanedImage() {
+      if (!window._lastCleanedBlob) return;
+      const targetId = document.getElementById('cleanTargetSelect').value;
+      if (targetId === 'downloadOnly') {
+        document.getElementById('btnDownloadCleaned').click();
+        return;
+      }
+
+      const btn = document.getElementById('btnUploadCleaned');
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = '⏳ جاري الرفع إلى Supabase...';
+      }
+
+      const cleanFile = new File([window._lastCleanedBlob], `rava_clean_${Date.now()}.jpg`, { type: 'image/jpeg' });
+      const fakeEvent = { target: { files: [cleanFile] } };
+      await handleCmsFileUpload(fakeEvent, targetId);
+
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = '✓ تم الاعتماد والرفع أونلاين!';
+        setTimeout(() => { btn.textContent = '☁️ اعتماد ورفع الصورة إلى Supabase'; }, 2500);
+      }
     }
 
     function applyCmsConfigToPage() {
