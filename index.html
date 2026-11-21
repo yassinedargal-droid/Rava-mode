@@ -68,7 +68,9 @@
       offer: 'solo',
       pair1: { color: 'blanc', size: '42' },
       pair2: { color: 'noir', size: '43' },
-      activeHeroVideoIdx: 0
+      activeHeroVideoIdx: 0,
+      heroAutoPlayEnabled: true,
+      heroAutoSlideStart: Date.now()
     };
 
     // =========================================================================
@@ -76,13 +78,18 @@
     // =========================================================================
     window.DEFAULT_CMS_CONFIG = {
       brandName: 'RAVA MODE',
-      announcement: '🚚 التوصيل فابور لجميع المدن المغربية (24-48 ساعة) • 💵 الدفع عند الاستلام حتى تقلب السلعة بيديك',
+      headerTagline: 'المجموعة الحصرية 2026',
+      announcement: '🚚 توصيل فابور (24-48س) • 💵 الدفع عند الاستلام بعد المعاينة',
       heroTitle: 'الأناقة والراحة فخطوة وحدة — سنيكرز RAVA MODE الجديد',
       heroSubtitle: 'موديل واحد بتصميم عصري بجودة عالية، نعل مريح 4.5 سم وتهوية مثالية طوال اليوم. متوفر بلونين حصريين ومقاسات من 40 إلى 44.',
+      heroGuarantee: 'توصيل مجاني لباب الدار + الدفع عند الاستلام بعد المعاينة',
+      heroCtaText: 'اطلب الآن — الدفع عند الاستلام 🛒',
       priceSolo: 299,
       priceOld: 449,
       priceDuo: 548,
+      discountBadge: 'تخفيض -33%',
       whatsappNumber: '212600000000',
+      whatsappFloatText: 'تواصل معنا',
       cmsPin: '2026',
       logoSrc: 'image_003970.jpg',
       colorBlancLabel: 'أبيض / أحمر',
@@ -91,6 +98,8 @@
       colorNoirLabel: 'أسود / رمادي',
       colorNoirSub: 'ستايل داكن وفخم',
       colorNoirImg: 'WhatsApp Image 2026-11-01 at 20.52.40.jpeg',
+      videosSectionBadge: 'لقطات حقيقية عن قرب بدون فلاتر',
+      videosSectionTitle: 'شاهد التفاصيل عن قرب',
       video0Src: 'sneaker_white_navy_flat_9x16_with_voiceover 2.mp4',
       video0Title: 'تفاصيل الشبكة والسويد',
       video1Src: 'sneakers_sidewalk_handheld_9x16_silent 3.mp4',
@@ -98,7 +107,27 @@
       video2Src: 'sneaker_black_exact_9x16_with_voiceover_v2 3.mp4',
       video2Title: 'جودة الخامات والتشطيب',
       video3Src: 'sneaker_step_9x16_with_voiceover 1.mp4',
-      video3Title: 'خفة وثبات طوال اليوم'
+      video3Title: 'خفة وثبات طوال اليوم',
+      whySectionBadge: 'الجودة والثقة قبل كل شيء',
+      whySectionTitle: 'علاش تختار RAVA MODE ؟',
+      why1Title: 'خفة وراحة طوال اليوم',
+      why1DescMobile: 'نعل مرن 4.5 سم، وزن خفيف (310 غ) يمتص الصدمات.',
+      why1DescDesktop: 'نعل طبي مرن بارتفاع 4.5 سم ووزن خفيف جداً (310 غرام) يمتص الصدمات ويحمي القدمين من التعب حتى بعد ساعات طويلة من المشي.',
+      why1Footer: '✓ نعل EVA مريح ومضاد للانزلاق',
+      why2Title: 'تشطيب عالي الجودة',
+      why2DescMobile: 'شبكة مهوية، سويد ناعم وخياطة مزدوجة متينة.',
+      why2DescDesktop: 'شبكة مهوية عالية الكثافة تمنع التعرق، مع جلد سويد ناعم وخياطة مزدوجة متينة تدوم طويلاً وتحافظ على أناقة الحذاء.',
+      why2Footer: '✓ جودة مطابقة 100% للصور والفيديوهات',
+      why3Title: 'توصيل سريع لجميع المدن',
+      why3DescMobile: 'مجاني في 24-48 ساعة، افتح الطرد وعاين قبل الدفع.',
+      why3DescDesktop: 'توصيل مجاني خلال 24 إلى 48 ساعة لجميع مدن المغرب، مع إمكانية فتح الطرد ومعاينة الحذاء قبل دفع أي درهم.',
+      why3Footer: '✓ الدفع عند الاستلام + تبديل المقاس مجاناً',
+      formBannerTag: 'طلب سريع في 30 ثانية • بدون بطاقة بنكية',
+      formTitle: 'أكمل طلبك الآن — الدفع عند الاستلام',
+      formSubtitle: 'عمّر المعلومات أسفله وسنتصل بك لتأكيد الإرسال لباب منزلك.',
+      formSubmitText: 'تأكيد الطلب الآن — الدفع عند الاستلام 🛒',
+      footerTagline: 'أناقة عصرية • توصيل مجاني لجميع مدن المغرب',
+      footerCopyright: '© 2026 RAVA MODE. جميع الحقوق محفوظة.'
     };
 
     window.cmsConfig = Object.assign({}, window.DEFAULT_CMS_CONFIG);
@@ -151,20 +180,39 @@
       if (fallbackEl) fallbackEl.classList.remove('hidden');
     }
 
-    function switchHeroVideo(idx) {
+    function updateHeroColorPillsUI(colorKey) {
+      const pillBlanc = document.getElementById('hero-vid-color-blanc');
+      const pillNoir = document.getElementById('hero-vid-color-noir');
+      if (!pillBlanc || !pillNoir) return;
+
+      if (colorKey === 'blanc') {
+        pillBlanc.className = 'flex-1 py-2 px-3 rounded-full text-xs font-extrabold bg-crimson text-white shadow-sm transition flex items-center justify-center gap-1.5 cursor-pointer';
+        pillNoir.className = 'flex-1 py-2 px-3 rounded-full text-xs font-extrabold bg-white/15 text-white/90 hover:bg-white/25 backdrop-blur-md transition flex items-center justify-center gap-1.5 cursor-pointer';
+      } else {
+        pillNoir.className = 'flex-1 py-2 px-3 rounded-full text-xs font-extrabold bg-[#DFD4C0] text-[#0E0E10] shadow-sm transition flex items-center justify-center gap-1.5 cursor-pointer';
+        pillBlanc.className = 'flex-1 py-2 px-3 rounded-full text-xs font-extrabold bg-white/15 text-white/90 hover:bg-white/25 backdrop-blur-md transition flex items-center justify-center gap-1.5 cursor-pointer';
+      }
+    }
+
+    function switchHeroVideo(idx, isAutoCycle) {
       window.orderState.activeHeroVideoIdx = idx;
+      window.orderState.heroAutoSlideStart = Date.now();
       const cfg = window.VIDEOS_CONFIG[idx] || window.VIDEOS_CONFIG[0];
 
       const badge = document.getElementById('heroVideoBadge');
       if (badge) badge.textContent = cfg.badge;
 
+      updateHeroColorPillsUI(cfg.colorKey);
+
       for (let i = 0; i < 4; i++) {
-        const pill = document.getElementById('hero-vid-pill-' + i);
-        if (!pill) continue;
-        if (i === idx) {
-          pill.className = 'shrink-0 px-2.5 py-1.5 rounded-full text-[11px] font-extrabold bg-white text-obsidian shadow-sm transition cursor-pointer';
+        const seg = document.getElementById('heroStoryBar-' + i);
+        if (!seg) continue;
+        if (i < idx) {
+          seg.style.width = '100%';
+        } else if (i > idx) {
+          seg.style.width = '0%';
         } else {
-          pill.className = 'shrink-0 px-2.5 py-1.5 rounded-full text-[11px] font-bold bg-white/20 text-white backdrop-blur-md hover:bg-white/30 transition cursor-pointer';
+          seg.style.width = '8%';
         }
       }
 
@@ -174,6 +222,11 @@
       if (vidEl) {
         if (stageEl) stageEl.classList.add('hidden');
         vidEl.classList.remove('hidden');
+        vidEl.loop = false;
+        vidEl.onended = function() {
+          const nextIdx = (window.orderState.activeHeroVideoIdx + 1) % 4;
+          switchHeroVideo(nextIdx, true);
+        };
         vidEl.src = cfg.file;
         vidEl.load();
         const playPromise = vidEl.play();
@@ -204,20 +257,23 @@
     }
 
     function startSmoothProgressLoop() {
-      const bar = document.getElementById('heroVideoProgress');
       const vid = document.getElementById('heroMainVideo');
-      if (!bar) return;
+      const SLIDE_DURATION_MS = 2600;
 
-      let simulatedProgress = 0;
       setInterval(function() {
-        if (vid && !vid.classList.contains('hidden') && vid.duration && !isNaN(vid.duration)) {
-          const pct = Math.min(100, Math.max(5, (vid.currentTime / vid.duration) * 100));
-          bar.style.width = pct + '%';
-        } else {
-          simulatedProgress = (simulatedProgress + 1.5) % 100;
-          bar.style.width = Math.max(8, simulatedProgress) + '%';
+        const currentIdx = window.orderState.activeHeroVideoIdx || 0;
+        const activeBar = document.getElementById('heroStoryBar-' + currentIdx);
+        if (!activeBar) return;
+
+        const elapsed = Date.now() - (window.orderState.heroAutoSlideStart || Date.now());
+        const pct = Math.min(100, Math.max(8, (elapsed / SLIDE_DURATION_MS) * 100));
+        activeBar.style.width = pct + '%';
+
+        if (elapsed >= SLIDE_DURATION_MS) {
+          const nextIdx = (currentIdx + 1) % 4;
+          switchHeroVideo(nextIdx, true);
         }
-      }, 150);
+      }, 60);
     }
 
     function setupMobileStickyObserver() {
@@ -520,7 +576,7 @@
           <span id="cmsHeaderBrandName" dir="ltr" class="font-brand font-extrabold text-base sm:text-lg tracking-[0.18em] text-obsidian leading-none">
             RAVA MODE
           </span>
-          <span class="text-[11px] text-obsidian/65 mt-1 font-semibold">
+          <span id="cmsHeaderTagline" class="text-[11px] text-obsidian/65 mt-1 font-semibold">
             المجموعة الحصرية 2026
           </span>
         </div>
@@ -528,7 +584,7 @@
 
       <!-- Minimal Desktop Navigation -->
       <nav class="hidden lg:flex items-center gap-7 text-xs font-bold text-obsidian/75">
-        <a href="#videos-zoom" class="hover:text-obsidian transition">شاهد التفاصيل عن قرب</a>
+        <a href="#videos-zoom" id="cmsNavVideos" class="hover:text-obsidian transition">شاهد التفاصيل عن قرب</a>
         <a href="#pourquoi" class="hover:text-obsidian transition">مميزات الحذاء</a>
         <a href="#commander" class="hover:text-obsidian transition">اطلب الآن</a>
       </nav>
@@ -564,16 +620,12 @@
 
           <!-- High-Impact Arabic / Darija Headline -->
           <h1 id="cmsHeroHeadline" class="font-display font-black text-3xl sm:text-5xl lg:text-[48px] text-obsidian leading-[1.18] mb-5">
-            الأناقة والراحة فخطوة وحدة — <br/>
-            <span class="relative inline-block">
-              سنيكرز RAVA MODE الجديد
-              <span id="headlineUnderline" class="absolute bottom-1 right-0 w-full h-3 bg-crimson/20 -z-10 rounded-full transition-colors duration-500"></span>
-            </span>
+            الأناقة والراحة فخطوة وحدة — سنيكرز RAVA MODE الجديد
           </h1>
 
           <!-- Subtitle -->
           <p id="cmsHeroSubtitle" class="text-sm sm:text-base text-obsidian/80 leading-relaxed max-w-xl mb-6 font-medium">
-            موديل واحد بتصميم عصري بجودة عالية، نعل مريح <strong class="text-obsidian font-extrabold">4.5 سم</strong> وتهوية مثالية طوال اليوم. متوفر بلونين حصريين ومقاسات من <strong class="text-obsidian font-extrabold">40 إلى 44</strong>.
+            موديل واحد بتصميم عصري بجودة عالية، نعل مريح 4.5 سم وتهوية مثالية طوال اليوم. متوفر بلونين حصريين ومقاسات من 40 إلى 44.
           </p>
 
           <!-- Pricing & COD Offer Box -->
@@ -582,7 +634,7 @@
               <div class="flex items-baseline gap-3">
                 <span id="cmsHeroPriceSolo" class="font-display font-black text-3xl sm:text-4xl text-obsidian">299 درهم</span>
                 <span id="cmsHeroPriceOld" class="text-base sm:text-lg text-obsidian/40 line-through font-bold">449 درهم</span>
-                <span class="px-2.5 py-0.5 rounded-full bg-crimson text-white text-xs font-extrabold">
+                <span id="cmsHeroDiscountBadge" class="px-2.5 py-0.5 rounded-full bg-crimson text-white text-xs font-extrabold">
                   تخفيض -33%
                 </span>
               </div>
@@ -592,7 +644,7 @@
             </div>
             <p class="mt-2.5 text-xs sm:text-sm font-bold text-obsidian/75 flex items-center gap-2">
               <svg class="w-4 h-4 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4" d="M5 13l4 4L19 7"/></svg>
-              <span>توصيل مجاني لباب الدار + الدفع عند الاستلام بعد المعاينة</span>
+              <span id="cmsHeroGuarantee">توصيل مجاني لباب الدار + الدفع عند الاستلام بعد المعاينة</span>
             </p>
           </div>
 
@@ -670,21 +722,31 @@
           <!-- Primary Hero CTA -->
           <a href="#commander"
             class="theme-cta-btn w-full py-4 sm:py-4.5 px-6 rounded-2xl bg-crimson text-white font-display font-extrabold text-sm sm:text-base flex items-center justify-center gap-3 active:scale-[0.99] transition shadow-xl">
-            <span>اطلب الآن — الدفع عند الاستلام 🛒</span>
+            <span id="cmsHeroCtaText">اطلب الآن — الدفع عند الاستلام 🛒</span>
             <svg class="w-5 h-5 shrink-0 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
           </a>
         </div>
 
-        <!-- LEFT COLUMN IN RTL: CLEAN SILENT VERTICAL VIDEO PLAYER (6 cols) -->
-        <div class="lg:col-span-6 flex flex-col items-center order-1 lg:order-2">
-          <div class="relative w-full max-w-[395px] aspect-[9/16] rounded-[32px] bg-obsidian p-2 shadow-2xl shadow-obsidian/20 hairline-border-strong">
-            
-            <!-- Inner Vertical Frame (100% Clean Video View) -->
-            <div class="relative w-full h-full rounded-[25px] overflow-hidden bg-obsidian select-none">
+        <!-- LEFT COLUMN IN RTL: CLEAN AUTO-CYCLING VERTICAL VIDEO FRAME (6 cols) -->
+        <div class="lg:col-span-6 flex flex-col items-center justify-center order-1 lg:order-2">
+          <div class="relative w-[275px] sm:w-[315px] lg:w-[340px] aspect-[9/16] rounded-[34px] p-2 bg-obsidian shadow-2xl shadow-obsidian/25 ring-1 ring-obsidian/15">
+            <!-- Inner Vertical Frame (100% Clean Auto-Cycling Video View) -->
+            <div class="relative w-full h-full rounded-[26px] overflow-hidden bg-obsidian select-none">
               
-              <!-- Animated Progress Bar -->
-              <div class="absolute top-3 left-3.5 right-3.5 z-30 h-1.5 rounded-full bg-white/25 overflow-hidden backdrop-blur-xs">
-                <div id="heroVideoProgress" class="h-full bg-white w-1/3 transition-all duration-150"></div>
+              <!-- 4-Segment Auto-Progress Story Bars (Shows auto-cycling across both models) -->
+              <div class="absolute top-3 left-3.5 right-3.5 z-30 grid grid-cols-4 gap-1.5">
+                <div class="h-1 rounded-full bg-white/30 overflow-hidden backdrop-blur-xs">
+                  <div id="heroStoryBar-0" class="h-full bg-white w-full transition-all duration-100"></div>
+                </div>
+                <div class="h-1 rounded-full bg-white/30 overflow-hidden backdrop-blur-xs">
+                  <div id="heroStoryBar-1" class="h-full bg-white w-0 transition-all duration-100"></div>
+                </div>
+                <div class="h-1 rounded-full bg-white/30 overflow-hidden backdrop-blur-xs">
+                  <div id="heroStoryBar-2" class="h-full bg-white w-0 transition-all duration-100"></div>
+                </div>
+                <div class="h-1 rounded-full bg-white/30 overflow-hidden backdrop-blur-xs">
+                  <div id="heroStoryBar-3" class="h-full bg-white w-0 transition-all duration-100"></div>
+                </div>
               </div>
 
               <!-- Top Floating Badge -->
@@ -694,14 +756,13 @@
                 </span>
               </div>
 
-              <!-- REAL SILENT MP4 VIDEO -->
+              <!-- REAL SILENT MP4 VIDEO (Auto-cycles through both colorways) -->
               <video
                 id="heroMainVideo"
                 src="sneaker_white_navy_flat_9x16_with_voiceover 2.mp4"
                 class="w-full h-full object-cover"
                 autoplay
                 muted
-                loop
                 playsinline
                 preload="auto"
                 onerror="activateHeroKenBurnsFallback()"
@@ -717,24 +778,18 @@
                 />
               </div>
 
-              <!-- Bottom Gradient Overlay: 4 Quick Video Switcher Pills Only -->
-              <div class="absolute bottom-0 inset-x-0 z-30 pt-10 pb-3.5 px-3.5 bg-gradient-to-t from-black/85 via-black/40 to-transparent">
-                <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar">
-                  <button type="button" onclick="switchHeroVideo(0)" id="hero-vid-pill-0"
-                    class="shrink-0 px-2.5 py-1.5 rounded-full text-[11px] font-extrabold bg-white text-obsidian shadow-sm transition cursor-pointer">
-                    01. أبيض / أحمر
+              <!-- Bottom Gradient Overlay: Reactive 2-Color Switcher (Matches "شاهد التفاصيل عن قرب" logic) -->
+              <div class="absolute bottom-0 inset-x-0 z-30 pt-12 pb-3.5 px-3.5 bg-gradient-to-t from-black/85 via-black/45 to-transparent">
+                <div class="flex items-center gap-2 p-1 rounded-full bg-black/45 backdrop-blur-md border border-white/15">
+                  <button type="button" onclick="selectColorway('blanc')" id="hero-vid-color-blanc"
+                    class="flex-1 py-2 px-3 rounded-full text-xs font-extrabold bg-crimson text-white shadow-sm transition flex items-center justify-center gap-1.5 cursor-pointer">
+                    <span class="w-2 h-2 rounded-full bg-white shrink-0"></span>
+                    <span id="cmsHeroVidPillBlanc">أبيض / أحمر</span>
                   </button>
-                  <button type="button" onclick="switchHeroVideo(1)" id="hero-vid-pill-1"
-                    class="shrink-0 px-2.5 py-1.5 rounded-full text-[11px] font-bold bg-white/20 text-white backdrop-blur-md hover:bg-white/30 transition cursor-pointer">
-                    02. أبيض / أحمر (لبس)
-                  </button>
-                  <button type="button" onclick="switchHeroVideo(2)" id="hero-vid-pill-2"
-                    class="shrink-0 px-2.5 py-1.5 rounded-full text-[11px] font-bold bg-white/20 text-white backdrop-blur-md hover:bg-white/30 transition cursor-pointer">
-                    03. أسود / رمادي
-                  </button>
-                  <button type="button" onclick="switchHeroVideo(3)" id="hero-vid-pill-3"
-                    class="shrink-0 px-2.5 py-1.5 rounded-full text-[11px] font-bold bg-white/20 text-white backdrop-blur-md hover:bg-white/30 transition cursor-pointer">
-                    04. أسود / رمادي (لبس)
+                  <button type="button" onclick="selectColorway('noir')" id="hero-vid-color-noir"
+                    class="flex-1 py-2 px-3 rounded-full text-xs font-extrabold bg-white/15 text-white/90 hover:bg-white/25 backdrop-blur-md transition flex items-center justify-center gap-1.5 cursor-pointer">
+                    <span class="w-2 h-2 rounded-full bg-obsidian border border-white/50 shrink-0"></span>
+                    <span id="cmsHeroVidPillNoir">أسود / رمادي</span>
                   </button>
                 </div>
               </div>
@@ -742,7 +797,7 @@
             </div>
           </div>
           <p class="text-xs text-obsidian/65 mt-3 font-semibold text-center">
-            بدّل بين الفيديوهات لمشاهدة الحذاء في اللونين من جميع الزوايا
+            عرض تلقائي للونين • اضغط على اللون المفضل لتثبيته وتغيير ألوان الصفحة
           </p>
         </div>
 
@@ -759,8 +814,8 @@
       <!-- Compact Header + Instant Reactive Color Filter Tabs -->
       <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-6 sm:mb-8 gap-3.5 text-right">
         <div>
-          <span class="text-[11px] font-extrabold text-obsidian/60">لقطات حقيقية عن قرب بدون فلاتر</span>
-          <h2 class="font-display font-black text-2xl sm:text-3xl text-obsidian mt-0.5">
+          <span id="cmsVideosSectionBadge" class="text-[11px] font-extrabold text-obsidian/60">لقطات حقيقية عن قرب بدون فلاتر</span>
+          <h2 id="cmsVideosSectionTitle" class="font-display font-black text-2xl sm:text-3xl text-obsidian mt-0.5">
             شاهد التفاصيل عن قرب
           </h2>
         </div>
@@ -770,12 +825,12 @@
           <button type="button" onclick="selectColorway('blanc')" id="vid-filter-blanc"
             class="px-3.5 py-1.5 rounded-full bg-crimson text-white text-xs font-extrabold shadow-xs transition flex items-center gap-1.5 cursor-pointer">
             <span class="w-2 h-2 rounded-full bg-white"></span>
-            <span>أبيض / أحمر (2)</span>
+            <span id="cmsVidFilterBlancText">أبيض / أحمر (2)</span>
           </button>
           <button type="button" onclick="selectColorway('noir')" id="vid-filter-noir"
             class="px-3.5 py-1.5 rounded-full text-obsidian/75 hover:text-obsidian text-xs font-extrabold transition flex items-center gap-1.5 cursor-pointer">
             <span class="w-2 h-2 rounded-full bg-obsidian"></span>
-            <span>أسود / رمادي (2)</span>
+            <span id="cmsVidFilterNoirText">أسود / رمادي (2)</span>
           </button>
         </div>
       </div>
@@ -942,8 +997,8 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
       <div class="text-center max-w-2xl mx-auto mb-7 sm:mb-12">
-        <span class="hidden sm:inline-block text-xs font-extrabold text-obsidian/60">الجودة والثقة قبل كل شيء</span>
-        <h2 class="font-display font-black text-2xl sm:text-4xl text-obsidian sm:mt-1.5">
+        <span id="cmsWhySectionBadge" class="hidden sm:inline-block text-xs font-extrabold text-obsidian/60">الجودة والثقة قبل كل شيء</span>
+        <h2 id="cmsWhySectionTitle" class="font-display font-black text-2xl sm:text-4xl text-obsidian sm:mt-1.5">
           علاش تختار RAVA MODE ؟
         </h2>
       </div>
@@ -957,16 +1012,16 @@
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
             </div>
             <div class="min-w-0 flex-1">
-              <h3 class="font-display font-extrabold text-base sm:text-xl text-obsidian leading-snug">
+              <h3 id="cmsWhy1Title" class="font-display font-extrabold text-base sm:text-xl text-obsidian leading-snug">
                 خفة وراحة طوال اليوم
               </h3>
               <p class="text-xs sm:text-sm text-obsidian/75 mt-1 sm:mt-2.5 leading-relaxed">
-                <span class="md:hidden">نعل مرن 4.5 سم، وزن خفيف (310 غ) يمتص الصدمات.</span>
-                <span class="hidden md:inline">نعل طبي مرن بارتفاع 4.5 سم ووزن خفيف جداً (310 غرام) يمتص الصدمات ويحمي القدمين من التعب حتى بعد ساعات طويلة من المشي.</span>
+                <span id="cmsWhy1DescMobile" class="md:hidden">نعل مرن 4.5 سم، وزن خفيف (310 غ) يمتص الصدمات.</span>
+                <span id="cmsWhy1DescDesktop" class="hidden md:inline">نعل طبي مرن بارتفاع 4.5 سم ووزن خفيف جداً (310 غرام) يمتص الصدمات ويحمي القدمين من التعب حتى بعد ساعات طويلة من المشي.</span>
               </p>
             </div>
           </div>
-          <div class="hidden md:block w-full mt-6 pt-4 border-t border-obsidian/10 text-xs font-extrabold text-obsidian">
+          <div id="cmsWhy1Footer" class="hidden md:block w-full mt-6 pt-4 border-t border-obsidian/10 text-xs font-extrabold text-obsidian">
             ✓ نعل EVA مريح ومضاد للانزلاق
           </div>
         </div>
@@ -978,16 +1033,16 @@
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
             </div>
             <div class="min-w-0 flex-1">
-              <h3 class="font-display font-extrabold text-base sm:text-xl text-white leading-snug">
+              <h3 id="cmsWhy2Title" class="font-display font-extrabold text-base sm:text-xl text-white leading-snug">
                 تشطيب عالي الجودة
               </h3>
               <p class="text-xs sm:text-sm text-white/80 mt-1 sm:mt-2.5 leading-relaxed">
-                <span class="md:hidden">شبكة مهوية، سويد ناعم وخياطة مزدوجة متينة.</span>
-                <span class="hidden md:inline">شبكة مهوية عالية الكثافة تمنع التعرق، مع جلد سويد ناعم وخياطة مزدوجة متينة تدوم طويلاً وتحافظ على أناقة الحذاء.</span>
+                <span id="cmsWhy2DescMobile" class="md:hidden">شبكة مهوية، سويد ناعم وخياطة مزدوجة متينة.</span>
+                <span id="cmsWhy2DescDesktop" class="hidden md:inline">شبكة مهوية عالية الكثافة تمنع التعرق، مع جلد سويد ناعم وخياطة مزدوجة متينة تدوم طويلاً وتحافظ على أناقة الحذاء.</span>
               </p>
             </div>
           </div>
-          <div class="hidden md:block w-full mt-6 pt-4 border-t border-white/15 text-xs font-extrabold text-warmsand">
+          <div id="cmsWhy2Footer" class="hidden md:block w-full mt-6 pt-4 border-t border-white/15 text-xs font-extrabold text-warmsand">
             ✓ جودة مطابقة 100% للصور والفيديوهات
           </div>
         </div>
@@ -999,16 +1054,16 @@
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
             </div>
             <div class="min-w-0 flex-1">
-              <h3 class="font-display font-extrabold text-base sm:text-xl text-obsidian leading-snug">
+              <h3 id="cmsWhy3Title" class="font-display font-extrabold text-base sm:text-xl text-obsidian leading-snug">
                 توصيل سريع لجميع المدن
               </h3>
               <p class="text-xs sm:text-sm text-obsidian/75 mt-1 sm:mt-2.5 leading-relaxed">
-                <span class="md:hidden">مجاني في 24-48 ساعة، افتح الطرد وعاين قبل الدفع.</span>
-                <span class="hidden md:inline">توصيل مجاني خلال 24 إلى 48 ساعة لجميع مدن المغرب، مع إمكانية فتح الطرد ومعاينة الحذاء قبل دفع أي درهم.</span>
+                <span id="cmsWhy3DescMobile" class="md:hidden">مجاني في 24-48 ساعة، افتح الطرد وعاين قبل الدفع.</span>
+                <span id="cmsWhy3DescDesktop" class="hidden md:inline">توصيل مجاني خلال 24 إلى 48 ساعة لجميع مدن المغرب، مع إمكانية فتح الطرد ومعاينة الحذاء قبل دفع أي درهم.</span>
               </p>
             </div>
           </div>
-          <div class="hidden md:block w-full mt-6 pt-4 border-t border-obsidian/10 text-xs font-extrabold text-emerald-700">
+          <div id="cmsWhy3Footer" class="hidden md:block w-full mt-6 pt-4 border-t border-obsidian/10 text-xs font-extrabold text-emerald-700">
             ✓ الدفع عند الاستلام + تبديل المقاس مجاناً
           </div>
         </div>
@@ -1036,10 +1091,10 @@
               توصيل مجاني 24-48 ساعة
             </span>
           </div>
-          <h2 class="font-display font-black text-2xl sm:text-3xl mt-2">
+          <h2 id="cmsFormTitle" class="font-display font-black text-2xl sm:text-3xl mt-2">
             أكمل طلبك الآن — الدفع عند الاستلام
           </h2>
-          <p class="text-xs sm:text-sm text-white/85 mt-1">
+          <p id="cmsFormSubtitle" class="text-xs sm:text-sm text-white/85 mt-1">
             عمّر المعلومات أسفله وسنتصل بك لتأكيد الإرسال لباب منزلك.
           </p>
         </div>
@@ -1082,7 +1137,7 @@
                   class="w-12 h-12 rounded-xl object-cover shrink-0 hairline-border"
                   onerror="applyMediaFallback(this, 'blanc_studio')"
                 />
-                <span class="text-xs font-extrabold text-obsidian">أبيض / أحمر</span>
+                <span id="cmsFormColorBlancLabel" class="text-xs font-extrabold text-obsidian">أبيض / أحمر</span>
               </button>
 
               <button type="button" onclick="setPairColor(1, 'noir')" id="form-color-noir"
@@ -1094,7 +1149,7 @@
                   class="w-12 h-12 rounded-xl object-cover shrink-0 hairline-border"
                   onerror="applyMediaFallback(this, 'noir_studio')"
                 />
-                <span class="text-xs font-extrabold text-obsidian">أسود / رمادي</span>
+                <span id="cmsFormColorNoirLabel" class="text-xs font-extrabold text-obsidian">أسود / رمادي</span>
               </button>
             </div>
           </div>
@@ -1275,10 +1330,10 @@
           />
         </div>
         <div>
-          <span dir="ltr" class="font-brand font-extrabold text-base tracking-[0.18em] text-white block">
+          <span id="cmsFooterBrandName" dir="ltr" class="font-brand font-extrabold text-base tracking-[0.18em] text-white block">
             RAVA MODE
           </span>
-          <span class="text-xs text-white/65">
+          <span id="cmsFooterTagline" class="text-xs text-white/65">
             أناقة عصرية • توصيل مجاني لجميع مدن المغرب
           </span>
         </div>
@@ -1290,32 +1345,42 @@
         <a href="#commander" class="hover:text-white transition">نموذج الطلب</a>
       </div>
 
-      <div class="text-xs text-white/55">
+      <div id="cmsFooterCopyright" class="text-xs text-white/55">
         © 2026 RAVA MODE. جميع الحقوق محفوظة.
       </div>
     </div>
   </footer>
 
   <!-- =====================================================================
-       7. STICKY MOBILE CONVERSION BAR
+       7. FLOATING WHATSAPP DIRECT SUPPORT BUTTON + STICKY MOBILE BAR
        ===================================================================== -->
+  <a id="floatingWhatsappBtn"
+    href="https://wa.me/212600000000"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="تواصل معنا عبر واتساب"
+    class="fixed bottom-20 md:bottom-6 left-4 sm:left-6 z-40 inline-flex items-center gap-2 px-4 py-3 rounded-full bg-[#1FAF58] hover:bg-[#19994B] text-white font-extrabold text-xs sm:text-sm shadow-xl shadow-[#1FAF58]/35 active:scale-95 transition-all">
+    <svg class="w-5 h-5 fill-current shrink-0" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824z"/></svg>
+    <span id="cmsWhatsappFloatText">تواصل معنا</span>
+  </a>
+
   <div id="stickyMobileBar" class="fixed bottom-0 inset-x-0 z-40 md:hidden bg-white/95 backdrop-blur-md border-t border-obsidian/15 px-4 py-2.5 shadow-[0_-8px_24px_rgba(14,14,16,0.1)] transition-transform duration-300">
     <div class="flex items-center justify-between gap-3">
       <div class="flex items-center gap-2.5 min-w-0">
         <img
           id="mobileStickyThumb"
           src="WhatsApp Image 2026-11-01 at 20.52.40;.jpeg"
-          alt="صورة مصغرة"
-          class="w-11 h-11 rounded-xl object-cover bg-stonegray shrink-0 hairline-border"
+          alt="RAVA MODE"
+          class="w-10 h-10 rounded-xl object-cover bg-stonegray shrink-0 hairline-border"
           onerror="applyMediaFallback(this, 'blanc_studio')"
         />
         <div class="min-w-0 text-right">
           <div id="mobileStickyTitle" class="text-xs font-extrabold text-obsidian truncate">أبيض / أحمر • مقاس 42</div>
-          <div id="mobileStickyPrice" class="text-[11px] font-bold text-emerald-700">299 درهم • توصيل مجاني</div>
+          <div id="mobileStickyPrice" class="text-[11px] font-bold text-emerald-700 truncate">299 درهم • توصيل مجاني</div>
         </div>
       </div>
-      <a href="#commander" class="theme-cta-btn shrink-0 px-4 py-2.5 rounded-xl bg-crimson text-white font-extrabold text-xs shadow-sm active:scale-95 transition">
-        اطلب الآن بـ 299 درهم • توصيل مجاني
+      <a href="#commander" id="mobileStickyCtaBtn" class="theme-cta-btn shrink-0 px-4 py-2.5 rounded-xl bg-crimson text-white font-extrabold text-xs shadow-sm active:scale-95 transition">
+        اطلب الآن
       </a>
     </div>
   </div>
@@ -1429,182 +1494,86 @@
         <button type="button" onclick="switchCmsTab('content')" id="cms-tab-btn-content"
           class="py-2.5 px-3 rounded-xl bg-white/70 text-obsidian font-extrabold text-xs transition cursor-pointer">
           ✏️ النصوص والأسعار
-        </button>
-      </div>
-
-      <!-- CMS Scrollable Body -->
-      <div class="flex-1 overflow-y-auto p-5 space-y-6 bg-alabaster">
-
-        <!-- TAB 1: ORDERS INBOX (استقبال وإدارة الطلبات) -->
-        <div id="cms-panel-orders" class="space-y-4">
-          <div class="p-4 rounded-2xl bg-white hairline-border flex flex-wrap items-center justify-between gap-3">
-            <div>
-              <h4 class="font-display font-black text-sm text-obsidian">سجل طلبات الزبناء (COD)</h4>
-              <p class="text-xs text-obsidian/65 mt-0.5">يتم حفظ كل طلبية جديدة تلقائياً هنا مع إشعار واتساب.</p>
-            </div>
-            <div class="flex items-center gap-2">
-              <button type="button" onclick="exportOrdersCsv()" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs cursor-pointer">
-                📥 تصدير Excel (CSV)
-              </button>
-              <button type="button" onclick="clearAllOrders()" class="px-3 py-2 rounded-xl bg-stonegray hover:bg-crimson hover:text-white text-obsidian font-bold text-xs cursor-pointer">
-                مسح الكل
-              </button>
-            </div>
-          </div>
-
-          <div id="cmsOrdersListContainer" class="space-y-3">
-            <!-- Populated dynamically from localStorage -->
-          </div>
-        </div>
-
-        <!-- TAB 2: MEDIA STUDIO (إضافة وتغيير الفيديوهات والصور) -->
-        <div id="cms-panel-media" class="hidden space-y-5">
-          <div class="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-xs text-amber-950 leading-relaxed">
-            <strong>💡 طريقة ذكية :</strong> يمكنك إدخال رابط مباشر للصورة/الفيديو أو الضغط على <strong>« رفع من الجهاز »</strong> لمعاينتها فوراً، ثم الضغط على زر <strong>« تحميل ملف HTML جاهز »</strong> بالأسفل لرفعه على GitHub / Vercel.
-          </div>
-
-          <!-- Brand Logo & Colorway Images -->
-          <div class="p-4 rounded-2xl bg-white hairline-border space-y-4">
-            <h4 class="font-display font-extrabold text-sm text-obsidian border-b border-obsidian/10 pb-2">1. الشعار وصور اللونين</h4>
-
-            <div class="space-y-1.5">
-              <label class="text-xs font-bold text-obsidian/80">شعار العلامة (Logo)</label>
-              <div class="flex gap-2">
-                <input type="text" id="cmsInputLogoSrc" class="flex-1 px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-semibold" dir="ltr" />
-                <label class="px-3 py-2 rounded-xl bg-obsidian text-white text-xs font-bold cursor-pointer shrink-0">
-                  📁 رفع
-                  <input type="file" accept="image/*" class="hidden" onchange="handleCmsFileUpload(event, 'cmsInputLogoSrc')" />
-                </label>
-              </div>
-            </div>
-
-            <div class="space-y-1.5">
-              <label class="text-xs font-bold text-obsidian/80">صورة اللون الأول (أبيض / أحمر)</label>
-              <div class="flex gap-2">
-                <input type="text" id="cmsInputColorBlancImg" class="flex-1 px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-semibold" dir="ltr" />
-                <label class="px-3 py-2 rounded-xl bg-obsidian text-white text-xs font-bold cursor-pointer shrink-0">
-                  📁 رفع
-                  <input type="file" accept="image/*" class="hidden" onchange="handleCmsFileUpload(event, 'cmsInputColorBlancImg')" />
-                </label>
-              </div>
-            </div>
-
-            <div class="space-y-1.5">
-              <label class="text-xs font-bold text-obsidian/80">صورة اللون الثاني (أسود / رمادي)</label>
-              <div class="flex gap-2">
-                <input type="text" id="cmsInputColorNoirImg" class="flex-1 px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-semibold" dir="ltr" />
-                <label class="px-3 py-2 rounded-xl bg-obsidian text-white text-xs font-bold cursor-pointer shrink-0">
-                  📁 رفع
-                  <input type="file" accept="image/*" class="hidden" onchange="handleCmsFileUpload(event, 'cmsInputColorNoirImg')" />
-                </label>
-              </div>
-            </div>
-          </div>
-
-          <!-- 4 Videos Manager -->
-          <div class="p-4 rounded-2xl bg-white hairline-border space-y-4">
-            <h4 class="font-display font-extrabold text-sm text-obsidian border-b border-obsidian/10 pb-2">2. الفيديوهات الأربعة (.mp4)</h4>
-
-            <div class="space-y-2 p-3 rounded-xl bg-alabaster">
-              <label class="text-xs font-extrabold text-crimson">فيديو 01 — أبيض / أحمر (زوم ماكرو)</label>
-              <input type="text" id="cmsInputVid0Title" placeholder="عنوان الفيديو 01" class="w-full px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-bold" />
-              <div class="flex gap-2">
-                <input type="text" id="cmsInputVid0Src" class="flex-1 px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-semibold" dir="ltr" />
-                <label class="px-3 py-2 rounded-xl bg-crimson text-white text-xs font-bold cursor-pointer shrink-0">
-                  🎥 فيديو
-                  <input type="file" accept="video/mp4,video/*" class="hidden" onchange="handleCmsFileUpload(event, 'cmsInputVid0Src')" />
-                </label>
-              </div>
-            </div>
-
-            <div class="space-y-2 p-3 rounded-xl bg-alabaster">
-              <label class="text-xs font-extrabold text-crimson">فيديو 02 — أبيض / أحمر (إطلالة ملبوسة)</label>
-              <input type="text" id="cmsInputVid1Title" placeholder="عنوان الفيديو 02" class="w-full px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-bold" />
-              <div class="flex gap-2">
-                <input type="text" id="cmsInputVid1Src" class="flex-1 px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-semibold" dir="ltr" />
-                <label class="px-3 py-2 rounded-xl bg-crimson text-white text-xs font-bold cursor-pointer shrink-0">
-                  🎥 فيديو
-                  <input type="file" accept="video/mp4,video/*" class="hidden" onchange="handleCmsFileUpload(event, 'cmsInputVid1Src')" />
-                </label>
-              </div>
-            </div>
-
-            <div class="space-y-2 p-3 rounded-xl bg-alabaster">
-              <label class="text-xs font-extrabold text-obsidian">فيديو 03 — أسود / رمادي (زوم ماكرو)</label>
-              <input type="text" id="cmsInputVid2Title" placeholder="عنوان الفيديو 03" class="w-full px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-bold" />
-              <div class="flex gap-2">
-                <input type="text" id="cmsInputVid2Src" class="flex-1 px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-semibold" dir="ltr" />
-                <label class="px-3 py-2 rounded-xl bg-obsidian text-white text-xs font-bold cursor-pointer shrink-0">
-                  🎥 فيديو
-                  <input type="file" accept="video/mp4,video/*" class="hidden" onchange="handleCmsFileUpload(event, 'cmsInputVid2Src')" />
-                </label>
-              </div>
-            </div>
-
-            <div class="space-y-2 p-3 rounded-xl bg-alabaster">
-              <label class="text-xs font-extrabold text-obsidian">فيديو 04 — أسود / رمادي (إطلالة ملبوسة)</label>
-              <input type="text" id="cmsInputVid3Title" placeholder="عنوان الفيديو 04" class="w-full px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-bold" />
-              <div class="flex gap-2">
-                <input type="text" id="cmsInputVid3Src" class="flex-1 px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-semibold" dir="ltr" />
-                <label class="px-3 py-2 rounded-xl bg-obsidian text-white text-xs font-bold cursor-pointer shrink-0">
-                  🎥 فيديو
-                  <input type="file" accept="video/mp4,video/*" class="hidden" onchange="handleCmsFileUpload(event, 'cmsInputVid3Src')" />
-                </label>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- TAB 3: TEXTS, PRICES & WHATSAPP (تعديل النصوص والأسعار والواتساب) -->
+        <!-- TAB 3: ORGANIZED SECTION-BY-SECTION CONTENT EDITOR (تعديل جميع نصوص وأقسام الموقع) -->
         <div id="cms-panel-content" class="hidden space-y-4">
-          <div class="p-4 rounded-2xl bg-white hairline-border space-y-3.5">
-            <h4 class="font-display font-extrabold text-sm text-obsidian border-b border-obsidian/10 pb-2">إعدادات المتجر والواتساب</h4>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <!-- SECTION A: WHATSAPP, SECURITY PIN & BRANDING -->
+          <div class="p-4 rounded-2xl bg-white hairline-border space-y-3">
+            <h4 class="font-display font-extrabold text-sm text-emerald-800 border-b border-obsidian/10 pb-2">
+              1️⃣ إعدادات واتساب، الهوية والرمز السري
+            </h4>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
               <div>
-                <label class="block text-xs font-bold text-obsidian/80 mb-1">اسم العلامة التجارية</label>
-                <input type="text" id="cmsInputBrandName" class="w-full px-3 py-2.5 rounded-xl border border-obsidian/20 text-xs font-bold" dir="ltr" />
+                <label class="block text-[11px] font-bold text-obsidian/80 mb-1">اسم العلامة التجارية</label>
+                <input type="text" id="cmsInputBrandName" class="w-full px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-bold" dir="ltr" />
               </div>
               <div>
-                <label class="block text-xs font-bold text-emerald-800 mb-1">رقم واتساب لاستقبال الطلبات (2126...)</label>
-                <input type="text" id="cmsInputWhatsapp" placeholder="212661234567" class="w-full px-3 py-2.5 rounded-xl border border-emerald-400 bg-emerald-50/40 text-xs font-extrabold" dir="ltr" />
+                <label class="block text-[11px] font-bold text-emerald-800 mb-1">رقم واتساب (2126...)</label>
+                <input type="text" id="cmsInputWhatsapp" placeholder="212661234567" class="w-full px-3 py-2 rounded-xl border border-emerald-400 bg-emerald-50/40 text-xs font-extrabold" dir="ltr" />
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-obsidian/80 mb-1">الرمز السري للوحة التحكم (PIN)</label>
+                <input type="text" id="cmsInputCmsPin" maxlength="12" class="w-full px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-black text-center" dir="ltr" />
               </div>
             </div>
-
-            <div>
-              <label class="block text-xs font-bold text-obsidian/80 mb-1">الشريط الإعلاني العلوي</label>
-              <input type="text" id="cmsInputAnnouncement" class="w-full px-3 py-2.5 rounded-xl border border-obsidian/20 text-xs font-semibold" />
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              <div>
+                <label class="block text-[11px] font-bold text-obsidian/80 mb-1">نص زر واتساب العائم</label>
+                <input type="text" id="cmsInputWhatsappFloatText" class="w-full px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-bold" />
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-obsidian/80 mb-1">النص أسفل الشعار في الهيدر</label>
+                <input type="text" id="cmsInputHeaderTagline" class="w-full px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-semibold" />
+              </div>
             </div>
-
             <div>
-              <label class="block text-xs font-bold text-obsidian/80 mb-1">العنوان الرئيسي (Hero Title)</label>
-              <input type="text" id="cmsInputHeroTitle" class="w-full px-3 py-2.5 rounded-xl border border-obsidian/20 text-xs font-bold" />
+              <label class="block text-[11px] font-bold text-obsidian/80 mb-1">الشريط الإعلاني الأحمر العلوي</label>
+              <input type="text" id="cmsInputAnnouncement" class="w-full px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-semibold" />
             </div>
+          </div>
 
+          <!-- SECTION B: HERO & PRICES -->
+          <div class="p-4 rounded-2xl bg-white hairline-border space-y-3">
+            <h4 class="font-display font-extrabold text-sm text-crimson border-b border-obsidian/10 pb-2">
+              2️⃣ قسم الواجهة الرئيسية والأسعار (Hero)
+            </h4>
             <div>
-              <label class="block text-xs font-bold text-obsidian/80 mb-1">الوصف أسفل العنوان</label>
+              <label class="block text-[11px] font-bold text-obsidian/80 mb-1">العنوان الرئيسي الكبير</label>
+              <input type="text" id="cmsInputHeroTitle" class="w-full px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-bold" />
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold text-obsidian/80 mb-1">الوصف أسفل العنوان</label>
               <textarea id="cmsInputHeroSubtitle" rows="2" class="w-full px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-semibold"></textarea>
             </div>
-          </div>
-
-          <div class="p-4 rounded-2xl bg-white hairline-border space-y-3.5">
-            <h4 class="font-display font-extrabold text-sm text-obsidian border-b border-obsidian/10 pb-2">الأسعار وأسماء الألوان</h4>
-            <div class="grid grid-cols-3 gap-2.5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
               <div>
-                <label class="block text-[11px] font-bold text-obsidian/80 mb-1">ثمن الزوج (درهم)</label>
-                <input type="number" id="cmsInputPriceSolo" class="w-full px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-black" />
+                <label class="block text-[11px] font-bold text-obsidian/80 mb-1">سطر الضمان والتوصيل</label>
+                <input type="text" id="cmsInputHeroGuarantee" class="w-full px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-semibold" />
               </div>
               <div>
-                <label class="block text-[11px] font-bold text-obsidian/80 mb-1">الثمن القديم</label>
-                <input type="number" id="cmsInputPriceOld" class="w-full px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-bold" />
-              </div>
-              <div>
-                <label class="block text-[11px] font-bold text-obsidian/80 mb-1">ثمن الزوجين (الثنائي)</label>
-                <input type="number" id="cmsInputPriceDuo" class="w-full px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-black" />
+                <label class="block text-[11px] font-bold text-obsidian/80 mb-1">نص زر الطلب الرئيسي</label>
+                <input type="text" id="cmsInputHeroCtaText" class="w-full px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-bold" />
               </div>
             </div>
-
-            <div class="grid grid-cols-2 gap-3 pt-2">
+            <div class="grid grid-cols-4 gap-2">
+              <div>
+                <label class="block text-[10px] font-bold text-obsidian/80 mb-1">ثمن الزوج (DH)</label>
+                <input type="number" id="cmsInputPriceSolo" class="w-full px-2.5 py-2 rounded-xl border border-obsidian/20 text-xs font-black" />
+              </div>
+              <div>
+                <label class="block text-[10px] font-bold text-obsidian/80 mb-1">الثمن القديم</label>
+                <input type="number" id="cmsInputPriceOld" class="w-full px-2.5 py-2 rounded-xl border border-obsidian/20 text-xs font-bold" />
+              </div>
+              <div>
+                <label class="block text-[10px] font-bold text-obsidian/80 mb-1">ثمن الزوجين</label>
+                <input type="number" id="cmsInputPriceDuo" class="w-full px-2.5 py-2 rounded-xl border border-obsidian/20 text-xs font-black" />
+              </div>
+              <div>
+                <label class="block text-[10px] font-bold text-obsidian/80 mb-1">شارة التخفيض</label>
+                <input type="text" id="cmsInputDiscountBadge" class="w-full px-2.5 py-2 rounded-xl border border-obsidian/20 text-xs font-bold" />
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-2.5 pt-1">
               <div>
                 <label class="block text-[11px] font-bold text-obsidian/80 mb-1">اسم اللون 1</label>
                 <input type="text" id="cmsInputColorBlancLabel" class="w-full px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-bold" />
@@ -1623,6 +1592,103 @@
               </div>
             </div>
           </div>
+
+          <!-- SECTION C: VIDEOS GALLERY SECTION -->
+          <div class="p-4 rounded-2xl bg-white hairline-border space-y-3">
+            <h4 class="font-display font-extrabold text-sm text-obsidian border-b border-obsidian/10 pb-2">
+              3️⃣ قسم الفيديوهات (شاهد التفاصيل عن قرب)
+            </h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              <div>
+                <label class="block text-[11px] font-bold text-obsidian/80 mb-1">العنوان الفرعي للقسم</label>
+                <input type="text" id="cmsInputVideosSectionBadge" class="w-full px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-semibold" />
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-obsidian/80 mb-1">العنوان الرئيسي للقسم</label>
+                <input type="text" id="cmsInputVideosSectionTitle" class="w-full px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-bold" />
+              </div>
+            </div>
+          </div>
+
+          <!-- SECTION D: WHY CHOOSE US (3 ADVANTAGE CARDS) -->
+          <div class="p-4 rounded-2xl bg-white hairline-border space-y-3">
+            <h4 class="font-display font-extrabold text-sm text-obsidian border-b border-obsidian/10 pb-2">
+              4️⃣ قسم المميزات (علاش تختار RAVA MODE ؟)
+            </h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              <div>
+                <label class="block text-[11px] font-bold text-obsidian/80 mb-1">العنوان الفرعي للمميزات</label>
+                <input type="text" id="cmsInputWhySectionBadge" class="w-full px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-semibold" />
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-obsidian/80 mb-1">العنوان الرئيسي للمميزات</label>
+                <input type="text" id="cmsInputWhySectionTitle" class="w-full px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-bold" />
+              </div>
+            </div>
+
+            <!-- Card 1 -->
+            <div class="p-3 rounded-xl bg-alabaster space-y-2">
+              <div class="text-[11px] font-extrabold text-obsidian">الميزة الأولى :</div>
+              <input type="text" id="cmsInputWhy1Title" placeholder="عنوان الميزة 1" class="w-full px-3 py-1.5 rounded-lg border border-obsidian/20 text-xs font-bold" />
+              <input type="text" id="cmsInputWhy1DescMobile" placeholder="وصف مختصر للهاتف" class="w-full px-3 py-1.5 rounded-lg border border-obsidian/20 text-xs" />
+              <input type="text" id="cmsInputWhy1DescDesktop" placeholder="وصف كامل للحاسوب" class="w-full px-3 py-1.5 rounded-lg border border-obsidian/20 text-xs" />
+              <input type="text" id="cmsInputWhy1Footer" placeholder="سطر التأكيد السفلي" class="w-full px-3 py-1.5 rounded-lg border border-obsidian/20 text-xs font-semibold" />
+            </div>
+
+            <!-- Card 2 -->
+            <div class="p-3 rounded-xl bg-alabaster space-y-2">
+              <div class="text-[11px] font-extrabold text-obsidian">الميزة الثانية :</div>
+              <input type="text" id="cmsInputWhy2Title" placeholder="عنوان الميزة 2" class="w-full px-3 py-1.5 rounded-lg border border-obsidian/20 text-xs font-bold" />
+              <input type="text" id="cmsInputWhy2DescMobile" placeholder="وصف مختصر للهاتف" class="w-full px-3 py-1.5 rounded-lg border border-obsidian/20 text-xs" />
+              <input type="text" id="cmsInputWhy2DescDesktop" placeholder="وصف كامل للحاسوب" class="w-full px-3 py-1.5 rounded-lg border border-obsidian/20 text-xs" />
+              <input type="text" id="cmsInputWhy2Footer" placeholder="سطر التأكيد السفلي" class="w-full px-3 py-1.5 rounded-lg border border-obsidian/20 text-xs font-semibold" />
+            </div>
+
+            <!-- Card 3 -->
+            <div class="p-3 rounded-xl bg-alabaster space-y-2">
+              <div class="text-[11px] font-extrabold text-obsidian">الميزة الثالثة :</div>
+              <input type="text" id="cmsInputWhy3Title" placeholder="عنوان الميزة 3" class="w-full px-3 py-1.5 rounded-lg border border-obsidian/20 text-xs font-bold" />
+              <input type="text" id="cmsInputWhy3DescMobile" placeholder="وصف مختصر للهاتف" class="w-full px-3 py-1.5 rounded-lg border border-obsidian/20 text-xs" />
+              <input type="text" id="cmsInputWhy3DescDesktop" placeholder="وصف كامل للحاسوب" class="w-full px-3 py-1.5 rounded-lg border border-obsidian/20 text-xs" />
+              <input type="text" id="cmsInputWhy3Footer" placeholder="سطر التأكيد السفلي" class="w-full px-3 py-1.5 rounded-lg border border-obsidian/20 text-xs font-semibold" />
+            </div>
+          </div>
+
+          <!-- SECTION E: ORDER FORM & FOOTER -->
+          <div class="p-4 rounded-2xl bg-white hairline-border space-y-3">
+            <h4 class="font-display font-extrabold text-sm text-obsidian border-b border-obsidian/10 pb-2">
+              5️⃣ قسم استمارة الطلب وأسفل الصفحة (Footer)
+            </h4>
+            <div>
+              <label class="block text-[11px] font-bold text-obsidian/80 mb-1">شارة أعلى الاستمارة</label>
+              <input type="text" id="cmsInputFormBannerTag" class="w-full px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-semibold" />
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              <div>
+                <label class="block text-[11px] font-bold text-obsidian/80 mb-1">عنوان استمارة الطلب</label>
+                <input type="text" id="cmsInputFormTitle" class="w-full px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-bold" />
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-obsidian/80 mb-1">نص زر تأكيد الطلب</label>
+                <input type="text" id="cmsInputFormSubmitText" class="w-full px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-bold" />
+              </div>
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold text-obsidian/80 mb-1">وصف استمارة الطلب</label>
+              <input type="text" id="cmsInputFormSubtitle" class="w-full px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-semibold" />
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              <div>
+                <label class="block text-[11px] font-bold text-obsidian/80 mb-1">شعار الفوتر</label>
+                <input type="text" id="cmsInputFooterTagline" class="w-full px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-semibold" />
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-obsidian/80 mb-1">حقوق النشر (Copyright)</label>
+                <input type="text" id="cmsInputFooterCopyright" class="w-full px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-semibold" />
+              </div>
+            </div>
+          </div>
+
         </div>
 
       </div>
@@ -1906,26 +1972,44 @@
       const p1Meta = COLOR_META[orderState.pair1.color];
       const p2Meta = COLOR_META[orderState.pair2.color];
 
-      document.getElementById('formTotalDisplay').textContent = `${total} درهم`;
+      const totalDisplayEl = document.getElementById('formTotalDisplay');
+      const previewSubEl = document.getElementById('formPreviewSub');
+      const summaryDetailEl = document.getElementById('formSummaryDetail');
+      const stickyTitleEl = document.getElementById('mobileStickyTitle');
+      const stickyPriceEl = document.getElementById('mobileStickyPrice');
+
+      if (totalDisplayEl) totalDisplayEl.textContent = `${total} درهم`;
 
       if (orderState.offer === 'solo') {
-        document.getElementById('formPreviewSub').innerHTML =
-          `المقاس : <strong class="text-obsidian">${orderState.pair1.size}</strong> • <span class="text-emerald-700 font-bold">توصيل مجاني</span>`;
-        document.getElementById('formSummaryDetail').textContent =
-          `${p1Meta.label} • مقاس ${orderState.pair1.size}`;
-        document.getElementById('mobileStickyTitle').textContent =
-          `${p1Meta.shortLabel} • مقاس ${orderState.pair1.size}`;
-        document.getElementById('mobileStickyPrice').textContent =
-          `${soloPrice} درهم • توصيل مجاني`;
+        if (previewSubEl) {
+          previewSubEl.innerHTML =
+            `المقاس : <strong class="text-obsidian">${orderState.pair1.size}</strong> • <span class="text-emerald-700 font-bold">توصيل مجاني</span>`;
+        }
+        if (summaryDetailEl) {
+          summaryDetailEl.textContent = `${p1Meta.label} • مقاس ${orderState.pair1.size}`;
+        }
+        if (stickyTitleEl) {
+          stickyTitleEl.textContent = `${p1Meta.shortLabel} • مقاس ${orderState.pair1.size}`;
+        }
+        if (stickyPriceEl) {
+          stickyPriceEl.textContent = `${soloPrice} درهم • توصيل مجاني`;
+        }
       } else {
-        document.getElementById('formPreviewSub').innerHTML =
-          `عرض الثنائي : <strong class="text-obsidian">مقاس ${orderState.pair1.size}</strong> + <strong class="text-obsidian">مقاس ${orderState.pair2.size}</strong> • <span class="text-crimson font-bold">توفير ${savedAmount} درهم</span>`;
-        document.getElementById('formSummaryDetail').textContent =
-          `عرض الثنائي : ${p1Meta.shortLabel} (${orderState.pair1.size}) + ${p2Meta.shortLabel} (${orderState.pair2.size})`;
-        document.getElementById('mobileStickyTitle').textContent =
-          `عرض الثنائي • مقاس ${orderState.pair1.size} و ${orderState.pair2.size}`;
-        document.getElementById('mobileStickyPrice').textContent =
-          `${duoPrice} درهم • توصيل مجاني`;
+        if (previewSubEl) {
+          previewSubEl.innerHTML =
+            `عرض الثنائي : <strong class="text-obsidian">مقاس ${orderState.pair1.size}</strong> + <strong class="text-obsidian">مقاس ${orderState.pair2.size}</strong> • <span class="text-crimson font-bold">توفير ${savedAmount} درهم</span>`;
+        }
+        if (summaryDetailEl) {
+          summaryDetailEl.textContent =
+            `عرض الثنائي : ${p1Meta.shortLabel} (${orderState.pair1.size}) + ${p2Meta.shortLabel} (${orderState.pair2.size})`;
+        }
+        if (stickyTitleEl) {
+          stickyTitleEl.textContent =
+            `عرض الثنائي • مقاس ${orderState.pair1.size} و ${orderState.pair2.size}`;
+        }
+        if (stickyPriceEl) {
+          stickyPriceEl.textContent = `${duoPrice} درهم • توصيل مجاني`;
+        }
       }
     }
 
@@ -2220,30 +2304,61 @@
 
     function populateCmsInputs() {
       const c = window.cmsConfig;
-      document.getElementById('cmsInputBrandName').value = c.brandName;
-      document.getElementById('cmsInputWhatsapp').value = c.whatsappNumber;
-      document.getElementById('cmsInputAnnouncement').value = c.announcement;
-      document.getElementById('cmsInputHeroTitle').value = c.heroTitle;
-      document.getElementById('cmsInputHeroSubtitle').value = c.heroSubtitle;
-      document.getElementById('cmsInputPriceSolo').value = c.priceSolo;
-      document.getElementById('cmsInputPriceOld').value = c.priceOld;
-      document.getElementById('cmsInputPriceDuo').value = c.priceDuo;
-      document.getElementById('cmsInputColorBlancLabel').value = c.colorBlancLabel;
-      document.getElementById('cmsInputColorBlancSub').value = c.colorBlancSub;
-      document.getElementById('cmsInputColorNoirLabel').value = c.colorNoirLabel;
-      document.getElementById('cmsInputColorNoirSub').value = c.colorNoirSub;
+      document.getElementById('cmsInputBrandName').value = c.brandName || '';
+      document.getElementById('cmsInputHeaderTagline').value = c.headerTagline || '';
+      document.getElementById('cmsInputWhatsapp').value = c.whatsappNumber || '';
+      document.getElementById('cmsInputWhatsappFloatText').value = c.whatsappFloatText || 'تواصل معنا';
+      document.getElementById('cmsInputCmsPin').value = c.cmsPin || '2026';
+      document.getElementById('cmsInputAnnouncement').value = c.announcement || '';
+      document.getElementById('cmsInputHeroTitle').value = c.heroTitle || '';
+      document.getElementById('cmsInputHeroSubtitle').value = c.heroSubtitle || '';
+      document.getElementById('cmsInputHeroGuarantee').value = c.heroGuarantee || '';
+      document.getElementById('cmsInputHeroCtaText').value = c.heroCtaText || '';
+      document.getElementById('cmsInputPriceSolo').value = c.priceSolo || 299;
+      document.getElementById('cmsInputPriceOld').value = c.priceOld || 449;
+      document.getElementById('cmsInputPriceDuo').value = c.priceDuo || 548;
+      document.getElementById('cmsInputDiscountBadge').value = c.discountBadge || 'تخفيض -33%';
+      document.getElementById('cmsInputColorBlancLabel').value = c.colorBlancLabel || '';
+      document.getElementById('cmsInputColorBlancSub').value = c.colorBlancSub || '';
+      document.getElementById('cmsInputColorNoirLabel').value = c.colorNoirLabel || '';
+      document.getElementById('cmsInputColorNoirSub').value = c.colorNoirSub || '';
 
-      document.getElementById('cmsInputLogoSrc').value = c.logoSrc;
-      document.getElementById('cmsInputColorBlancImg').value = c.colorBlancImg;
-      document.getElementById('cmsInputColorNoirImg').value = c.colorNoirImg;
-      document.getElementById('cmsInputVid0Src').value = c.video0Src;
-      document.getElementById('cmsInputVid0Title').value = c.video0Title;
-      document.getElementById('cmsInputVid1Src').value = c.video1Src;
-      document.getElementById('cmsInputVid1Title').value = c.video1Title;
-      document.getElementById('cmsInputVid2Src').value = c.video2Src;
-      document.getElementById('cmsInputVid2Title').value = c.video2Title;
-      document.getElementById('cmsInputVid3Src').value = c.video3Src;
-      document.getElementById('cmsInputVid3Title').value = c.video3Title;
+      document.getElementById('cmsInputVideosSectionBadge').value = c.videosSectionBadge || '';
+      document.getElementById('cmsInputVideosSectionTitle').value = c.videosSectionTitle || '';
+
+      document.getElementById('cmsInputWhySectionBadge').value = c.whySectionBadge || '';
+      document.getElementById('cmsInputWhySectionTitle').value = c.whySectionTitle || '';
+      document.getElementById('cmsInputWhy1Title').value = c.why1Title || '';
+      document.getElementById('cmsInputWhy1DescMobile').value = c.why1DescMobile || '';
+      document.getElementById('cmsInputWhy1DescDesktop').value = c.why1DescDesktop || '';
+      document.getElementById('cmsInputWhy1Footer').value = c.why1Footer || '';
+      document.getElementById('cmsInputWhy2Title').value = c.why2Title || '';
+      document.getElementById('cmsInputWhy2DescMobile').value = c.why2DescMobile || '';
+      document.getElementById('cmsInputWhy2DescDesktop').value = c.why2DescDesktop || '';
+      document.getElementById('cmsInputWhy2Footer').value = c.why2Footer || '';
+      document.getElementById('cmsInputWhy3Title').value = c.why3Title || '';
+      document.getElementById('cmsInputWhy3DescMobile').value = c.why3DescMobile || '';
+      document.getElementById('cmsInputWhy3DescDesktop').value = c.why3DescDesktop || '';
+      document.getElementById('cmsInputWhy3Footer').value = c.why3Footer || '';
+
+      document.getElementById('cmsInputFormBannerTag').value = c.formBannerTag || '';
+      document.getElementById('cmsInputFormTitle').value = c.formTitle || '';
+      document.getElementById('cmsInputFormSubtitle').value = c.formSubtitle || '';
+      document.getElementById('cmsInputFormSubmitText').value = c.formSubmitText || '';
+      document.getElementById('cmsInputFooterTagline').value = c.footerTagline || '';
+      document.getElementById('cmsInputFooterCopyright').value = c.footerCopyright || '';
+
+      document.getElementById('cmsInputLogoSrc').value = c.logoSrc || '';
+      document.getElementById('cmsInputColorBlancImg').value = c.colorBlancImg || '';
+      document.getElementById('cmsInputColorNoirImg').value = c.colorNoirImg || '';
+      document.getElementById('cmsInputVid0Src').value = c.video0Src || '';
+      document.getElementById('cmsInputVid0Title').value = c.video0Title || '';
+      document.getElementById('cmsInputVid1Src').value = c.video1Src || '';
+      document.getElementById('cmsInputVid1Title').value = c.video1Title || '';
+      document.getElementById('cmsInputVid2Src').value = c.video2Src || '';
+      document.getElementById('cmsInputVid2Title').value = c.video2Title || '';
+      document.getElementById('cmsInputVid3Src').value = c.video3Src || '';
+      document.getElementById('cmsInputVid3Title').value = c.video3Title || '';
     }
 
     function handleCmsFileUpload(event, targetInputId) {
@@ -2265,28 +2380,69 @@
       const duo = Number(c.priceDuo) || 548;
       const saved = Math.max(0, (solo * 2) - duo);
 
-      const brandEl = document.getElementById('cmsHeaderBrandName');
-      if (brandEl) brandEl.textContent = c.brandName;
+      const setText = (id, val) => {
+        const el = document.getElementById(id);
+        if (el && val !== undefined) el.textContent = val;
+      };
 
-      const annEl = document.getElementById('cmsTopAnnouncementText');
-      if (annEl) annEl.textContent = c.announcement;
+      setText('cmsHeaderBrandName', c.brandName);
+      setText('cmsFooterBrandName', c.brandName);
+      setText('cmsHeaderTagline', c.headerTagline);
+      setText('cmsTopAnnouncementText', c.announcement);
+      setText('cmsHeroHeadline', c.heroTitle);
+      setText('cmsHeroSubtitle', c.heroSubtitle);
+      setText('cmsHeroGuarantee', c.heroGuarantee);
+      setText('cmsHeroCtaText', c.heroCtaText);
+      setText('cmsHeroDiscountBadge', c.discountBadge);
+      setText('cmsHeroPriceSolo', `${solo} درهم`);
+      setText('cmsHeroPriceOld', `${oldP} درهم`);
 
-      const subEl = document.getElementById('cmsHeroSubtitle');
-      if (subEl) subEl.textContent = c.heroSubtitle;
+      setText('cmsOfferSoloPrice', `${solo} درهم`);
+      setText('cmsOfferDuoPrice', `${duo} درهم`);
+      setText('cmsOfferDuoOld', `${solo * 2} درهم`);
+      setText('cmsOfferDuoSave', `وفر ${saved} درهم + توصيل مجاني`);
 
-      const pSoloEl = document.getElementById('cmsHeroPriceSolo');
-      if (pSoloEl) pSoloEl.textContent = `${solo} درهم`;
-      const pOldEl = document.getElementById('cmsHeroPriceOld');
-      if (pOldEl) pOldEl.textContent = `${oldP} درهم`;
+      // Videos Section Texts
+      setText('cmsVideosSectionBadge', c.videosSectionBadge);
+      setText('cmsVideosSectionTitle', c.videosSectionTitle);
+      setText('cmsNavVideos', c.videosSectionTitle);
+      setText('cmsVidFilterBlancText', `${c.colorBlancLabel} (2)`);
+      setText('cmsVidFilterNoirText', `${c.colorNoirLabel} (2)`);
 
-      const offSoloEl = document.getElementById('cmsOfferSoloPrice');
-      if (offSoloEl) offSoloEl.textContent = `${solo} درهم`;
-      const offDuoEl = document.getElementById('cmsOfferDuoPrice');
-      if (offDuoEl) offDuoEl.textContent = `${duo} درهم`;
-      const offDuoOldEl = document.getElementById('cmsOfferDuoOld');
-      if (offDuoOldEl) offDuoOldEl.textContent = `${solo * 2} درهم`;
-      const offDuoSaveEl = document.getElementById('cmsOfferDuoSave');
-      if (offDuoSaveEl) offDuoSaveEl.textContent = `وفر ${saved} درهم + توصيل مجاني`;
+      // Why Choose Us Section Texts
+      setText('cmsWhySectionBadge', c.whySectionBadge);
+      setText('cmsWhySectionTitle', c.whySectionTitle);
+      setText('cmsWhy1Title', c.why1Title);
+      setText('cmsWhy1DescMobile', c.why1DescMobile);
+      setText('cmsWhy1DescDesktop', c.why1DescDesktop);
+      setText('cmsWhy1Footer', c.why1Footer);
+      setText('cmsWhy2Title', c.why2Title);
+      setText('cmsWhy2DescMobile', c.why2DescMobile);
+      setText('cmsWhy2DescDesktop', c.why2DescDesktop);
+      setText('cmsWhy2Footer', c.why2Footer);
+      setText('cmsWhy3Title', c.why3Title);
+      setText('cmsWhy3DescMobile', c.why3DescMobile);
+      setText('cmsWhy3DescDesktop', c.why3DescDesktop);
+      setText('cmsWhy3Footer', c.why3Footer);
+
+      // Order Form & Footer Texts
+      setText('formBannerSubTag', c.formBannerTag);
+      setText('cmsFormTitle', c.formTitle);
+      setText('cmsFormSubtitle', c.formSubtitle);
+      setText('submitBtnLabel', c.formSubmitText);
+      setText('cmsFormColorBlancLabel', c.colorBlancLabel);
+      setText('cmsFormColorNoirLabel', c.colorNoirLabel);
+      setText('cmsFooterTagline', c.footerTagline);
+      setText('cmsFooterCopyright', c.footerCopyright);
+
+      // Floating WhatsApp Button Sync
+      setText('cmsWhatsappFloatText', c.whatsappFloatText || 'تواصل معنا');
+      const waFloatBtn = document.getElementById('floatingWhatsappBtn');
+      if (waFloatBtn) {
+        const cleanWa = (c.whatsappNumber || '212600000000').replace(/\D/g, '');
+        const waIntro = encodeURIComponent(`السلام عليكم ${c.brandName || 'RAVA MODE'} 👋، أريد الاستفسار حول سنيكرز RAVA RUNNER 01.`);
+        waFloatBtn.href = `https://wa.me/${cleanWa}?text=${waIntro}`;
+      }
 
       // Update Color Meta & Thumbnails
       window.COLOR_META.blanc.label = c.colorBlancLabel;
@@ -2297,14 +2453,12 @@
       window.COLOR_META.noir.shortLabel = c.colorNoirLabel;
       window.COLOR_META.noir.primaryFile = c.colorNoirImg;
 
-      const hbLbl = document.getElementById('cmsHeroColorBlancLabel');
-      if (hbLbl) hbLbl.textContent = c.colorBlancLabel;
-      const hbSub = document.getElementById('cmsHeroColorBlancSub');
-      if (hbSub) hbSub.textContent = c.colorBlancSub;
-      const hnLbl = document.getElementById('cmsHeroColorNoirLabel');
-      if (hnLbl) hnLbl.textContent = c.colorNoirLabel;
-      const hnSub = document.getElementById('cmsHeroColorNoirSub');
-      if (hnSub) hnSub.textContent = c.colorNoirSub;
+      setText('cmsHeroColorBlancLabel', c.colorBlancLabel);
+      setText('cmsHeroColorBlancSub', c.colorBlancSub);
+      setText('cmsHeroColorNoirLabel', c.colorNoirLabel);
+      setText('cmsHeroColorNoirSub', c.colorNoirSub);
+      setText('cmsHeroVidPillBlanc', c.colorBlancLabel);
+      setText('cmsHeroVidPillNoir', c.colorNoirLabel);
 
       ['heroThumbBlanc', 'formThumbBlanc'].forEach(id => {
         const el = document.getElementById(id);
@@ -2323,9 +2477,6 @@
       });
       document.querySelectorAll('.cms-btn-choose-noir').forEach(btn => {
         btn.textContent = `اطلب ${c.colorNoirLabel}`;
-      });
-      document.querySelectorAll('.cms-btn-choose-noir').forEach(btn => {
-        btn.textContent = `اختر ${c.colorNoirLabel} — ${solo} درهم`;
       });
 
       // Update 4 Videos Config & Grid
@@ -2352,31 +2503,59 @@
     }
 
     function saveCmsChanges(silent) {
+      const val = (id) => (document.getElementById(id) ? document.getElementById(id).value.trim() : '');
       window.cmsConfig = {
-        brandName: document.getElementById('cmsInputBrandName').value.trim() || 'RAVA MODE',
-        whatsappNumber: document.getElementById('cmsInputWhatsapp').value.trim() || '212600000000',
-        cmsPin: window.cmsConfig.cmsPin || '2026',
-        announcement: document.getElementById('cmsInputAnnouncement').value.trim(),
-        heroTitle: document.getElementById('cmsInputHeroTitle').value.trim(),
-        heroSubtitle: document.getElementById('cmsInputHeroSubtitle').value.trim(),
-        priceSolo: Number(document.getElementById('cmsInputPriceSolo').value) || 299,
-        priceOld: Number(document.getElementById('cmsInputPriceOld').value) || 449,
-        priceDuo: Number(document.getElementById('cmsInputPriceDuo').value) || 548,
-        colorBlancLabel: document.getElementById('cmsInputColorBlancLabel').value.trim() || 'أبيض / أحمر',
-        colorBlancSub: document.getElementById('cmsInputColorBlancSub').value.trim(),
-        colorNoirLabel: document.getElementById('cmsInputColorNoirLabel').value.trim() || 'أسود / رمادي',
-        colorNoirSub: document.getElementById('cmsInputColorNoirSub').value.trim(),
-        logoSrc: document.getElementById('cmsInputLogoSrc').value.trim(),
-        colorBlancImg: document.getElementById('cmsInputColorBlancImg').value.trim(),
-        colorNoirImg: document.getElementById('cmsInputColorNoirImg').value.trim(),
-        video0Src: document.getElementById('cmsInputVid0Src').value.trim(),
-        video0Title: document.getElementById('cmsInputVid0Title').value.trim(),
-        video1Src: document.getElementById('cmsInputVid1Src').value.trim(),
-        video1Title: document.getElementById('cmsInputVid1Title').value.trim(),
-        video2Src: document.getElementById('cmsInputVid2Src').value.trim(),
-        video2Title: document.getElementById('cmsInputVid2Title').value.trim(),
-        video3Src: document.getElementById('cmsInputVid3Src').value.trim(),
-        video3Title: document.getElementById('cmsInputVid3Title').value.trim()
+        brandName: val('cmsInputBrandName') || 'RAVA MODE',
+        headerTagline: val('cmsInputHeaderTagline') || 'المجموعة الحصرية 2026',
+        whatsappNumber: val('cmsInputWhatsapp') || '212600000000',
+        whatsappFloatText: val('cmsInputWhatsappFloatText') || 'تواصل معنا',
+        cmsPin: val('cmsInputCmsPin') || '2026',
+        announcement: val('cmsInputAnnouncement'),
+        heroTitle: val('cmsInputHeroTitle'),
+        heroSubtitle: val('cmsInputHeroSubtitle'),
+        heroGuarantee: val('cmsInputHeroGuarantee'),
+        heroCtaText: val('cmsInputHeroCtaText'),
+        priceSolo: Number(val('cmsInputPriceSolo')) || 299,
+        priceOld: Number(val('cmsInputPriceOld')) || 449,
+        priceDuo: Number(val('cmsInputPriceDuo')) || 548,
+        discountBadge: val('cmsInputDiscountBadge') || 'تخفيض -33%',
+        colorBlancLabel: val('cmsInputColorBlancLabel') || 'أبيض / أحمر',
+        colorBlancSub: val('cmsInputColorBlancSub'),
+        colorNoirLabel: val('cmsInputColorNoirLabel') || 'أسود / رمادي',
+        colorNoirSub: val('cmsInputColorNoirSub'),
+        videosSectionBadge: val('cmsInputVideosSectionBadge'),
+        videosSectionTitle: val('cmsInputVideosSectionTitle'),
+        whySectionBadge: val('cmsInputWhySectionBadge'),
+        whySectionTitle: val('cmsInputWhySectionTitle'),
+        why1Title: val('cmsInputWhy1Title'),
+        why1DescMobile: val('cmsInputWhy1DescMobile'),
+        why1DescDesktop: val('cmsInputWhy1DescDesktop'),
+        why1Footer: val('cmsInputWhy1Footer'),
+        why2Title: val('cmsInputWhy2Title'),
+        why2DescMobile: val('cmsInputWhy2DescMobile'),
+        why2DescDesktop: val('cmsInputWhy2DescDesktop'),
+        why2Footer: val('cmsInputWhy2Footer'),
+        why3Title: val('cmsInputWhy3Title'),
+        why3DescMobile: val('cmsInputWhy3DescMobile'),
+        why3DescDesktop: val('cmsInputWhy3DescDesktop'),
+        why3Footer: val('cmsInputWhy3Footer'),
+        formBannerTag: val('cmsInputFormBannerTag'),
+        formTitle: val('cmsInputFormTitle'),
+        formSubtitle: val('cmsInputFormSubtitle'),
+        formSubmitText: val('cmsInputFormSubmitText'),
+        footerTagline: val('cmsInputFooterTagline'),
+        footerCopyright: val('cmsInputFooterCopyright'),
+        logoSrc: val('cmsInputLogoSrc'),
+        colorBlancImg: val('cmsInputColorBlancImg'),
+        colorNoirImg: val('cmsInputColorNoirImg'),
+        video0Src: val('cmsInputVid0Src'),
+        video0Title: val('cmsInputVid0Title'),
+        video1Src: val('cmsInputVid1Src'),
+        video1Title: val('cmsInputVid1Title'),
+        video2Src: val('cmsInputVid2Src'),
+        video2Title: val('cmsInputVid2Title'),
+        video3Src: val('cmsInputVid3Src'),
+        video3Title: val('cmsInputVid3Title')
       };
 
       try {
