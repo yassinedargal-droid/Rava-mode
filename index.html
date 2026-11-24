@@ -109,7 +109,6 @@
       "welcomePopupPoint1": "معاينة الطرد قبل الدفع",
       "welcomePopupPoint2": "جودة مستوردة 100%",
       "welcomePopupPoint3": "تبديل المقاس مجاناً",
-      "welcomePopupCtaText": "اكتشف الموديل الآن",
       "cmsPin": "2026",
       "announcement": "✈️ إسبادري مستوردة من الخارج • 🚚 توصيل فابور (24-48س) • 💵 الدفع عند الاستلام",
       "heroTitle": "الأناقة والراحة فخطوة وحدة — سنيكرز RAVA MODE الجديد",
@@ -1346,8 +1345,8 @@
       <div class="pt-1 space-y-1.5">
         <button type="button" onclick="acceptWelcomePopupAndOrder()" class="w-full py-3 px-5 rounded-2xl bg-obsidian hover:bg-anthracite text-white font-display font-extrabold text-xs sm:text-sm shadow-md active:scale-[0.99] transition cursor-pointer">
           <span id="cmsWelcomePopupCtaText">اكتشف الموديل الآن</span>
-        </button>
-        <button type="button" onclick="closeWelcomePopup()" class="w-full py-1.5 text-[11px] font-semibold text-obsidian/55 hover:text-obsidian transition cursor-pointer">
+      <div class="pt-1">
+        <button type="button" onclick="closeWelcomePopup()" class="w-full py-2.5 px-4 rounded-xl bg-alabaster hover:bg-stonegray text-xs font-bold text-obsidian/75 hover:text-obsidian transition cursor-pointer">
           متابعة التصفح
         </button>
       </div>
@@ -1475,244 +1474,8 @@
         <div id="cms-panel-orders" class="space-y-3">
           <div class="flex flex-wrap items-center justify-between gap-2 bg-white p-3.5 rounded-2xl hairline-border">
             <div>
-              <h4 class="font-display font-extrabold text-sm text-obsidian">سجل الطلبات المستلمة (Supabase COD)</h4>
-              <p class="text-[11px] text-obsidian/60">تتزامن تلقائياً مع قاعدة بيانات yassinedata</p>
-            </div>
-            <div class="flex flex-wrap items-center gap-2">
-              <button type="button" onclick="loadOrdersFromSupabase()" class="px-3 py-2 rounded-xl bg-obsidian hover:bg-anthracite text-white font-bold text-xs cursor-pointer">
-                🔄 تحديث
-              </button>
-              <button type="button" onclick="exportOrdersCsv()" class="px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs cursor-pointer">
-                📥 تصدير Excel
-              </button>
-              <button type="button" onclick="clearAllOrders()" class="px-3 py-2 rounded-xl bg-stonegray hover:bg-crimson hover:text-white text-obsidian font-bold text-xs cursor-pointer">
-                مسح الكل
-              </button>
-            </div>
-          </div>
-          <div id="cmsOrdersListContainer" class="space-y-3"></div>
-        </div>
-
-        <!-- TAB 2: MEDIA STUDIO -->
-        <div id="cms-panel-media" class="space-y-4 hidden">
-          <div class="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-900 font-semibold">
-            💡 عند رفع ملف (صورة أو فيديو)، يتم رفعه تلقائياً إلى <strong>Supabase Storage (rava-media)</strong> للحصول على رابط دائم يظهر لجميع الزوار أونلاين.
-          </div>
-
-          <div class="p-4 rounded-2xl bg-white hairline-border space-y-3">
-            <h4 class="font-display font-extrabold text-sm text-obsidian border-b border-obsidian/10 pb-2">
-              🖼️ الشعار وصور الموديلين
-            </h4>
-            <div class="space-y-2.5">
-              <div>
-                <label class="block text-[11px] font-bold text-obsidian/80 mb-1">الشعار (Logo)</label>
-                <div class="flex gap-2">
-                  <input type="text" id="cmsInputLogoSrc" class="flex-1 min-w-0 px-3 py-2 rounded-xl border border-obsidian/20 text-xs" dir="ltr">
-                  <label class="px-3 py-2 rounded-xl bg-obsidian text-white font-bold text-xs cursor-pointer shrink-0">
-                    📁 رفع
-                    <input type="file" accept="image/*" class="hidden" onchange="handleCmsFileUpload(event, 'cmsInputLogoSrc')">
-                  </label>
-                </div>
-              </div>
-              <div>
-                <label class="block text-[11px] font-bold text-obsidian/80 mb-1">صورة اللون 1 (أبيض / أحمر)</label>
-                <div class="flex gap-2">
-                  <input type="text" id="cmsInputColorBlancImg" class="flex-1 min-w-0 px-3 py-2 rounded-xl border border-obsidian/20 text-xs" dir="ltr">
-                  <label class="px-3 py-2 rounded-xl bg-obsidian text-white font-bold text-xs cursor-pointer shrink-0">
-                    📁 رفع
-                    <input type="file" accept="image/*" class="hidden" onchange="handleCmsFileUpload(event, 'cmsInputColorBlancImg')">
-                  </label>
-                </div>
-              </div>
-              <div>
-                <label class="block text-[11px] font-bold text-obsidian/80 mb-1">صورة اللون 2 (أسود / رمادي)</label>
-                <div class="flex gap-2">
-                  <input type="text" id="cmsInputColorNoirImg" class="flex-1 min-w-0 px-3 py-2 rounded-xl border border-obsidian/20 text-xs" dir="ltr">
-                  <label class="px-3 py-2 rounded-xl bg-obsidian text-white font-bold text-xs cursor-pointer shrink-0">
-                    📁 رفع
-                    <input type="file" accept="image/*" class="hidden" onchange="handleCmsFileUpload(event, 'cmsInputColorNoirImg')">
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="p-4 rounded-2xl bg-white hairline-border space-y-3">
-            <div class="flex items-center justify-between border-b border-obsidian/10 pb-2">
-              <h4 class="font-display font-extrabold text-sm text-obsidian">
-                ✨ تنظيف وتحسين الصور (إزالة النصوص + جودة HD)
-              </h4>
-              <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-extrabold">Studio Auto</span>
-            </div>
-            <p class="text-[11px] text-obsidian/70 leading-relaxed">
-              اختر أي صورة تحتوي على نصوص في الأعلى أو الأسفل (مثل SAPUXI) : يقوم النظام تلقائياً بمسح النصوص مع الحفاظ على خلفية الاستوديو وتحسين وضوح الحذاء.
-            </p>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-              <label class="py-2.5 px-3 rounded-xl bg-obsidian hover:bg-anthracite text-white font-extrabold text-xs text-center cursor-pointer transition">
-                📸 اختر صورة للتنظيف
-                <input type="file" accept="image/*" class="hidden" onchange="processStudioCleanImage(event)">
-              </label>
-              <select id="cleanTargetSelect" class="px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-bold bg-alabaster">
-                <option value="cmsInputColorBlancImg">تعيين كـ : أبيض / أحمر</option>
-                <option value="cmsInputColorNoirImg">تعيين كـ : أسود / رمادي</option>
-                <option value="downloadOnly">تحميل الصورة النظيفة فقط</option>
-              </select>
-            </div>
-            <div id="cleanPreviewBox" class="hidden space-y-2.5 pt-2">
-              <img id="cleanedResultImg" src="" alt="الصورة المنظفة" class="w-full max-h-64 object-contain rounded-xl bg-stonegray hairline-border">
-              <div class="flex gap-2">
-                <button type="button" onclick="applyAndUploadCleanedImage()" id="btnUploadCleaned" class="flex-1 py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs cursor-pointer">
-                  ☁️ اعتماد ورفع الصورة إلى Supabase
-                </button>
-                <a id="btnDownloadCleaned" href="#" download="rava_clean_sneaker.jpg" class="py-2.5 px-3 rounded-xl bg-stonegray hover:bg-obsidian hover:text-white text-obsidian font-extrabold text-xs">
-                  ⬇️ تحميل
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div class="p-4 rounded-2xl bg-white hairline-border space-y-3">
-            <h4 class="font-display font-extrabold text-sm text-obsidian border-b border-obsidian/10 pb-2">
-              🎥 الفيديوهات الأربعة (MP4) وعناوينها
-            </h4>
-            <div class="space-y-2.5">
-              <div class="p-3 rounded-xl bg-alabaster space-y-1.5">
-                <label class="block text-[11px] font-extrabold text-crimson">فيديو 1 (أبيض / أحمر — ماكرو)</label>
-                <div class="flex gap-2">
-                  <input type="text" id="cmsInputVid0Src" class="flex-1 min-w-0 px-3 py-1.5 rounded-lg border border-obsidian/20 text-xs" dir="ltr">
-                  <label class="px-3 py-1.5 rounded-lg bg-obsidian text-white font-bold text-xs cursor-pointer shrink-0">
-                    📁 فيديو
-                    <input type="file" accept="video/mp4,video/*" class="hidden" onchange="handleCmsFileUpload(event, 'cmsInputVid0Src')">
-                  </label>
-                </div>
-                <input type="text" id="cmsInputVid0Title" placeholder="عنوان الفيديو 1" class="w-full px-3 py-1.5 rounded-lg border border-obsidian/20 text-xs font-bold">
-              </div>
-
-              <div class="p-3 rounded-xl bg-alabaster space-y-1.5">
-                <label class="block text-[11px] font-extrabold text-crimson">فيديو 2 (أبيض / أحمر — تجربة ملبوسة)</label>
-                <div class="flex gap-2">
-                  <input type="text" id="cmsInputVid1Src" class="flex-1 min-w-0 px-3 py-1.5 rounded-lg border border-obsidian/20 text-xs" dir="ltr">
-                  <label class="px-3 py-1.5 rounded-lg bg-obsidian text-white font-bold text-xs cursor-pointer shrink-0">
-                    📁 فيديو
-                    <input type="file" accept="video/mp4,video/*" class="hidden" onchange="handleCmsFileUpload(event, 'cmsInputVid1Src')">
-                  </label>
-                </div>
-                <input type="text" id="cmsInputVid1Title" placeholder="عنوان الفيديو 2" class="w-full px-3 py-1.5 rounded-lg border border-obsidian/20 text-xs font-bold">
-              </div>
-
-              <div class="p-3 rounded-xl bg-alabaster space-y-1.5">
-                <label class="block text-[11px] font-extrabold text-obsidian">فيديو 3 (أسود / رمادي — ماكرو)</label>
-                <div class="flex gap-2">
-                  <input type="text" id="cmsInputVid2Src" class="flex-1 min-w-0 px-3 py-1.5 rounded-lg border border-obsidian/20 text-xs" dir="ltr">
-                  <label class="px-3 py-1.5 rounded-lg bg-obsidian text-white font-bold text-xs cursor-pointer shrink-0">
-                    📁 فيديو
-                    <input type="file" accept="video/mp4,video/*" class="hidden" onchange="handleCmsFileUpload(event, 'cmsInputVid2Src')">
-                  </label>
-                </div>
-                <input type="text" id="cmsInputVid2Title" placeholder="عنوان الفيديو 3" class="w-full px-3 py-1.5 rounded-lg border border-obsidian/20 text-xs font-bold">
-              </div>
-
-              <div class="p-3 rounded-xl bg-alabaster space-y-1.5">
-                <label class="block text-[11px] font-extrabold text-obsidian">فيديو 4 (أسود / رمادي — تجربة ملبوسة)</label>
-                <div class="flex gap-2">
-                  <input type="text" id="cmsInputVid3Src" class="flex-1 min-w-0 px-3 py-1.5 rounded-lg border border-obsidian/20 text-xs" dir="ltr">
-                  <label class="px-3 py-1.5 rounded-lg bg-obsidian text-white font-bold text-xs cursor-pointer shrink-0">
-                    📁 فيديو
-                    <input type="file" accept="video/mp4,video/*" class="hidden" onchange="handleCmsFileUpload(event, 'cmsInputVid3Src')">
-                  </label>
-                </div>
-                <input type="text" id="cmsInputVid3Title" placeholder="عنوان الفيديو 4" class="w-full px-3 py-1.5 rounded-lg border border-obsidian/20 text-xs font-bold">
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- TAB 3: ORGANIZED SECTION-BY-SECTION CONTENT EDITOR -->
-        <div id="cms-panel-content" class="space-y-4 hidden">
-
-          <!-- SECTION 1: BRAND, WHATSAPP & PIN -->
-          <div class="p-4 rounded-2xl bg-white hairline-border space-y-3">
-            <h4 class="font-display font-extrabold text-sm text-emerald-800 border-b border-obsidian/10 pb-2">
-              1️⃣ إعدادات واتساب، الهوية والرمز السري
-            </h4>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-              <div>
-                <label class="block text-[11px] font-bold text-obsidian/80 mb-1">اسم العلامة التجارية</label>
-                <input type="text" id="cmsInputBrandName" class="w-full px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-bold" dir="ltr">
-              </div>
-              <div>
-                <label class="block text-[11px] font-bold text-emerald-800 mb-1">رقم واتساب (2126...)</label>
-                <input type="text" id="cmsInputWhatsapp" placeholder="212661234567" class="w-full px-3 py-2 rounded-xl border border-emerald-400 bg-emerald-50/40 text-xs font-extrabold" dir="ltr">
-              </div>
-              <div>
-                <label class="block text-[11px] font-bold text-obsidian/80 mb-1">الرمز السري للوحة التحكم (PIN)</label>
-                <input type="text" id="cmsInputCmsPin" maxlength="12" class="w-full px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-black text-center" dir="ltr">
-              </div>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-              <div>
-                <label class="block text-[11px] font-bold text-obsidian/80 mb-1">نص زر واتساب العائم</label>
-                <input type="text" id="cmsInputWhatsappFloatText" class="w-full px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-bold">
-              </div>
-              <div>
-                <label class="block text-[11px] font-bold text-obsidian/80 mb-1">النص أسفل الشعار في الهيدر</label>
-                <input type="text" id="cmsInputHeaderTagline" class="w-full px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-semibold">
-              </div>
-            </div>
-            <div>
-              <label class="block text-[11px] font-bold text-obsidian/80 mb-1">الشريط الإعلاني الأحمر العلوي</label>
-              <input type="text" id="cmsInputAnnouncement" class="w-full px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-semibold">
-            </div>
-          </div>
-
-          <!-- SOCIAL MEDIA LINKS CARD (RÉSEAUX SOCIAUX) -->
-          <div class="p-4 rounded-2xl bg-white hairline-border space-y-3">
-            <h4 class="font-display font-extrabold text-sm text-obsidian border-b border-obsidian/10 pb-2">
-              🌐 روابط مواقع التواصل الاجتماعي (Réseaux Sociaux)
-            </h4>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-              <div>
-                <label class="block text-[11px] font-bold text-obsidian/80 mb-1">رابط إنستغرام (Instagram URL)</label>
-                <input type="url" id="cmsInputInstagramUrl" placeholder="https://www.instagram.com/ravamode.ma" class="w-full px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-semibold" dir="ltr">
-              </div>
-              <div>
-                <label class="block text-[11px] font-bold text-obsidian/80 mb-1">رابط تيك توك (TikTok URL)</label>
-                <input type="url" id="cmsInputTiktokUrl" placeholder="https://www.tiktok.com/@ravamode.ma" class="w-full px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-semibold" dir="ltr">
-              </div>
-              <div>
-                <label class="block text-[11px] font-bold text-obsidian/80 mb-1">رابط فيسبوك (Facebook URL)</label>
-                <input type="url" id="cmsInputFacebookUrl" placeholder="https://www.facebook.com/ravamode.ma" class="w-full px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-semibold" dir="ltr">
-              </div>
-            </div>
-            <p class="text-[11px] text-obsidian/65 font-semibold">
-              💡 ملاحظة : إذا تركت أي حقل فارغاً، سيتم إخفاء أيقونته تلقائياً من أعلى وأسفل الصفحة.
-            </p>
-          </div>
-
-          <!-- WELCOME GUARANTEE POPUP CARD -->
-          <div class="p-4 rounded-2xl bg-white hairline-border space-y-3">
-            <div class="flex items-center justify-between gap-2 border-b border-obsidian/10 pb-2.5">
-              <div>
-                <h4 class="font-display font-extrabold text-sm text-crimson">
-                  🛡️ النافذة المنبثقة الترحيبية (Pop-up الضمان والتجربة)
-                </h4>
-                <p class="text-[11px] text-obsidian/60">تظهر للزائر عند فتح الموقع لتعزيز الثقة (جرّب قبل الشراء / راضي أو مسترجع)</p>
-              </div>
-              <label class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-alabaster hairline-border cursor-pointer shrink-0">
-                <input type="checkbox" id="cmsInputWelcomePopupEnabled" class="w-4 h-4 accent-crimson cursor-pointer">
-                <span class="text-xs font-extrabold text-obsidian">مفعّلة (Activer)</span>
-              </label>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-              <div>
-                <label class="block text-[11px] font-bold text-obsidian/80 mb-1">الشارة العلوية (Badge)</label>
-                <input type="text" id="cmsInputWelcomePopupBadge" class="w-full px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-bold">
-              </div>
-              <div>
-                <label class="block text-[11px] font-bold text-obsidian/80 mb-1">نص الزر الرئيسي في النافذة</label>
-                <input type="text" id="cmsInputWelcomePopupCtaText" class="w-full px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-bold">
-              </div>
+              <label class="block text-[11px] font-bold text-obsidian/80 mb-1">الشارة العلوية (Badge)</label>
+              <input type="text" id="cmsInputWelcomePopupBadge" class="w-full px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-bold">
             </div>
 
             <div>
@@ -2925,7 +2688,6 @@
       setVal('cmsInputWelcomePopupPoint1', c.welcomePopupPoint1);
       setVal('cmsInputWelcomePopupPoint2', c.welcomePopupPoint2);
       setVal('cmsInputWelcomePopupPoint3', c.welcomePopupPoint3);
-      setVal('cmsInputWelcomePopupCtaText', c.welcomePopupCtaText);
       setVal('cmsInputCmsPin', c.cmsPin || '2026');
       setVal('cmsInputAnnouncement', c.announcement);
       setVal('cmsInputHeroTitle', c.heroTitle);
@@ -3171,7 +2933,6 @@
       setText('cmsWelcomePopupPoint1', c.welcomePopupPoint1);
       setText('cmsWelcomePopupPoint2', c.welcomePopupPoint2);
       setText('cmsWelcomePopupPoint3', c.welcomePopupPoint3);
-      setText('cmsWelcomePopupCtaText', c.welcomePopupCtaText);
       if (c.welcomePopupEnabled === false) {
         const welcomeModal = document.getElementById('welcomeGuaranteeModal');
         if (welcomeModal) welcomeModal.classList.add('hidden');
@@ -3496,7 +3257,6 @@
         welcomePopupPoint1: val('cmsInputWelcomePopupPoint1'),
         welcomePopupPoint2: val('cmsInputWelcomePopupPoint2'),
         welcomePopupPoint3: val('cmsInputWelcomePopupPoint3'),
-        welcomePopupCtaText: val('cmsInputWelcomePopupCtaText'),
         cmsPin: val('cmsInputCmsPin') || '2026',
         announcement: val('cmsInputAnnouncement'),
         heroTitle: val('cmsInputHeroTitle'),
