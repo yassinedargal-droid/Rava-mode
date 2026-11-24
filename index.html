@@ -2333,9 +2333,6 @@
     function closeWelcomePopup() {
       const modal = document.getElementById('welcomeGuaranteeModal');
       if (modal) modal.classList.add('hidden');
-      try {
-        sessionStorage.setItem('rava_welcome_popup_seen', '1');
-      } catch (e) {}
     }
 
     function acceptWelcomePopupAndOrder() {
@@ -3405,13 +3402,7 @@
       if (isCmsOpen) {
         openSmartCms();
       } else if (window.cmsConfig.welcomePopupEnabled !== false) {
-        let alreadySeen = false;
-        try {
-          alreadySeen = sessionStorage.getItem('rava_welcome_popup_seen') === '1';
-        } catch (e) {}
-        if (!alreadySeen) {
-          setTimeout(openWelcomePopup, 450);
-        }
+        setTimeout(openWelcomePopup, 450);
       }
 
       window.addEventListener('hashchange', () => {
