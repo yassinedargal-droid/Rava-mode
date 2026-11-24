@@ -14,11 +14,8 @@
   <!-- Supabase JS SDK v2 -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <!-- Core Media State & Early Global Helpers (Prevents ReferenceError on inline onerror handlers) -->
+  <!-- Core Media State & Early Global Helpers -->
   <script>
-    // =========================================================================
-    // SUPABASE LIVE CONNECTION CONFIGURATION (yassinedata)
-    // =========================================================================
     window.SUPABASE_URL = 'https://cnovkkilcvobthwjjkvr.supabase.co';
     window.SUPABASE_KEY = 'sb_publishable_FmH6WZl2WnBiC3KFizbfxw_5V2_yka1';
     window.sbClient = null;
@@ -89,17 +86,14 @@
 
     window.orderState = {
       offer: 'solo',
+      modelSizes: { blanc: '42', noir: '43' },
       pair1: { color: 'blanc', size: '42' },
       pair2: { color: 'noir', size: '43' },
-      modelSizes: { blanc: '42', noir: '43' },
       activeHeroVideoIdx: 0,
       heroAutoPlayEnabled: true,
       heroAutoSlideStart: Date.now()
     };
 
-    // =========================================================================
-    // SMART MINI CMS DEFAULT CONFIGURATION & PERSISTENT STATE
-    // =========================================================================
     window.DEFAULT_CMS_CONFIG = {
       "brandName": "RAVA MODE",
       "headerTagline": "المجموعة الحصرية 2026",
@@ -108,11 +102,19 @@
       "instagramUrl": "https://www.instagram.com/ravamode.ma",
       "tiktokUrl": "https://www.tiktok.com/@ravamode.ma",
       "facebookUrl": "https://www.facebook.com/ravamode.ma",
+      "welcomePopupEnabled": true,
+      "welcomePopupBadge": "✈️ منتوج مستورد من الخارج",
+      "welcomePopupTitle": "جرّب الحذاء قبل ما تخلّص",
+      "welcomePopupSubtitle": "توصيل مجاني لباب الدار • افتح الطرد وعاين الجودة قبل الدفع.",
+      "welcomePopupPoint1": "معاينة الطرد قبل الدفع",
+      "welcomePopupPoint2": "جودة مستوردة 100%",
+      "welcomePopupPoint3": "تبديل المقاس مجاناً",
+      "welcomePopupCtaText": "اكتشف الموديل الآن",
       "cmsPin": "2026",
-      "announcement": "✈️ إسبادري مستوردة من الخارج بجودة عالية • 🚚 توصيل فابور (24-48س) • 💵 الدفع عند الاستلام بعد المعاينة",
+      "announcement": "✈️ إسبادري مستوردة من الخارج • 🚚 توصيل فابور (24-48س) • 💵 الدفع عند الاستلام",
       "heroTitle": "الأناقة والراحة فخطوة وحدة — سنيكرز RAVA MODE الجديد",
-      "heroSubtitle": "إسبادري مستوردة من الخارج بجودة عالية وتصميم عصري، نعل مريح 4.5 سم وتهوية مثالية طوال اليوم. متوفرة بلونين حصريين ومقاسات من 40 إلى 44.",
-      "heroGuarantee": "منتوج مستورد أصلي • توصيل مجاني لباب الدار + الدفع عند الاستلام بعد المعاينة",
+      "heroSubtitle": "إسبادري مستوردة من الخارج بتصميم عصري بجودة عالية، نعل مريح 4.5 سم وتهوية مثالية طوال اليوم. متوفر بلونين حصريين ومقاسات من 40 إلى 44.",
+      "heroGuarantee": "توصيل مجاني لباب الدار + الدفع عند الاستلام بعد المعاينة",
       "heroCtaText": "اطلب الآن — الدفع عند الاستلام 🛒",
       "priceSolo": 299,
       "priceOld": 449,
@@ -124,16 +126,16 @@
       "colorNoirSub": "ستايل داكن وفخم",
       "videosSectionBadge": "",
       "videosSectionTitle": "شاهد التفاصيل عن قرب",
-      "whySectionBadge": "الجودة المستوردة والثقة قبل كل شيء",
+      "whySectionBadge": "جودة مستوردة وثقة قبل كل شيء",
       "whySectionTitle": "علاش تختار RAVA MODE ؟",
       "why1Title": "خفة وراحة طوال اليوم",
       "why1DescMobile": "نعل مرن 4.5 سم، وزن خفيف (310 غ) يمتص الصدمات.",
       "why1DescDesktop": "نعل طبي مرن بارتفاع 4.5 سم ووزن خفيف جداً (310 غرام) يمتص الصدمات ويحمي القدمين من التعب حتى بعد ساعات طويلة من المشي.",
       "why1Footer": "✓ نعل EVA مريح ومضاد للانزلاق",
-      "why2Title": "تشطيب عالي الجودة • مستوردة من الخارج",
-      "why2DescMobile": "إسبادري مستوردة من الخارج، شبكة مهوية، سويد ناعم وخياطة مزدوجة.",
-      "why2DescDesktop": "إسبادري مستوردة من الخارج بمواصفات عالمية، شبكة مهوية عالية الكثافة تمنع التعرق، مع جلد سويد ناعم وخياطة مزدوجة متينة تدوم طويلاً.",
-      "why2Footer": "✓ جودة مستوردة ومطابقة 100% للصور والفيديوهات",
+      "why2Title": "مستوردة من الخارج بجودة عالية",
+      "why2DescMobile": "إسبادري مستوردة بشبكة مهوية، سويد ناعم وخياطة متينة.",
+      "why2DescDesktop": "إسبادري مستوردة من الخارج بشبكة مهوية عالية الكثافة تمنع التعرق، مع جلد سويد ناعم وخياطة مزدوجة متينة تدوم طويلاً وتحافظ على أناقة الحذاء.",
+      "why2Footer": "✓ منتوج مستورد ومطابق 100% للصور والفيديوهات",
       "why3Title": "توصيل سريع لجميع المدن",
       "why3DescMobile": "مجاني في 24-48 ساعة، افتح الطرد وعاين قبل الدفع.",
       "why3DescDesktop": "توصيل مجاني خلال 24 إلى 48 ساعة لجميع مدن المغرب، مع إمكانية فتح الطرد ومعاينة الحذاء قبل دفع أي درهم.",
@@ -167,19 +169,6 @@
         window.cmsConfig = Object.assign({}, window.DEFAULT_CMS_CONFIG, JSON.parse(savedCfg));
       }
     } catch (e) {}
-
-    function renderOfficialRavaSvg(imgEl) {
-      if (!imgEl || !imgEl.parentElement) return;
-      imgEl.onerror = null;
-      imgEl.parentElement.innerHTML = `
-        <svg viewBox="0 0 120 120" class="w-full h-full" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="RAVA MODE">
-          <circle cx="60" cy="60" r="60" fill="#0E0E10"/>
-          <circle cx="60" cy="46" r="21" fill="none" stroke="#FFFFFF" stroke-width="2.2"/>
-          <path d="M51 57V36H62.5C67 36 69.5 38.4 69.5 42.3C69.5 45.7 67.4 47.9 63.6 48.5L73.5 63.5" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-          <text x="60" y="86" text-anchor="middle" fill="#FFFFFF" font-family="Montserrat, sans-serif" font-weight="700" font-size="11.5" letter-spacing="2.4">RAVA MODE</text>
-        </svg>
-      `;
-    }
 
     function applyMediaFallback(imgEl, key) {
       if (!imgEl) return;
@@ -223,11 +212,11 @@
       if (!pillBlanc || !pillNoir) return;
 
       if (colorKey === 'blanc') {
-        pillBlanc.className = 'flex-1 py-2 px-3 rounded-full text-xs font-extrabold bg-crimson text-white shadow-sm transition flex items-center justify-center gap-1.5 cursor-pointer';
-        pillNoir.className = 'flex-1 py-2 px-3 rounded-full text-xs font-extrabold bg-white/15 text-white/90 hover:bg-white/25 backdrop-blur-md transition flex items-center justify-center gap-1.5 cursor-pointer';
+        pillBlanc.className = 'flex-1 py-2 px-2.5 rounded-full text-[11px] sm:text-xs font-extrabold bg-crimson text-white shadow-sm transition flex items-center justify-center gap-1.5 whitespace-nowrap cursor-pointer';
+        pillNoir.className = 'flex-1 py-2 px-2.5 rounded-full text-[11px] sm:text-xs font-extrabold bg-white/15 text-white/90 hover:bg-white/25 backdrop-blur-md transition flex items-center justify-center gap-1.5 whitespace-nowrap cursor-pointer';
       } else {
-        pillNoir.className = 'flex-1 py-2 px-3 rounded-full text-xs font-extrabold bg-[#DFD4C0] text-[#0E0E10] shadow-sm transition flex items-center justify-center gap-1.5 cursor-pointer';
-        pillBlanc.className = 'flex-1 py-2 px-3 rounded-full text-xs font-extrabold bg-white/15 text-white/90 hover:bg-white/25 backdrop-blur-md transition flex items-center justify-center gap-1.5 cursor-pointer';
+        pillNoir.className = 'flex-1 py-2 px-2.5 rounded-full text-[11px] sm:text-xs font-extrabold bg-[#DFD4C0] text-[#0E0E10] shadow-sm transition flex items-center justify-center gap-1.5 whitespace-nowrap cursor-pointer';
+        pillBlanc.className = 'flex-1 py-2 px-2.5 rounded-full text-[11px] sm:text-xs font-extrabold bg-white/15 text-white/90 hover:bg-white/25 backdrop-blur-md transition flex items-center justify-center gap-1.5 whitespace-nowrap cursor-pointer';
       }
     }
 
@@ -456,28 +445,28 @@
       box-shadow: 0 0 0 3px rgba(14, 14, 16, 0.08);
     }
 
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
-    .no-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
-
-    .rava-logo-crop {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center 48%;
-      transform: scale(2.15);
-    }
-
     #smartCmsModal.hidden,
     #cmsPinModal.hidden,
     #sizeGuideModal.hidden,
     #orderConfirmModal.hidden,
+    #welcomeGuaranteeModal.hidden,
     #cookieConsentBanner.hidden {
       display: none !important;
+    }
+
+    @keyframes smoothModalPop {
+      0% {
+        opacity: 0;
+        transform: translateY(14px) scale(0.97);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .animate-smooth-modal {
+      animation: smoothModalPop 0.38s cubic-bezier(0.22, 1, 0.36, 1) forwards;
     }
 
     :root {
@@ -513,11 +502,7 @@
     body,
     header,
     section,
-    footer,
-    .theme-card,
-    .theme-surface,
-    .theme-btn-primary,
-    .theme-input {
+    footer {
       transition: background-color 0.45s cubic-bezier(0.22, 1, 0.36, 1),
                   color 0.45s cubic-bezier(0.22, 1, 0.36, 1),
                   border-color 0.45s cubic-bezier(0.22, 1, 0.36, 1),
@@ -634,7 +619,6 @@
       box-shadow: 0 0 0 3px rgba(223, 212, 192, 0.18) !important;
     }
   </style>
-  <script id="ravaSchemaOrgProduct" type="application/ld+json">{"@context":"https://schema.org/","@type":"Product","name":"RAVA MODE — RAVA RUNNER 01","description":"إسبادري مستوردة من الخارج بتصميم عصري بجودة عالية، نعل مريح 4.5 سم وتهوية مثالية طوال اليوم. متوفرة بلونين حصريين ومقاسات من 40 إلى 44.","brand":{"@type":"Brand","name":"RAVA MODE"},"offers":{"@type":"Offer","url":"https://www.ravamode.ma/","priceCurrency":"MAD","price":"299","availability":"https://schema.org/InStock","itemCondition":"https://schema.org/NewCondition"}}</script>
 </head>
 <body class="theme-blanc antialiased selection:bg-crimson selection:text-white pb-24 md:pb-0">
 
@@ -642,18 +626,18 @@
        0. TOP MOROCCO COD ANNOUNCEMENT BAR
        ===================================================================== -->
   <div id="topAnnouncementBar" class="bg-crimson text-white text-[10px] sm:text-xs font-bold py-1.5 sm:py-2 px-3 text-center border-b border-white/10 transition-colors duration-500">
-    <p id="cmsTopAnnouncementText" class="max-w-7xl mx-auto tracking-wide truncate">✈️ إسبادري مستوردة من الخارج بجودة عالية • 🚚 توصيل فابور (24-48س) • 💵 الدفع عند الاستلام بعد المعاينة</p>
+    <p id="cmsTopAnnouncementText" class="max-w-7xl mx-auto tracking-wide truncate">✈️ إسبادري مستوردة من الخارج • 🚚 توصيل فابور (24-48س) • 💵 الدفع عند الاستلام</p>
   </div>
 
   <!-- =====================================================================
-       1. STICKY HEADER WITH OFFICIAL RAVA MODE LOGO + RS + SECRET CMS TRIGGER
+       1. STICKY HEADER WITH OFFICIAL RAVA MODE LOGO + SOCIAL MEDIA + SECRET CMS
        ===================================================================== -->
-  <header class="sticky top-0 z-40 bg-alabaster/90 backdrop-blur-md border-b border-obsidian/10">
-    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-14 sm:h-20 flex items-center justify-between gap-2">
+  <header class="sticky top-0 z-40 bg-alabaster/92 backdrop-blur-md border-b border-obsidian/10">
+    <div class="max-w-7xl mx-auto px-2.5 sm:px-6 lg:px-8 h-14 sm:h-20 flex items-center justify-between gap-1.5 sm:gap-3">
       
       <!-- Brand Emblem + RAVA MODE Wordmark (Triple-tap opens CMS) -->
-      <a href="#" onclick="handleLogoSecretTap(event)" class="flex items-center gap-2 sm:gap-3 group focus:outline-none min-w-0">
-        <div id="headerLogoWrapper" class="w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden bg-obsidian shrink-0 shadow-sm ring-1 ring-obsidian/15 group-hover:scale-105 transition-transform duration-300">
+      <a href="#" onclick="handleLogoSecretTap(event)" class="flex items-center gap-2 sm:gap-3 group focus:outline-none min-w-0 shrink">
+        <div id="headerLogoWrapper" class="w-9 h-9 sm:w-12 sm:h-12 rounded-full overflow-hidden bg-obsidian shrink-0 shadow-sm ring-1 ring-obsidian/15 group-hover:scale-105 transition-transform duration-300">
           <svg viewBox="0 0 120 120" class="w-full h-full" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="RAVA MODE">
             <circle cx="60" cy="60" r="60" fill="#0E0E10"></circle>
             <circle cx="60" cy="46" r="21" fill="none" stroke="#FFFFFF" stroke-width="2.2"></circle>
@@ -662,8 +646,8 @@
           </svg>
         </div>
         <div class="flex flex-col text-right min-w-0">
-          <span id="cmsHeaderBrandName" dir="ltr" class="font-brand font-extrabold text-sm sm:text-lg tracking-[0.14em] sm:tracking-[0.18em] text-obsidian leading-none truncate">RAVA MODE</span>
-          <span id="cmsHeaderTagline" class="text-[10px] sm:text-[11px] text-obsidian/65 mt-1 font-semibold truncate">المجموعة الحصرية 2026</span>
+          <span id="cmsHeaderBrandName" dir="ltr" class="font-brand font-extrabold text-xs sm:text-lg tracking-[0.12em] sm:tracking-[0.18em] text-obsidian leading-none whitespace-nowrap">RAVA MODE</span>
+          <span id="cmsHeaderTagline" class="text-[9px] sm:text-[11px] text-obsidian/65 mt-0.5 sm:mt-1 font-semibold truncate">المجموعة الحصرية 2026</span>
         </div>
       </a>
 
@@ -674,17 +658,17 @@
         <a href="#commander" class="hover:text-obsidian transition">اطلب الآن</a>
       </nav>
 
-      <!-- Header Actions: Social Media (RS) + Fast Order CTA -->
-      <div class="flex items-center gap-1.5 sm:gap-3 shrink-0">
-        <div class="flex items-center gap-1 sm:gap-1.5 shrink-0" aria-label="مواقع التواصل الاجتماعي">
-          <a id="headerInstagramLink" href="https://www.instagram.com/ravamode.ma" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="w-7 h-7 sm:w-9 sm:h-9 rounded-full bg-stonegray/85 hover:bg-obsidian hover:text-white text-obsidian flex items-center justify-center shrink-0 transition hairline-border">
+      <!-- Header Actions: Social Links (Instagram, TikTok, Facebook) + Single-line Order CTA -->
+      <div class="flex items-center gap-1 sm:gap-2.5 shrink-0">
+        <div id="headerSocialLinks" class="flex items-center gap-1 sm:gap-1.5">
+          <a id="headerInstagramLink" href="https://www.instagram.com/ravamode.ma" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="w-7 h-7 sm:w-9 sm:h-9 rounded-full bg-stonegray/85 hover:bg-obsidian text-obsidian hover:text-white flex items-center justify-center transition">
             <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
           </a>
-          <a id="headerTiktokLink" href="https://www.tiktok.com/@ravamode.ma" target="_blank" rel="noopener noreferrer" aria-label="TikTok" class="w-7 h-7 sm:w-9 sm:h-9 rounded-full bg-stonegray/85 hover:bg-obsidian hover:text-white text-obsidian flex items-center justify-center shrink-0 transition hairline-border">
+          <a id="headerTiktokLink" href="https://www.tiktok.com/@ravamode.ma" target="_blank" rel="noopener noreferrer" aria-label="TikTok" class="w-7 h-7 sm:w-9 sm:h-9 rounded-full bg-stonegray/85 hover:bg-obsidian text-obsidian hover:text-white flex items-center justify-center transition">
             <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
           </a>
-          <a id="headerFacebookLink" href="https://www.facebook.com/ravamode.ma" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="w-7 h-7 sm:w-9 sm:h-9 rounded-full bg-stonegray/85 hover:bg-obsidian hover:text-white text-obsidian flex items-center justify-center shrink-0 transition hairline-border">
-            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current" viewBox="0 0 24 24"><path d="M14 13.5h2.5l1-4H14v-2c0-1.03 0-2 2-2h1.5V2.14c-.326-.043-1.557-.14-2.857-.14C11.928 2 10 3.657 10 6.7v2.8H7v4h3V22h4v-8.5z"/></svg>
+          <a id="headerFacebookLink" href="https://www.facebook.com/ravamode.ma" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="w-7 h-7 sm:w-9 sm:h-9 rounded-full bg-stonegray/85 hover:bg-obsidian text-obsidian hover:text-white flex items-center justify-center transition">
+            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current" viewBox="0 0 24 24"><path d="M13.5 21v-7.5h2.55l.38-2.95H13.5V8.67c0-.85.24-1.43 1.46-1.43h1.56V4.6c-.27-.04-1.2-.12-2.28-.12-2.26 0-3.8 1.38-3.8 3.91v2.16H7.9v2.95h2.54V21h3.06z"/></svg>
           </a>
         </div>
 
@@ -708,13 +692,13 @@
           <div class="flex flex-wrap items-center gap-2.5 mb-5">
             <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-stonegray hairline-border">
               <span id="heroThemeDot" class="w-2.5 h-2.5 rounded-full bg-crimson animate-pulse"></span>
-              <span id="heroThemeBadgeText" class="text-xs font-extrabold text-obsidian">✈️ إسبادري مستوردة من الخارج • المجموعة الحصرية 2026</span>
+              <span id="heroThemeBadgeText" class="text-xs font-extrabold text-obsidian">✈️ إسبادري مستوردة من الخارج • ثيم أبيض / أحمر</span>
             </div>
           </div>
 
           <h1 id="cmsHeroHeadline" class="font-display font-black text-3xl sm:text-5xl lg:text-[48px] text-obsidian leading-[1.18] mb-5">الأناقة والراحة فخطوة وحدة — سنيكرز RAVA MODE الجديد</h1>
 
-          <p id="cmsHeroSubtitle" class="text-sm sm:text-base text-obsidian/80 leading-relaxed max-w-xl mb-6 font-medium">إسبادري مستوردة من الخارج بجودة عالية وتصميم عصري، نعل مريح 4.5 سم وتهوية مثالية طوال اليوم. متوفرة بلونين حصريين ومقاسات من 40 إلى 44.</p>
+          <p id="cmsHeroSubtitle" class="text-sm sm:text-base text-obsidian/80 leading-relaxed max-w-xl mb-6 font-medium">إسبادري مستوردة من الخارج بتصميم عصري بجودة عالية، نعل مريح 4.5 سم وتهوية مثالية طوال اليوم. متوفر بلونين حصريين ومقاسات من 40 إلى 44.</p>
 
           <!-- Pricing & COD Offer Box -->
           <div class="w-full p-4 sm:p-5 rounded-2xl bg-white hairline-border shadow-xs mb-6">
@@ -725,12 +709,12 @@
                 <span id="cmsHeroDiscountBadge" class="px-2.5 py-0.5 rounded-full bg-crimson text-white text-xs font-extrabold">تخفيض -33%</span>
               </div>
               <span class="text-xs font-extrabold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full">
-                مستورد من الخارج • شحن سريع
+                متوفر حالياً • شحن سريع
               </span>
             </div>
             <p class="mt-2.5 text-xs sm:text-sm font-bold text-obsidian/75 flex items-center gap-2">
               <svg class="w-4 h-4 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4" d="M5 13l4 4L19 7"></path></svg>
-              <span id="cmsHeroGuarantee">منتوج مستورد أصلي • توصيل مجاني لباب الدار + الدفع عند الاستلام بعد المعاينة</span>
+              <span id="cmsHeroGuarantee">توصيل مجاني لباب الدار + الدفع عند الاستلام بعد المعاينة</span>
             </p>
           </div>
 
@@ -824,24 +808,24 @@
                 <span id="heroVideoBadge" class="px-3 py-1 rounded-full bg-obsidian/80 backdrop-blur-md text-white text-[10px] font-extrabold border border-white/15">🎥 زوم ماكرو • أبيض / أحمر</span>
               </div>
 
-              <!-- DUAL-BUFFER SILENT MP4 VIDEOS (Smooth 500ms Crossfade, Zero Image Flash) -->
-              <video id="heroVideoBufferA" class="absolute inset-0 w-full h-full object-cover transition-all duration-500 ease-out z-20 opacity-100 scale-100" autoplay muted playsinline preload="auto"></video>
+              <!-- DUAL-BUFFER SILENT MP4 VIDEOS -->
+              <video id="heroVideoBufferA" class="absolute inset-0 w-full h-full object-cover transition-all duration-500 ease-out z-20 opacity-100 scale-100" autoplay="" muted="" playsinline="" preload="auto" fetchpriority="high" src="https://cnovkkilcvobthwjjkvr.supabase.co/storage/v1/object/public/rava-media/1795285374445_sneaker_white_navy_flat_9x16_with_voiceover_2__1_.mp4"></video>
 
-              <video id="heroVideoBufferB" class="absolute inset-0 w-full h-full object-cover transition-all duration-500 ease-out z-10 opacity-0 scale-[1.03]" muted playsinline preload="auto"></video>
+              <video id="heroVideoBufferB" class="absolute inset-0 w-full h-full object-cover z-10 transition-all duration-500 ease-out opacity-0 scale-[1.03]" muted="" playsinline="" preload="auto"></video>
 
-              <!-- HIGH-RESOLUTION KEN BURNS MACRO FALLBACK STAGE (Smooth Fade if Video Unavailable) -->
+              <!-- HIGH-RESOLUTION KEN BURNS MACRO FALLBACK STAGE -->
               <div id="heroKenBurnsStage" class="opacity-0 transition-opacity duration-500 ease-out absolute inset-0 w-full h-full overflow-hidden bg-obsidian z-20 hidden">
                 <img id="heroKenBurnsImg" src="https://cnovkkilcvobthwjjkvr.supabase.co/storage/v1/object/public/rava-media/1795284591460_rava_clean_1795284591460.jpg" alt="معاينة سنيكرز RAVA MODE" class="w-full h-full object-cover animate-ken-burns">
               </div>
 
               <!-- Bottom Gradient Overlay: Reactive 2-Color Switcher -->
               <div class="absolute bottom-0 inset-x-0 z-30 pt-12 pb-3.5 px-3.5 bg-gradient-to-t from-black/85 via-black/45 to-transparent">
-                <div class="flex items-center gap-2 p-1 rounded-full bg-black/45 backdrop-blur-md border border-white/15">
-                  <button type="button" onclick="selectColorway('blanc')" id="hero-vid-color-blanc" class="flex-1 py-2 px-3 rounded-full text-xs font-extrabold bg-crimson text-white shadow-sm transition flex items-center justify-center gap-1.5 cursor-pointer">
+                <div class="flex items-center gap-1.5 p-1 rounded-full bg-black/45 backdrop-blur-md border border-white/15">
+                  <button type="button" onclick="selectColorway('blanc')" id="hero-vid-color-blanc" class="flex-1 py-2 px-2.5 rounded-full text-[11px] sm:text-xs font-extrabold bg-crimson text-white shadow-sm transition flex items-center justify-center gap-1.5 whitespace-nowrap cursor-pointer">
                     <span class="w-2 h-2 rounded-full bg-white shrink-0"></span>
                     <span id="cmsHeroVidPillBlanc">أبيض / أحمر</span>
                   </button>
-                  <button type="button" onclick="selectColorway('noir')" id="hero-vid-color-noir" class="flex-1 py-2 px-3 rounded-full text-xs font-extrabold bg-white/15 text-white/90 hover:bg-white/25 backdrop-blur-md transition flex items-center justify-center gap-1.5 cursor-pointer">
+                  <button type="button" onclick="selectColorway('noir')" id="hero-vid-color-noir" class="flex-1 py-2 px-2.5 rounded-full text-[11px] sm:text-xs font-extrabold bg-white/15 text-white/90 hover:bg-white/25 backdrop-blur-md transition flex items-center justify-center gap-1.5 whitespace-nowrap cursor-pointer">
                     <span class="w-2 h-2 rounded-full bg-obsidian border border-white/50 shrink-0"></span>
                     <span id="cmsHeroVidPillNoir">أسود / رمادي</span>
                   </button>
@@ -862,13 +846,11 @@
   <section id="videos-zoom" class="py-10 sm:py-16 bg-alabaster border-b border-obsidian/10">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
       
-      <!-- Compact Header + Instant Reactive Color Filter Tabs -->
       <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-6 sm:mb-8 gap-3.5 text-right">
         <div>
           <h2 id="cmsVideosSectionTitle" class="font-display font-black text-2xl sm:text-3xl text-obsidian">شاهد التفاصيل عن قرب</h2>
         </div>
 
-        <!-- Reactive Color Switcher Pills -->
         <div class="inline-flex items-center p-1 rounded-full bg-stonegray hairline-border self-start sm:self-auto">
           <button type="button" onclick="selectColorway('blanc')" id="vid-filter-blanc" class="px-3.5 py-1.5 rounded-full bg-crimson text-white text-xs font-extrabold shadow-xs transition flex items-center gap-1.5 cursor-pointer">
             <span class="w-2 h-2 rounded-full bg-white"></span>
@@ -881,105 +863,74 @@
         </div>
       </div>
 
-      <!-- Compact 2-Column Reactive Grid -->
       <div class="grid grid-cols-2 gap-3 sm:gap-6">
-        
-        <!-- VIDEO CARD 1: أبيض / أحمر — زوم ماكرو -->
+        <!-- VIDEO CARD 1 -->
         <div id="video-card-0" data-color="blanc" class="rounded-2xl sm:rounded-3xl bg-white hairline-border p-2.5 sm:p-3.5 shadow-sm flex flex-col justify-between text-right transition-all">
           <div>
             <div class="relative aspect-[4/5] sm:aspect-[9/14] w-full rounded-xl sm:rounded-2xl overflow-hidden bg-obsidian">
-              <video id="gridVideo-0" data-src="https://cnovkkilcvobthwjjkvr.supabase.co/storage/v1/object/public/rava-media/1795285374445_sneaker_white_navy_flat_9x16_with_voiceover_2__1_.mp4" poster="https://cnovkkilcvobthwjjkvr.supabase.co/storage/v1/object/public/rava-media/1795284591460_rava_clean_1795284591460.jpg" class="w-full h-full object-cover lazy-grid-video" muted loop playsinline preload="none" onerror="activateGridKenBurnsFallback(0)"></video>
-
-              <!-- Ken Burns Fallback Stage 0 -->
+              <video id="gridVideo-0" data-src="https://cnovkkilcvobthwjjkvr.supabase.co/storage/v1/object/public/rava-media/1795285374445_sneaker_white_navy_flat_9x16_with_voiceover_2__1_.mp4" poster="https://cnovkkilcvobthwjjkvr.supabase.co/storage/v1/object/public/rava-media/1795284591460_rava_clean_1795284591460.jpg" class="w-full h-full object-cover lazy-grid-video" muted="" loop="" playsinline="" preload="none" onerror="activateGridKenBurnsFallback(0)"></video>
               <div id="gridFallback-0" class="hidden absolute inset-0 w-full h-full overflow-hidden">
                 <img id="gridFallbackImg-0" src="https://cnovkkilcvobthwjjkvr.supabase.co/storage/v1/object/public/rava-media/1795284591460_rava_clean_1795284591460.jpg" alt="أبيض / أحمر — زوم التفاصيل" class="w-full h-full object-cover animate-ken-burns" onerror="applyMediaFallback(this, 'blanc_studio')">
               </div>
-
-              <!-- Compact Overlay Caption -->
               <div class="absolute bottom-0 inset-x-0 z-20 p-2.5 sm:p-3.5 bg-gradient-to-t from-black/90 via-black/45 to-transparent text-white">
-                <span class="inline-block px-2 py-0.5 rounded-full bg-crimson text-white text-[9px] sm:text-[10px] font-extrabold mb-1">
-                  زوم ماكرو
-                </span>
+                <span class="inline-block px-2 py-0.5 rounded-full bg-crimson text-white text-[9px] sm:text-[10px] font-extrabold mb-1">زوم ماكرو</span>
                 <h3 id="cmsGridTitle0" class="font-display font-extrabold text-xs sm:text-base leading-snug">تفاصيل الشبكة والسويد</h3>
               </div>
             </div>
           </div>
-
           <button type="button" onclick="chooseColorAndScroll('blanc')" class="cms-btn-choose-blanc mt-2.5 sm:mt-3.5 w-full py-2.5 px-2.5 rounded-xl bg-stonegray/85 hover:bg-obsidian hover:text-white text-obsidian font-extrabold text-[11px] sm:text-xs transition cursor-pointer">اطلب أبيض / أحمر</button>
         </div>
 
-        <!-- VIDEO CARD 2: أبيض / أحمر — تجربة ملبوسة -->
+        <!-- VIDEO CARD 2 -->
         <div id="video-card-1" data-color="blanc" class="rounded-2xl sm:rounded-3xl bg-white hairline-border p-2.5 sm:p-3.5 shadow-sm flex flex-col justify-between text-right transition-all">
           <div>
             <div class="relative aspect-[4/5] sm:aspect-[9/14] w-full rounded-xl sm:rounded-2xl overflow-hidden bg-obsidian">
-              <video id="gridVideo-1" data-src="https://cnovkkilcvobthwjjkvr.supabase.co/storage/v1/object/public/rava-media/1795285381952_jolk___1_.mp4" poster="https://cnovkkilcvobthwjjkvr.supabase.co/storage/v1/object/public/rava-media/1795284591460_rava_clean_1795284591460.jpg" class="w-full h-full object-cover lazy-grid-video" muted loop playsinline preload="none" onerror="activateGridKenBurnsFallback(1)"></video>
-
-              <!-- Ken Burns Fallback Stage 1 -->
+              <video id="gridVideo-1" data-src="https://cnovkkilcvobthwjjkvr.supabase.co/storage/v1/object/public/rava-media/1795285381952_jolk___1_.mp4" poster="https://cnovkkilcvobthwjjkvr.supabase.co/storage/v1/object/public/rava-media/1795284591460_rava_clean_1795284591460.jpg" class="w-full h-full object-cover lazy-grid-video" muted="" loop="" playsinline="" preload="none" onerror="activateGridKenBurnsFallback(1)"></video>
               <div id="gridFallback-1" class="hidden absolute inset-0 w-full h-full overflow-hidden">
                 <img id="gridFallbackImg-1" src="https://cnovkkilcvobthwjjkvr.supabase.co/storage/v1/object/public/rava-media/1795284591460_rava_clean_1795284591460.jpg" alt="أبيض / أحمر — إطلالة الشارع" class="w-full h-full object-cover animate-ken-burns-pan" onerror="applyMediaFallback(this, 'blanc_street')">
               </div>
-
-              <!-- Compact Overlay Caption -->
               <div class="absolute bottom-0 inset-x-0 z-20 p-2.5 sm:p-3.5 bg-gradient-to-t from-black/90 via-black/45 to-transparent text-white">
-                <span class="inline-block px-2 py-0.5 rounded-full bg-white/90 text-obsidian text-[9px] sm:text-[10px] font-extrabold mb-1">
-                  تجربة ملبوسة
-                </span>
+                <span class="inline-block px-2 py-0.5 rounded-full bg-white/90 text-obsidian text-[9px] sm:text-[10px] font-extrabold mb-1">تجربة ملبوسة</span>
                 <h3 id="cmsGridTitle1" class="font-display font-extrabold text-xs sm:text-base leading-snug">أناقة ملفتة فكل خطوة</h3>
               </div>
             </div>
           </div>
-
           <button type="button" onclick="chooseColorAndScroll('blanc')" class="cms-btn-choose-blanc mt-2.5 sm:mt-3.5 w-full py-2.5 px-2.5 rounded-xl bg-stonegray/85 hover:bg-obsidian hover:text-white text-obsidian font-extrabold text-[11px] sm:text-xs transition cursor-pointer">اطلب أبيض / أحمر</button>
         </div>
 
-        <!-- VIDEO CARD 3: أسود / رمادي — زوم ماكرو -->
+        <!-- VIDEO CARD 3 -->
         <div id="video-card-2" data-color="noir" class="hidden rounded-2xl sm:rounded-3xl bg-white hairline-border p-2.5 sm:p-3.5 shadow-sm flex flex-col justify-between text-right transition-all">
           <div>
             <div class="relative aspect-[4/5] sm:aspect-[9/14] w-full rounded-xl sm:rounded-2xl overflow-hidden bg-obsidian">
-              <video id="gridVideo-2" data-src="https://cnovkkilcvobthwjjkvr.supabase.co/storage/v1/object/public/rava-media/1795285387849_sneaker_black_exact_9x16_with_voiceover_v2_3__1_.mp4" poster="https://cnovkkilcvobthwjjkvr.supabase.co/storage/v1/object/public/rava-media/1795284601030_rava_clean_1795284601030.jpg" class="w-full h-full object-cover lazy-grid-video" muted loop playsinline preload="none" onerror="activateGridKenBurnsFallback(2)"></video>
-
-              <!-- Ken Burns Fallback Stage 2 -->
+              <video id="gridVideo-2" data-src="https://cnovkkilcvobthwjjkvr.supabase.co/storage/v1/object/public/rava-media/1795285387849_sneaker_black_exact_9x16_with_voiceover_v2_3__1_.mp4" poster="https://cnovkkilcvobthwjjkvr.supabase.co/storage/v1/object/public/rava-media/1795284601030_rava_clean_1795284601030.jpg" class="w-full h-full object-cover lazy-grid-video" muted="" loop="" playsinline="" preload="none" onerror="activateGridKenBurnsFallback(2)"></video>
               <div id="gridFallback-2" class="hidden absolute inset-0 w-full h-full overflow-hidden">
                 <img id="gridFallbackImg-2" src="https://cnovkkilcvobthwjjkvr.supabase.co/storage/v1/object/public/rava-media/1795284601030_rava_clean_1795284601030.jpg" alt="أسود / رمادي — زوم التفاصيل" class="w-full h-full object-cover animate-ken-burns-pan" onerror="applyMediaFallback(this, 'noir_studio')">
               </div>
-
-              <!-- Compact Overlay Caption -->
               <div class="absolute bottom-0 inset-x-0 z-20 p-2.5 sm:p-3.5 bg-gradient-to-t from-black/90 via-black/45 to-transparent text-white">
-                <span class="inline-block px-2 py-0.5 rounded-full bg-warmsand text-obsidian text-[9px] sm:text-[10px] font-extrabold mb-1">
-                  زوم ماكرو
-                </span>
+                <span class="inline-block px-2 py-0.5 rounded-full bg-warmsand text-obsidian text-[9px] sm:text-[10px] font-extrabold mb-1">زوم ماكرو</span>
                 <h3 id="cmsGridTitle2" class="font-display font-extrabold text-xs sm:text-base leading-snug">جودة الخامات والتشطيب</h3>
               </div>
             </div>
           </div>
-
           <button type="button" onclick="chooseColorAndScroll('noir')" class="cms-btn-choose-noir mt-2.5 sm:mt-3.5 w-full py-2.5 px-2.5 rounded-xl bg-stonegray/85 hover:bg-obsidian hover:text-white text-obsidian font-extrabold text-[11px] sm:text-xs transition cursor-pointer">اطلب أسود / رمادي</button>
         </div>
 
-        <!-- VIDEO CARD 4: أسود / رمادي — تجربة في اللبس -->
+        <!-- VIDEO CARD 4 -->
         <div id="video-card-3" data-color="noir" class="hidden rounded-2xl sm:rounded-3xl bg-white hairline-border p-2.5 sm:p-3.5 shadow-sm flex flex-col justify-between text-right transition-all">
           <div>
             <div class="relative aspect-[4/5] sm:aspect-[9/14] w-full rounded-xl sm:rounded-2xl overflow-hidden bg-obsidian">
-              <video id="gridVideo-3" data-src="https://cnovkkilcvobthwjjkvr.supabase.co/storage/v1/object/public/rava-media/1795285618609_sneaker_step_9x16_with_voiceover_1__1_.mp4" poster="https://cnovkkilcvobthwjjkvr.supabase.co/storage/v1/object/public/rava-media/1795284601030_rava_clean_1795284601030.jpg" class="w-full h-full object-cover lazy-grid-video" muted loop playsinline preload="none" onerror="activateGridKenBurnsFallback(3)"></video>
-
-              <!-- Ken Burns Fallback Stage 3 -->
+              <video id="gridVideo-3" data-src="https://cnovkkilcvobthwjjkvr.supabase.co/storage/v1/object/public/rava-media/1795285618609_sneaker_step_9x16_with_voiceover_1__1_.mp4" poster="https://cnovkkilcvobthwjjkvr.supabase.co/storage/v1/object/public/rava-media/1795284601030_rava_clean_1795284601030.jpg" class="w-full h-full object-cover lazy-grid-video" muted="" loop="" playsinline="" preload="none" onerror="activateGridKenBurnsFallback(3)"></video>
               <div id="gridFallback-3" class="hidden absolute inset-0 w-full h-full overflow-hidden">
                 <img id="gridFallbackImg-3" src="https://cnovkkilcvobthwjjkvr.supabase.co/storage/v1/object/public/rava-media/1795284601030_rava_clean_1795284601030.jpg" alt="أسود / رمادي — تجربة ملبوسة" class="w-full h-full object-cover animate-ken-burns" onerror="applyMediaFallback(this, 'noir_walk')">
               </div>
-
-              <!-- Compact Overlay Caption -->
               <div class="absolute bottom-0 inset-x-0 z-20 p-2.5 sm:p-3.5 bg-gradient-to-t from-black/90 via-black/45 to-transparent text-white">
-                <span class="inline-block px-2 py-0.5 rounded-full bg-white/90 text-obsidian text-[9px] sm:text-[10px] font-extrabold mb-1">
-                  تجربة ملبوسة
-                </span>
+                <span class="inline-block px-2 py-0.5 rounded-full bg-white/90 text-obsidian text-[9px] sm:text-[10px] font-extrabold mb-1">تجربة ملبوسة</span>
                 <h3 id="cmsGridTitle3" class="font-display font-extrabold text-xs sm:text-base leading-snug">خفة وثبات طوال اليوم</h3>
               </div>
             </div>
           </div>
-
           <button type="button" onclick="chooseColorAndScroll('noir')" class="cms-btn-choose-noir mt-2.5 sm:mt-3.5 w-full py-2.5 px-2.5 rounded-xl bg-stonegray/85 hover:bg-obsidian hover:text-white text-obsidian font-extrabold text-[11px] sm:text-xs transition cursor-pointer">اطلب أسود / رمادي</button>
         </div>
-
       </div>
     </div>
   </section>
@@ -989,15 +940,12 @@
        ===================================================================== -->
   <section id="pourquoi" class="py-12 sm:py-20 bg-white border-b border-obsidian/10 text-right">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      
       <div class="text-center max-w-2xl mx-auto mb-7 sm:mb-12">
-        <span id="cmsWhySectionBadge" class="hidden sm:inline-block text-xs font-extrabold text-obsidian/60">الجودة المستوردة والثقة قبل كل شيء</span>
+        <span id="cmsWhySectionBadge" class="hidden sm:inline-block text-xs font-extrabold text-obsidian/60">جودة مستوردة وثقة قبل كل شيء</span>
         <h2 id="cmsWhySectionTitle" class="font-display font-black text-2xl sm:text-4xl text-obsidian sm:mt-1.5">علاش تختار RAVA MODE ؟</h2>
       </div>
 
-      <!-- 3 Value Proposition Cards -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-6">
-        <!-- Card 1 -->
         <div class="rounded-2xl sm:rounded-3xl bg-alabaster hairline-border p-4 sm:p-7 shadow-xs flex flex-row md:flex-col items-center md:items-start justify-start md:justify-between gap-3.5 sm:gap-0">
           <div class="flex flex-row md:flex-col items-center md:items-start gap-3.5 sm:gap-0 w-full">
             <div class="w-12 h-12 rounded-2xl bg-obsidian text-warmsand flex items-center justify-center shrink-0 md:mb-5">
@@ -1014,24 +962,22 @@
           <div id="cmsWhy1Footer" class="hidden md:block w-full mt-6 pt-4 border-t border-obsidian/10 text-xs font-extrabold text-obsidian">✓ نعل EVA مريح ومضاد للانزلاق</div>
         </div>
 
-        <!-- Card 2 -->
         <div class="rounded-2xl sm:rounded-3xl bg-obsidian text-alabaster p-4 sm:p-7 shadow-md flex flex-row md:flex-col items-center md:items-start justify-start md:justify-between gap-3.5 sm:gap-0">
           <div class="flex flex-row md:flex-col items-center md:items-start gap-3.5 sm:gap-0 w-full">
             <div class="w-12 h-12 rounded-2xl bg-white/15 text-warmsand flex items-center justify-center shrink-0 md:mb-5">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path></svg>
             </div>
             <div class="min-w-0 flex-1">
-              <h3 id="cmsWhy2Title" class="font-display font-extrabold text-base sm:text-xl text-white leading-snug">تشطيب عالي الجودة • مستوردة من الخارج</h3>
+              <h3 id="cmsWhy2Title" class="font-display font-extrabold text-base sm:text-xl text-white leading-snug">مستوردة من الخارج بجودة عالية</h3>
               <p class="text-xs sm:text-sm text-white/80 mt-1 sm:mt-2.5 leading-relaxed">
-                <span id="cmsWhy2DescMobile" class="md:hidden">إسبادري مستوردة من الخارج، شبكة مهوية، سويد ناعم وخياطة مزدوجة.</span>
-                <span id="cmsWhy2DescDesktop" class="hidden md:inline">إسبادري مستوردة من الخارج بمواصفات عالمية، شبكة مهوية عالية الكثافة تمنع التعرق، مع جلد سويد ناعم وخياطة مزدوجة متينة تدوم طويلاً.</span>
+                <span id="cmsWhy2DescMobile" class="md:hidden">إسبادري مستوردة بشبكة مهوية، سويد ناعم وخياطة متينة.</span>
+                <span id="cmsWhy2DescDesktop" class="hidden md:inline">إسبادري مستوردة من الخارج بشبكة مهوية عالية الكثافة تمنع التعرق، مع جلد سويد ناعم وخياطة مزدوجة متينة تدوم طويلاً وتحافظ على أناقة الحذاء.</span>
               </p>
             </div>
           </div>
-          <div id="cmsWhy2Footer" class="hidden md:block w-full mt-6 pt-4 border-t border-white/15 text-xs font-extrabold text-warmsand">✓ جودة مستوردة ومطابقة 100% للصور والفيديوهات</div>
+          <div id="cmsWhy2Footer" class="hidden md:block w-full mt-6 pt-4 border-t border-white/15 text-xs font-extrabold text-warmsand">✓ منتوج مستورد ومطابق 100% للصور والفيديوهات</div>
         </div>
 
-        <!-- Card 3 -->
         <div class="rounded-2xl sm:rounded-3xl bg-alabaster hairline-border p-4 sm:p-7 shadow-xs flex flex-row md:flex-col items-center md:items-start justify-start md:justify-between gap-3.5 sm:gap-0">
           <div class="flex flex-row md:flex-col items-center md:items-start gap-3.5 sm:gap-0 w-full">
             <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-800 flex items-center justify-center shrink-0 md:mb-5">
@@ -1048,19 +994,16 @@
           <div id="cmsWhy3Footer" class="hidden md:block w-full mt-6 pt-4 border-t border-obsidian/10 text-xs font-extrabold text-emerald-700">✓ الدفع عند الاستلام + تبديل المقاس مجاناً</div>
         </div>
       </div>
-
     </div>
   </section>
 
   <!-- =====================================================================
-       5. SECTION 4: FORMULAIRE DE COMMANDE COD ULTRA-SIMPLE (RTL MOROCCO)
+       5. SECTION 4: FORMULAIRE DE COMMANDE COD ULTRA-SIMPLE (SOLO & DUO)
        ===================================================================== -->
   <section id="commander" class="py-16 sm:py-24 editorial-grid-bg text-right">
     <div class="max-w-3xl mx-auto px-4 sm:px-6">
-      
       <div class="rounded-[32px] bg-white hairline-border-strong shadow-2xl shadow-obsidian/10 overflow-hidden">
         
-        <!-- Form Header Banner -->
         <div id="formHeaderBanner" class="bg-crimson text-white px-6 sm:px-10 py-6 sm:py-8 transition-colors duration-500">
           <div class="flex flex-wrap items-center justify-between gap-2">
             <span id="formBannerSubTag" class="text-xs font-extrabold text-white/90">طلب سريع في 30 ثانية • بدون بطاقة بنكية</span>
@@ -1073,10 +1016,9 @@
           <p id="cmsFormSubtitle" class="text-xs sm:text-sm text-white/85 mt-1">عمّر المعلومات أسفله وسنتصل بك لتأكيد الإرسال لباب منزلك.</p>
         </div>
 
-        <!-- Form Content -->
-        <form id="codOrderForm" onsubmit="submitOrder(event)" novalidate class="p-6 sm:p-10 space-y-7">
+        <form id="codOrderForm" onsubmit="submitOrder(event)" novalidate="" class="p-6 sm:p-10 space-y-7">
           
-          <!-- Dynamic Visual Preview of Active Selection (Solo Mode) -->
+          <!-- Dynamic Visual Preview (Solo Mode) -->
           <div id="soloPreviewBox" class="flex items-center gap-4 p-4 rounded-2xl bg-alabaster hairline-border">
             <img id="formPreviewImg" src="https://cnovkkilcvobthwjjkvr.supabase.co/storage/v1/object/public/rava-media/1795284591460_rava_clean_1795284591460.jpg" alt="معاينة سنيكرز RAVA MODE" class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl object-cover bg-stonegray shrink-0 hairline-border" onerror="applyMediaFallback(this, 'blanc_studio')">
             <div class="min-w-0 flex-1">
@@ -1086,43 +1028,39 @@
             </div>
           </div>
 
-          <!-- Dual Side-by-Side Visual Preview (Duo Mode: Each Model & Its Own Size Always Visible) -->
-          <div id="duoPreviewBox" class="hidden p-4 rounded-2xl bg-alabaster hairline-border space-y-2.5">
+          <!-- Side-by-Side Visual Preview (Duo Mode) -->
+          <div id="duoPreviewBox" class="hidden p-4 rounded-2xl bg-alabaster hairline-border space-y-3">
             <div class="flex items-center justify-between">
-              <span class="text-[11px] font-extrabold text-obsidian/70">اختيارك في عرض الثنائي (كل موديل بمقاسه الخاص) :</span>
-              <span id="duoPreviewSaveTag" class="text-[11px] font-extrabold text-crimson">توفير 50 درهم</span>
+              <span class="text-xs font-extrabold text-obsidian">🔥 ملخص عرض الثنائي (2 Paires) :</span>
+              <span id="duoPreviewSaveTag" class="text-[11px] font-extrabold text-crimson bg-crimson/10 px-2.5 py-0.5 rounded-full">توفير 50 درهم + توصيل مجاني</span>
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-              <!-- Pair 1 Card -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div class="flex items-center gap-3 p-2.5 rounded-xl bg-white hairline-border">
-                <img id="duoPreviewImg1" src="https://cnovkkilcvobthwjjkvr.supabase.co/storage/v1/object/public/rava-media/1795284591460_rava_clean_1795284591460.jpg" alt="الحذاء الأول" class="w-14 h-14 rounded-xl object-cover bg-stonegray shrink-0 hairline-border" onerror="applyMediaFallback(this, 'blanc_studio')">
-                <div class="min-w-0 flex-1">
-                  <span class="inline-block px-2 py-0.5 rounded-full bg-obsidian text-white text-[10px] font-extrabold">الحذاء 1</span>
-                  <div id="duoPreviewColor1" class="text-xs font-extrabold text-obsidian truncate mt-1">أبيض / أحمر</div>
-                  <div id="duoPreviewSize1" class="text-xs font-black text-crimson mt-0.5">المقاس المختار : 42</div>
+                <img id="duoPreviewImg1" src="https://cnovkkilcvobthwjjkvr.supabase.co/storage/v1/object/public/rava-media/1795284591460_rava_clean_1795284591460.jpg" alt="الحذاء الأول" class="w-14 h-14 rounded-xl object-cover bg-stonegray shrink-0" onerror="applyMediaFallback(this, 'blanc_studio')">
+                <div class="min-w-0">
+                  <span class="text-[10px] font-extrabold text-obsidian/55 block">الحذاء الأول :</span>
+                  <strong id="duoPreviewColor1" class="text-xs font-extrabold text-obsidian block truncate">أبيض / أحمر</strong>
+                  <span id="duoPreviewSize1" class="inline-block mt-1 px-2 py-0.5 rounded-md bg-obsidian text-white text-[11px] font-extrabold">المقاس المختار : 42</span>
                 </div>
               </div>
-              <!-- Pair 2 Card -->
               <div class="flex items-center gap-3 p-2.5 rounded-xl bg-white hairline-border">
-                <img id="duoPreviewImg2" src="https://cnovkkilcvobthwjjkvr.supabase.co/storage/v1/object/public/rava-media/1795284601030_rava_clean_1795284601030.jpg" alt="الحذاء الثاني" class="w-14 h-14 rounded-xl object-cover bg-stonegray shrink-0 hairline-border" onerror="applyMediaFallback(this, 'noir_studio')">
-                <div class="min-w-0 flex-1">
-                  <span class="inline-block px-2 py-0.5 rounded-full bg-obsidian text-white text-[10px] font-extrabold">الحذاء 2</span>
-                  <div id="duoPreviewColor2" class="text-xs font-extrabold text-obsidian truncate mt-1">أسود / رمادي</div>
-                  <div id="duoPreviewSize2" class="text-xs font-black text-crimson mt-0.5">المقاس المختار : 43</div>
+                <img id="duoPreviewImg2" src="https://cnovkkilcvobthwjjkvr.supabase.co/storage/v1/object/public/rava-media/1795284601030_rava_clean_1795284601030.jpg" alt="الحذاء الثاني" class="w-14 h-14 rounded-xl object-cover bg-stonegray shrink-0" onerror="applyMediaFallback(this, 'noir_studio')">
+                <div class="min-w-0">
+                  <span class="text-[10px] font-extrabold text-obsidian/55 block">الحذاء الثاني :</span>
+                  <strong id="duoPreviewColor2" class="text-xs font-extrabold text-obsidian block truncate">أسود / رمادي</strong>
+                  <span id="duoPreviewSize2" class="inline-block mt-1 px-2 py-0.5 rounded-md bg-obsidian text-white text-[11px] font-extrabold">المقاس المختار : 43</span>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- 1. CHOIX DU COLORIS -->
+          <!-- 1. CHOIX DU COLORIS (PAIR 1) -->
           <div>
-            <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center justify-between gap-2 mb-3">
               <label id="formStep1Label" class="block text-xs sm:text-sm font-extrabold text-obsidian">
                 1. اختر اللون :
               </label>
-              <span id="formStep1Badge" class="hidden px-2.5 py-0.5 rounded-full bg-obsidian text-white text-[11px] font-extrabold">
-                أبيض / أحمر • مقاس 42
-              </span>
+              <span id="formStep1Badge" class="hidden px-2.5 py-0.5 rounded-full bg-obsidian text-white text-[11px] font-extrabold">أبيض / أحمر • مقاس 42</span>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <button type="button" onclick="setPairColor(1, 'blanc')" id="form-color-blanc" class="flex items-center justify-between gap-3 p-3 rounded-2xl bg-alabaster border-2 border-crimson text-right transition cursor-pointer">
@@ -1130,7 +1068,7 @@
                   <img id="formThumbBlanc" src="https://cnovkkilcvobthwjjkvr.supabase.co/storage/v1/object/public/rava-media/1795284591460_rava_clean_1795284591460.jpg" alt="أبيض / أحمر" class="w-12 h-12 rounded-xl object-cover shrink-0 hairline-border" onerror="applyMediaFallback(this, 'blanc_studio')">
                   <div class="min-w-0">
                     <span id="cmsFormColorBlancLabel" class="block text-xs font-extrabold text-obsidian truncate">أبيض / أحمر</span>
-                    <span id="formColorBlancSizeTag" class="block text-[11px] font-bold text-crimson mt-0.5">المقاس : 42</span>
+                    <span id="formColorBlancSizeTag" class="block text-[11px] font-extrabold text-crimson mt-0.5">المقاس : 42</span>
                   </div>
                 </div>
               </button>
@@ -1140,14 +1078,14 @@
                   <img id="formThumbNoir" src="https://cnovkkilcvobthwjjkvr.supabase.co/storage/v1/object/public/rava-media/1795284601030_rava_clean_1795284601030.jpg" alt="أسود / رمادي" class="w-12 h-12 rounded-xl object-cover shrink-0 hairline-border" onerror="applyMediaFallback(this, 'noir_studio')">
                   <div class="min-w-0">
                     <span id="cmsFormColorNoirLabel" class="block text-xs font-extrabold text-obsidian truncate">أسود / رمادي</span>
-                    <span id="formColorNoirSizeTag" class="block text-[11px] font-bold text-obsidian/60 mt-0.5">المقاس : 43</span>
+                    <span id="formColorNoirSizeTag" class="block text-[11px] font-bold text-obsidian/65 mt-0.5">المقاس : 43</span>
                   </div>
                 </div>
               </button>
             </div>
           </div>
 
-          <!-- 2. CHOIX DE LA POINTURE (40 - 44) -->
+          <!-- 2. CHOIX DE LA POINTURE (PAIR 1) -->
           <div>
             <div class="flex flex-wrap items-center justify-between gap-2 mb-2.5">
               <label id="formStep2Label" class="text-xs sm:text-sm font-extrabold text-obsidian">
@@ -1167,13 +1105,12 @@
             </div>
           </div>
 
-          <!-- 3. OFFRE SPÉCIALE PANIER MOYEN (SOLO 299 DH vs DUO 548 DH) -->
+          <!-- 3. OFFRE SPÉCIALE (SOLO vs DUO) -->
           <div>
             <label class="block text-xs sm:text-sm font-extrabold text-obsidian mb-3">
               3. اختر العرض المناسب لك :
             </label>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-              <!-- Solo Offer -->
               <button type="button" onclick="selectOffer('solo')" id="offer-btn-solo" class="p-4 rounded-2xl border-2 border-obsidian bg-alabaster text-right transition cursor-pointer">
                 <div class="flex items-center justify-between">
                   <span class="font-display font-extrabold text-base text-obsidian">زوج واحد (1 Paire)</span>
@@ -1182,7 +1119,6 @@
                 <p class="text-xs text-emerald-700 font-bold mt-1">+ توصيل مجاني لباب الدار</p>
               </button>
 
-              <!-- Pack Duo Offer (548 DH - Save 50 DH) -->
               <button type="button" onclick="selectOffer('duo')" id="offer-btn-duo" class="relative p-4 rounded-2xl border border-obsidian/20 bg-white hover:border-obsidian/50 text-right transition cursor-pointer">
                 <span class="absolute -top-3 left-3 px-2.5 py-0.5 rounded-full bg-crimson text-white text-[11px] font-extrabold shadow-xs">
                   الأكثر طلباً 🔥
@@ -1202,26 +1138,26 @@
           <!-- PAIR 2 SELECTOR (WHEN DUO OFFER IS CHOSEN) -->
           <div id="pair2Box" class="hidden p-5 rounded-2xl bg-stonegray/65 hairline-border space-y-4">
             <div class="flex flex-wrap items-center justify-between gap-2">
-              <span class="text-xs sm:text-sm font-extrabold text-obsidian">الحذاء الثاني — اختر اللون والمقاس بحرية :</span>
-              <span id="formStep2P2Badge" class="text-[11px] font-extrabold text-emerald-900 bg-emerald-100 px-2.5 py-0.5 rounded-full">أسود / رمادي • مقاس 43</span>
+              <span class="text-xs font-extrabold text-obsidian">الحذاء الثاني — اختر اللون والمقاس بحرية :</span>
+              <span id="formStep2P2Badge" class="px-2.5 py-0.5 rounded-full bg-obsidian text-white text-[11px] font-extrabold">أسود / رمادي • مقاس 43</span>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
               <button type="button" onclick="setPairColor(2, 'blanc')" id="form-p2-color-blanc" class="flex items-center justify-between gap-2.5 p-2.5 rounded-xl bg-white/80 border border-obsidian/15 text-right transition cursor-pointer">
                 <div class="flex items-center gap-2.5 min-w-0">
-                  <img id="formP2ThumbBlanc" src="https://cnovkkilcvobthwjjkvr.supabase.co/storage/v1/object/public/rava-media/1795284591460_rava_clean_1795284591460.jpg" alt="أبيض / أحمر" class="w-10 h-10 rounded-lg object-cover shrink-0" onerror="applyMediaFallback(this, 'blanc_studio')">
+                  <img id="formP2ThumbBlanc" src="https://cnovkkilcvobthwjjkvr.supabase.co/storage/v1/object/public/rava-media/1795284591460_rava_clean_1795284591460.jpg" alt="أبيض / أحمر" class="w-9 h-9 rounded-lg object-cover shrink-0" onerror="applyMediaFallback(this, 'blanc_studio')">
                   <div class="min-w-0">
                     <span id="cmsFormP2ColorBlancLabel" class="block text-xs font-extrabold text-obsidian truncate">أبيض / أحمر</span>
-                    <span id="formP2BlancSizeTag" class="block text-[10px] font-bold text-obsidian/60">المقاس : 42</span>
+                    <span id="formP2BlancSizeTag" class="block text-[10px] font-bold text-obsidian/65">المقاس : 42</span>
                   </div>
                 </div>
               </button>
-              <button type="button" onclick="setPairColor(2, 'noir')" id="form-p2-color-noir" class="flex items-center justify-between gap-2.5 p-2.5 rounded-xl bg-white border-2 border-obsidian text-right transition cursor-pointer">
+              <button type="button" onclick="setPairColor(2, 'noir')" id="form-p2-color-noir" class="flex items-center justify-between gap-2.5 p-2.5 rounded-xl bg-white border-2 border-[#DFD4C0] text-right transition cursor-pointer">
                 <div class="flex items-center gap-2.5 min-w-0">
-                  <img id="formP2ThumbNoir" src="https://cnovkkilcvobthwjjkvr.supabase.co/storage/v1/object/public/rava-media/1795284601030_rava_clean_1795284601030.jpg" alt="أسود / رمادي" class="w-10 h-10 rounded-lg object-cover shrink-0" onerror="applyMediaFallback(this, 'noir_studio')">
+                  <img id="formP2ThumbNoir" src="https://cnovkkilcvobthwjjkvr.supabase.co/storage/v1/object/public/rava-media/1795284601030_rava_clean_1795284601030.jpg" alt="أسود / رمادي" class="w-9 h-9 rounded-lg object-cover shrink-0" onerror="applyMediaFallback(this, 'noir_studio')">
                   <div class="min-w-0">
                     <span id="cmsFormP2ColorNoirLabel" class="block text-xs font-extrabold text-obsidian truncate">أسود / رمادي</span>
-                    <span id="formP2NoirSizeTag" class="block text-[10px] font-bold text-crimson">المقاس : 43</span>
+                    <span id="formP2NoirSizeTag" class="block text-[10px] font-extrabold text-crimson">المقاس : 43</span>
                   </div>
                 </div>
               </button>
@@ -1236,28 +1172,25 @@
             </div>
           </div>
 
-          <!-- 4. INFORMATIONS CLIENT (RTL MOROCCAN FIELDS) -->
+          <!-- 4. INFORMATIONS CLIENT -->
           <div class="space-y-4">
             <label class="block text-xs sm:text-sm font-extrabold text-obsidian">
               4. معلومات التوصيل :
             </label>
 
-            <!-- الاسم الكامل -->
             <div>
-              <input type="text" id="inputName" required placeholder="الاسم الكامل (مثال: يوسف بنعلي) *" class="w-full px-4 py-3.5 rounded-xl bg-alabaster border border-obsidian/20 text-sm font-semibold text-obsidian placeholder:text-obsidian/45 transition text-right">
+              <input type="text" id="inputName" required="" placeholder="الاسم الكامل (مثال: يوسف بنعلي) *" class="w-full px-4 py-3.5 rounded-xl bg-alabaster border border-obsidian/20 text-sm font-semibold text-obsidian placeholder:text-obsidian/45 transition text-right">
               <p id="errName" class="hidden text-xs text-crimson font-bold mt-1">المرجو إدخال الاسم الكامل.</p>
             </div>
 
-            <!-- رقم الهاتف -->
             <div>
-              <input type="tel" id="inputPhone" required dir="ltr" placeholder="رقم الهاتف (06 / 07...) *" class="w-full px-4 py-3.5 rounded-xl bg-alabaster border border-obsidian/20 text-sm font-bold text-obsidian placeholder:text-obsidian/45 transition text-right">
+              <input type="tel" id="inputPhone" required="" dir="ltr" placeholder="رقم الهاتف (06 / 07...) *" class="w-full px-4 py-3.5 rounded-xl bg-alabaster border border-obsidian/20 text-sm font-bold text-obsidian placeholder:text-obsidian/45 transition text-right">
               <p id="errPhone" class="hidden text-xs text-crimson font-bold mt-1">المرجو إدخال رقم هاتف مغربي صحيح (مثال: 0612345678).</p>
             </div>
 
-            <!-- المدينة (Sélecteur des villes marocaines) -->
             <div>
-              <select id="inputCity" required class="w-full px-4 py-3.5 rounded-xl bg-alabaster border border-obsidian/20 text-sm font-bold text-obsidian transition text-right cursor-pointer">
-                <option value="" disabled selected>اختر المدينة *</option>
+              <select id="inputCity" required="" class="w-full px-4 py-3.5 rounded-xl bg-alabaster border border-obsidian/20 text-sm font-bold text-obsidian transition text-right cursor-pointer">
+                <option value="" disabled="" selected="">اختر المدينة *</option>
                 <option value="الدار البيضاء">الدار البيضاء</option>
                 <option value="الرباط">الرباط</option>
                 <option value="مراكش">مراكش</option>
@@ -1278,7 +1211,6 @@
               <p id="errCity" class="hidden text-xs text-crimson font-bold mt-1">المرجو اختيار المدينة.</p>
             </div>
 
-            <!-- العنوان (اختياري) -->
             <div>
               <input type="text" id="inputAddress" placeholder="العنوان أو الحي (اختياري)" class="w-full px-4 py-3.5 rounded-xl bg-alabaster border border-obsidian/20 text-sm font-semibold text-obsidian placeholder:text-obsidian/45 transition text-right">
             </div>
@@ -1293,7 +1225,6 @@
             <div id="formTotalDisplay" class="font-display font-black text-2xl text-obsidian">299 درهم</div>
           </div>
 
-          <!-- Big Animated Submit CTA -->
           <div>
             <button type="submit" id="submitOrderBtn" class="theme-cta-btn w-full py-4 sm:py-5 px-6 rounded-2xl bg-crimson text-white font-display font-black text-sm sm:text-base active:scale-[0.99] transition shadow-xl flex items-center justify-center gap-3 cursor-pointer">
               <span id="submitBtnLabel">تأكيد الطلب الآن — الدفع عند الاستلام 🛒</span>
@@ -1303,14 +1234,13 @@
               ✓ توصيل مجاني 100% • ✓ افتح الطرد وتأكد من الجودة قبل الدفع • ✓ تبديل المقاس مضمون
             </p>
           </div>
-
         </form>
       </div>
     </div>
   </section>
 
   <!-- =====================================================================
-       6. FOOTER WITH RAVA MODE BRANDING & SOCIAL MEDIA (RS)
+       6. FOOTER WITH RAVA MODE BRANDING & SOCIAL LINKS
        ===================================================================== -->
   <footer class="bg-obsidian text-alabaster border-t border-white/10 py-12 text-right">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
@@ -1335,20 +1265,19 @@
         <a href="#commander" class="hover:text-white transition">نموذج الطلب</a>
       </div>
 
-      <div class="flex flex-col items-center md:items-end gap-3">
-        <div class="flex items-center gap-2.5" aria-label="تابعنا على مواقع التواصل الاجتماعي">
-          <a id="footerInstagramLink" href="https://www.instagram.com/ravamode.ma" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="w-9 h-9 rounded-full bg-white/10 hover:bg-white hover:text-obsidian text-white flex items-center justify-center transition">
-            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-          </a>
-          <a id="footerTiktokLink" href="https://www.tiktok.com/@ravamode.ma" target="_blank" rel="noopener noreferrer" aria-label="TikTok" class="w-9 h-9 rounded-full bg-white/10 hover:bg-white hover:text-obsidian text-white flex items-center justify-center transition">
-            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
-          </a>
-          <a id="footerFacebookLink" href="https://www.facebook.com/ravamode.ma" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="w-9 h-9 rounded-full bg-white/10 hover:bg-white hover:text-obsidian text-white flex items-center justify-center transition">
-            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M14 13.5h2.5l1-4H14v-2c0-1.03 0-2 2-2h1.5V2.14c-.326-.043-1.557-.14-2.857-.14C11.928 2 10 3.657 10 6.7v2.8H7v4h3V22h4v-8.5z"/></svg>
-          </a>
-        </div>
-        <div id="cmsFooterCopyright" class="text-xs text-white/55">© 2026 RAVA MODE. جميع الحقوق محفوظة.</div>
+      <div class="flex items-center gap-2.5">
+        <a id="footerInstagramLink" href="https://www.instagram.com/ravamode.ma" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="w-9 h-9 rounded-full bg-white/10 hover:bg-white hover:text-obsidian text-white flex items-center justify-center transition">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <a id="footerTiktokLink" href="https://www.tiktok.com/@ravamode.ma" target="_blank" rel="noopener noreferrer" aria-label="TikTok" class="w-9 h-9 rounded-full bg-white/10 hover:bg-white hover:text-obsidian text-white flex items-center justify-center transition">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
+        </a>
+        <a id="footerFacebookLink" href="https://www.facebook.com/ravamode.ma" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="w-9 h-9 rounded-full bg-white/10 hover:bg-white hover:text-obsidian text-white flex items-center justify-center transition">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M13.5 21v-7.5h2.55l.38-2.95H13.5V8.67c0-.85.24-1.43 1.46-1.43h1.56V4.6c-.27-.04-1.2-.12-2.28-.12-2.26 0-3.8 1.38-3.8 3.91v2.16H7.9v2.95h2.54V21h3.06z"/></svg>
+        </a>
       </div>
+
+      <div id="cmsFooterCopyright" class="text-xs text-white/55">© 2026 RAVA MODE. جميع الحقوق محفوظة.</div>
     </div>
   </footer>
 
@@ -1369,14 +1298,64 @@
           <div id="mobileStickyPrice" class="text-[11px] font-bold text-emerald-700 truncate">299 درهم • توصيل مجاني</div>
         </div>
       </div>
-      <a href="#commander" id="mobileStickyCtaBtn" class="theme-cta-btn shrink-0 px-4 py-2.5 rounded-xl bg-crimson text-white font-extrabold text-xs shadow-sm active:scale-95 transition">
+      <a href="#commander" id="mobileStickyCtaBtn" class="theme-cta-btn shrink-0 px-4 py-2.5 rounded-xl bg-crimson text-white font-extrabold text-xs whitespace-nowrap shadow-sm active:scale-95 transition">
         اطلب الآن
       </a>
     </div>
   </div>
 
   <!-- =====================================================================
-       8. SIZE GUIDE MODAL (ARABIC)
+       8. WELCOME TRUST & GUARANTEE POP-UP (SMOOTH, MINIMAL, ZERO RED)
+       ===================================================================== -->
+  <div id="welcomeGuaranteeModal" onclick="if(event.target === this) closeWelcomePopup()" class="hidden fixed inset-0 z-50 bg-obsidian/55 backdrop-blur-sm flex items-center justify-center p-4 text-right transition-opacity duration-300">
+    <div class="animate-smooth-modal relative bg-white text-obsidian rounded-[28px] max-w-sm w-full p-6 sm:p-7 hairline-border shadow-[0_24px_60px_-15px_rgba(14,14,16,0.28)] space-y-4">
+      <button type="button" onclick="closeWelcomePopup()" aria-label="إغلاق" class="absolute top-3.5 left-3.5 w-8 h-8 rounded-full bg-alabaster hover:bg-stonegray flex items-center justify-center text-obsidian/70 hover:text-obsidian cursor-pointer transition">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+      </button>
+
+      <div class="flex flex-col items-center text-center pt-1">
+        <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-700 border border-emerald-200/70 flex items-center justify-center mb-3">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+        </div>
+        <span id="cmsWelcomePopupBadge" class="px-3 py-1 rounded-full bg-alabaster hairline-border text-[11px] font-bold text-obsidian/80">
+          ✈️ منتوج مستورد من الخارج
+        </span>
+        <h3 id="cmsWelcomePopupTitle" class="font-display font-black text-xl text-obsidian mt-2.5 leading-snug">
+          جرّب الحذاء قبل ما تخلّص
+        </h3>
+        <p id="cmsWelcomePopupSubtitle" class="text-xs text-obsidian/70 mt-1.5 leading-relaxed">
+          توصيل مجاني لباب الدار • افتح الطرد وعاين الجودة قبل الدفع.
+        </p>
+      </div>
+
+      <div class="flex flex-wrap items-center justify-center gap-1.5 pt-0.5">
+        <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-50/90 text-emerald-800 text-[11px] font-bold">
+          <span>✓</span>
+          <span id="cmsWelcomePopupPoint1">معاينة الطرد قبل الدفع</span>
+        </span>
+        <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-alabaster hairline-border text-obsidian/85 text-[11px] font-bold">
+          <span>✓</span>
+          <span id="cmsWelcomePopupPoint2">جودة مستوردة 100%</span>
+        </span>
+        <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-alabaster hairline-border text-obsidian/85 text-[11px] font-bold">
+          <span>✓</span>
+          <span id="cmsWelcomePopupPoint3">تبديل المقاس مجاناً</span>
+        </span>
+      </div>
+
+      <div class="pt-1 space-y-1.5">
+        <button type="button" onclick="acceptWelcomePopupAndOrder()" class="w-full py-3 px-5 rounded-2xl bg-obsidian hover:bg-anthracite text-white font-display font-extrabold text-xs sm:text-sm shadow-md active:scale-[0.99] transition cursor-pointer">
+          <span id="cmsWelcomePopupCtaText">اكتشف الموديل الآن</span>
+        </button>
+        <button type="button" onclick="closeWelcomePopup()" class="w-full py-1.5 text-[11px] font-semibold text-obsidian/55 hover:text-obsidian transition cursor-pointer">
+          متابعة التصفح
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       9. SIZE GUIDE MODAL (ARABIC)
        ===================================================================== -->
   <div id="sizeGuideModal" class="hidden fixed inset-0 z-50 bg-obsidian/75 backdrop-blur-xs flex items-center justify-center p-4 text-right">
     <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 hairline-border-strong shadow-2xl">
@@ -1708,6 +1687,58 @@
             <p class="text-[11px] text-obsidian/65 font-semibold">
               💡 ملاحظة : إذا تركت أي حقل فارغاً، سيتم إخفاء أيقونته تلقائياً من أعلى وأسفل الصفحة.
             </p>
+          </div>
+
+          <!-- WELCOME GUARANTEE POPUP CARD -->
+          <div class="p-4 rounded-2xl bg-white hairline-border space-y-3">
+            <div class="flex items-center justify-between gap-2 border-b border-obsidian/10 pb-2.5">
+              <div>
+                <h4 class="font-display font-extrabold text-sm text-crimson">
+                  🛡️ النافذة المنبثقة الترحيبية (Pop-up الضمان والتجربة)
+                </h4>
+                <p class="text-[11px] text-obsidian/60">تظهر للزائر عند فتح الموقع لتعزيز الثقة (جرّب قبل الشراء / راضي أو مسترجع)</p>
+              </div>
+              <label class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-alabaster hairline-border cursor-pointer shrink-0">
+                <input type="checkbox" id="cmsInputWelcomePopupEnabled" class="w-4 h-4 accent-crimson cursor-pointer">
+                <span class="text-xs font-extrabold text-obsidian">مفعّلة (Activer)</span>
+              </label>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              <div>
+                <label class="block text-[11px] font-bold text-obsidian/80 mb-1">الشارة العلوية (Badge)</label>
+                <input type="text" id="cmsInputWelcomePopupBadge" class="w-full px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-bold">
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-obsidian/80 mb-1">نص الزر الرئيسي في النافذة</label>
+                <input type="text" id="cmsInputWelcomePopupCtaText" class="w-full px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-bold">
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-bold text-obsidian/80 mb-1">عنوان النافذة المنبثقة</label>
+              <input type="text" id="cmsInputWelcomePopupTitle" class="w-full px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-extrabold">
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-bold text-obsidian/80 mb-1">النص التوضيحي للضمان</label>
+              <textarea id="cmsInputWelcomePopupSubtitle" rows="2" class="w-full px-3 py-2 rounded-xl border border-obsidian/20 text-xs font-semibold"></textarea>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              <div>
+                <label class="block text-[10px] font-bold text-obsidian/80 mb-1">نقطة الثقة 1</label>
+                <input type="text" id="cmsInputWelcomePopupPoint1" class="w-full px-2.5 py-2 rounded-xl border border-obsidian/20 text-xs font-semibold">
+              </div>
+              <div>
+                <label class="block text-[10px] font-bold text-obsidian/80 mb-1">نقطة الثقة 2</label>
+                <input type="text" id="cmsInputWelcomePopupPoint2" class="w-full px-2.5 py-2 rounded-xl border border-obsidian/20 text-xs font-semibold">
+              </div>
+              <div>
+                <label class="block text-[10px] font-bold text-obsidian/80 mb-1">نقطة الثقة 3</label>
+                <input type="text" id="cmsInputWelcomePopupPoint3" class="w-full px-2.5 py-2 rounded-xl border border-obsidian/20 text-xs font-semibold">
+              </div>
+            </div>
           </div>
 
           <!-- SECTION 2: HERO & PRICING -->
@@ -2230,17 +2261,18 @@
 
       applyPageTheme(colorKey);
 
-      document.getElementById('heroActiveColorLabel').textContent = meta.label;
+      const heroColorLabelEl = document.getElementById('heroActiveColorLabel');
+      if (heroColorLabelEl) heroColorLabelEl.textContent = meta.label;
       const heroBlanc = document.getElementById('hero-color-blanc');
       const heroNoir = document.getElementById('hero-color-noir');
 
       if (colorKey === 'blanc') {
-        heroBlanc.className = 'flex items-center gap-3 p-2.5 rounded-2xl bg-white border-2 border-crimson shadow-md text-right transition-all cursor-pointer';
-        heroNoir.className = 'flex items-center gap-3 p-2.5 rounded-2xl bg-white/75 hover:bg-white border border-obsidian/15 text-right transition-all cursor-pointer';
+        if (heroBlanc) heroBlanc.className = 'flex items-center gap-3 p-2.5 rounded-2xl bg-white border-2 border-crimson shadow-md text-right transition-all cursor-pointer';
+        if (heroNoir) heroNoir.className = 'flex items-center gap-3 p-2.5 rounded-2xl bg-white/75 hover:bg-white border border-obsidian/15 text-right transition-all cursor-pointer';
         switchHeroVideo(0);
       } else {
-        heroNoir.className = 'flex items-center gap-3 p-2.5 rounded-2xl bg-white border-2 border-[#DFD4C0] shadow-md text-right transition-all cursor-pointer';
-        heroBlanc.className = 'flex items-center gap-3 p-2.5 rounded-2xl bg-white/75 hover:bg-white border border-obsidian/15 text-right transition-all cursor-pointer';
+        if (heroNoir) heroNoir.className = 'flex items-center gap-3 p-2.5 rounded-2xl bg-white border-2 border-[#DFD4C0] shadow-md text-right transition-all cursor-pointer';
+        if (heroBlanc) heroBlanc.className = 'flex items-center gap-3 p-2.5 rounded-2xl bg-white/75 hover:bg-white border border-obsidian/15 text-right transition-all cursor-pointer';
         switchHeroVideo(2);
       }
 
@@ -2530,6 +2562,26 @@
 
     function closeOrderModal() {
       document.getElementById('orderConfirmModal').classList.add('hidden');
+    }
+
+    function openWelcomePopup() {
+      if (window.cmsConfig.welcomePopupEnabled === false) return;
+      const modal = document.getElementById('welcomeGuaranteeModal');
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function closeWelcomePopup() {
+      const modal = document.getElementById('welcomeGuaranteeModal');
+      if (modal) modal.classList.add('hidden');
+      try {
+        sessionStorage.setItem('rava_welcome_popup_seen', '1');
+      } catch (e) {}
+    }
+
+    function acceptWelcomePopupAndOrder() {
+      closeWelcomePopup();
+      const formEl = document.getElementById('commander');
+      if (formEl) formEl.scrollIntoView({ behavior: 'smooth' });
     }
 
     function escapeHtml(str) {
@@ -2865,6 +2917,15 @@
       setVal('cmsInputInstagramUrl', c.instagramUrl);
       setVal('cmsInputTiktokUrl', c.tiktokUrl);
       setVal('cmsInputFacebookUrl', c.facebookUrl);
+      const welcomeToggle = document.getElementById('cmsInputWelcomePopupEnabled');
+      if (welcomeToggle) welcomeToggle.checked = c.welcomePopupEnabled !== false;
+      setVal('cmsInputWelcomePopupBadge', c.welcomePopupBadge);
+      setVal('cmsInputWelcomePopupTitle', c.welcomePopupTitle);
+      setVal('cmsInputWelcomePopupSubtitle', c.welcomePopupSubtitle);
+      setVal('cmsInputWelcomePopupPoint1', c.welcomePopupPoint1);
+      setVal('cmsInputWelcomePopupPoint2', c.welcomePopupPoint2);
+      setVal('cmsInputWelcomePopupPoint3', c.welcomePopupPoint3);
+      setVal('cmsInputWelcomePopupCtaText', c.welcomePopupCtaText);
       setVal('cmsInputCmsPin', c.cmsPin || '2026');
       setVal('cmsInputAnnouncement', c.announcement);
       setVal('cmsInputHeroTitle', c.heroTitle);
@@ -3103,6 +3164,18 @@
       setText('cmsFormP2ColorNoirLabel', c.colorNoirLabel);
       setText('cmsFooterTagline', c.footerTagline);
       setText('cmsFooterCopyright', c.footerCopyright);
+
+      setText('cmsWelcomePopupBadge', c.welcomePopupBadge);
+      setText('cmsWelcomePopupTitle', c.welcomePopupTitle);
+      setText('cmsWelcomePopupSubtitle', c.welcomePopupSubtitle);
+      setText('cmsWelcomePopupPoint1', c.welcomePopupPoint1);
+      setText('cmsWelcomePopupPoint2', c.welcomePopupPoint2);
+      setText('cmsWelcomePopupPoint3', c.welcomePopupPoint3);
+      setText('cmsWelcomePopupCtaText', c.welcomePopupCtaText);
+      if (c.welcomePopupEnabled === false) {
+        const welcomeModal = document.getElementById('welcomeGuaranteeModal');
+        if (welcomeModal) welcomeModal.classList.add('hidden');
+      }
 
       setText('cmsWhatsappFloatText', c.whatsappFloatText || 'تواصل معنا');
       const waFloatBtn = document.getElementById('floatingWhatsappBtn');
@@ -3416,6 +3489,14 @@
         instagramUrl: val('cmsInputInstagramUrl'),
         tiktokUrl: val('cmsInputTiktokUrl'),
         facebookUrl: val('cmsInputFacebookUrl'),
+        welcomePopupEnabled: document.getElementById('cmsInputWelcomePopupEnabled') ? document.getElementById('cmsInputWelcomePopupEnabled').checked : true,
+        welcomePopupBadge: val('cmsInputWelcomePopupBadge'),
+        welcomePopupTitle: val('cmsInputWelcomePopupTitle'),
+        welcomePopupSubtitle: val('cmsInputWelcomePopupSubtitle'),
+        welcomePopupPoint1: val('cmsInputWelcomePopupPoint1'),
+        welcomePopupPoint2: val('cmsInputWelcomePopupPoint2'),
+        welcomePopupPoint3: val('cmsInputWelcomePopupPoint3'),
+        welcomePopupCtaText: val('cmsInputWelcomePopupCtaText'),
         cmsPin: val('cmsInputCmsPin') || '2026',
         announcement: val('cmsInputAnnouncement'),
         heroTitle: val('cmsInputHeroTitle'),
@@ -3552,6 +3633,7 @@
           openSmartCms();
         }
         if (e.key === 'Escape') {
+          closeWelcomePopup();
           closeSizeGuide();
           closeOrderModal();
           closeCmsPinModal();
@@ -3562,8 +3644,17 @@
       await loadConfigFromSupabase();
       await loadOrdersFromSupabase();
 
-      if (window.location.search.includes('cms=1') || window.location.hash === '#cms') {
+      const isCmsOpen = window.location.search.includes('cms=1') || window.location.hash === '#cms';
+      if (isCmsOpen) {
         openSmartCms();
+      } else if (window.cmsConfig.welcomePopupEnabled !== false) {
+        let alreadySeen = false;
+        try {
+          alreadySeen = sessionStorage.getItem('rava_welcome_popup_seen') === '1';
+        } catch (e) {}
+        if (!alreadySeen) {
+          setTimeout(openWelcomePopup, 450);
+        }
       }
 
       window.addEventListener('hashchange', () => {
